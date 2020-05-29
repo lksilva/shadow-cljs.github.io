@@ -1,19 +1,18 @@
-# shadow-cljs User's Guide
+# Guia do usuário shadow-cljs
 
-See https://shadow-cljs.github.io/docs/UsersGuide.html
+Para mais informações https://shadow-cljs.github.io/docs/UsersGuide.html
 
+O guia é escrito usando o formato asciidoc disponível na pasta `/docs`.
 
-The guide is written in asciidoc format available in the `/docs` directory.
+`make` é usado para construir o arquivo HTML primário via [asciidoctor](http://asciidoctor.org/).
 
-`make` is used to build the primary HTML file via [asciidoctor](http://asciidoctor.org/).
+## Contribuição
 
-## Contribution
-
-Contributions are very welcome. Just open an issue or pull request.
+Contribuições são sempre bem vindas. Basta abrir um issue ou uma pull request.
 
 ### Dockerfile
 
-People who prefer developing against a Docker container can use the `Dockerfile` provided in this repository. It contains everything that you need:
+Para as pessoas que preferem desenvolvimento com Docker é possível usar o `Dockerfile` fornecido nesse repositório. Ele contém tudo que você precisa:
 
 - Ruby
 - Bundler
@@ -21,4 +20,4 @@ People who prefer developing against a Docker container can use the `Dockerfile`
 
 ### Visual Studio Code
 
-Provided that you have you have the "Visual Studio Code Remote - Container" extension installed, Visual Studio Code users will be able to develop against the Docker container immediately.
+Partindo do ponto que você tem a extensão "Visual Studio Code Remote - Container" instalada, os usuários do Visual Studio Code são capazes de desenvolver com Docker container imediatamente.
