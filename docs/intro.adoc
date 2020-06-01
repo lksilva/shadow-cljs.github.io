@@ -1,6 +1,6 @@
-= Introduction
+= Introdução
 
-`shadow-cljs` provides everything you need to compile your ClojureScript projects with a focus on simplicity and ease of use. The provided build targets abstract away most of the manual configuration so that you only have to configure the essentials for your build. Each target provides optimal defaults for each environment and get an optimized experience during development and in release builds.
+`shadow-cljs` provê tudo que você precisa pra compilar seu projeto ClojureScript com foco em simplicidade e facilidade de uso. A compilação do build fornecidos abstraem a maioria da configuração manual de modo que a única coisa que você tem que fazaer é configurar coisas essenciais para o seu build. Cada target provê padrões ótimos para cada ambiente e fornece uma experiência otimizada durante a fase de desenvolvimento e builds de produção.
 
 == High-Level Overview
 
