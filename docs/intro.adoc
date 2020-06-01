@@ -2,12 +2,12 @@
 
 `shadow-cljs` provê tudo que você precisa pra compilar seu projeto ClojureScript com foco em simplicidade e facilidade de uso. A compilação do build fornecidos abstraem a maioria da configuração manual de modo que a única coisa que você tem que fazaer é configurar coisas essenciais para o seu build. Cada target provê padrões ótimos para cada ambiente e fornece uma experiência otimizada durante a fase de desenvolvimento e builds de produção.
 
-== High-Level Overview
+== Visão de auto nível
 
-`shadow-cljs` is composed of 2 parts:
+`shadow-cljs` é composto de duas partes:
 
-- The https://clojars.org/thheller/shadow-cljs[shadow-cljs] Clojure library which handles all the actual work.
-- The https://www.npmjs.com/package/shadow-cljs[shadow-cljs] `npm` package which provides a convenient interface for running most of the build functionality directly from command line.
+- A https://clojars.org/thheller/shadow-cljs[shadow-cljs] biblioteca Clojure que manipula todo o trabalho atual.
+- O https://www.npmjs.com/package/shadow-cljs[shadow-cljs], pacote `npm` que fornece uma interface coviciente para rodar a maioria das funcionalidades de build diretamente da linha de comando.
 
 If desired you can easily integrate the `shadow-cljs` Clojure library into any other Clojure/JVM build tool (eg. https://leiningen.org/[leiningen] or the https://clojure.org/guides/deps_and_cli[Clojure CLI] tools).
 
