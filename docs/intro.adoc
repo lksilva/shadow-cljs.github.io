@@ -9,37 +9,36 @@
 - A https://clojars.org/thheller/shadow-cljs[shadow-cljs] biblioteca Clojure que manipula todo o trabalho atual.
 - O https://www.npmjs.com/package/shadow-cljs[shadow-cljs], pacote `npm` que fornece uma interface coviciente para rodar a maioria das funcionalidades de build diretamente da linha de comando.
 
-If desired you can easily integrate the `shadow-cljs` Clojure library into any other Clojure/JVM build tool (eg. https://leiningen.org/[leiningen] or the https://clojure.org/guides/deps_and_cli[Clojure CLI] tools).
+É possivel integrar facilmente a biblioteca Clojure `shadow-cljs` em qualquer outro ferramenta de compilação Clojure/JVM (eg. https://leiningen.org/[leiningen] ou a ferramenta https://clojure.org/guides/deps_and_cli[Clojure CLI]).
 
-It is recommended to use the `npm` package as that provides a more optimized development experience tailored towards CLJS development.
+É recomendado usar os pacotes `npm` que fornece uma experiência mais otimizada e sob medida em relação ao desenvolvimento com CLJS.
+
+== Fluxo de trabalho básico 
+
+When trabalhando com `shadow-cljs` você definirá uma ou mais builds no arquivo de configuração `shadow-cljs.edn`. Cada build tem a propriedade `:target` que representa uma configuração otimizada e predefinida para o ambiente alvo (eg. the Browser, uma aplicação `node.js` ou uma Extensão Chrome).
+
+Cada buila pode produzir uma saída de desenvolvimento ou de produção dependendo do comando usado para disparar a compilação. Os padrões de build são: `compile`, `watch` e `release`.
+
+=== Modo de desenvolvimento
+
+É possível `compile` uma build de desenvolvimento uma vez ou rodar o processo `watch` que vai monitorar seus arquivos e recompilar eles automáticamente (e live-reload o code se você desejar).
+
+Todas as builds de desenvolvimento são otimizadas para experiência do desenvolvedor, com ciclos de feedback rápido e outras funcionalidades como REPL para interagir diretamente com o código rodando.
+
+Uma build de desenvolvimento nunca deveria ser públicada desde que ela pode torna-se um pouco grande e deve funcionar apenas na máquina onde foi compilada, dependendo do `:target`.
+
+=== Modo de produção
+
+Criando uma build de `release` vai remover todo o código relacionado ao modo de desenvolvimento e finalmente roda o código atráves do Closure Compiler. Esse é um Compiler otimizado para JavaScript que reduz significativamente no geral o tamanho do código.
 
 
-== Basic Workflow
+== Conceitos importantes
 
-When working with `shadow-cljs` you will be defining one or more builds in the `shadow-cljs.edn` configuration file. Each build will have a `:target` property which represents a configuration preset optimized for the target environment (eg. the Browser, a `node.js` application or a Chrome Extension).
+Existe vários conceitos importantes que você deveria estar familiarizado quando usando `shadow-cljs`. Eles são fundamentais para o entendimento de como tudo se encaixa junto e como a ferramenta trabalha com o código.
 
-Each build can either produce development or release output depending on the command used to trigger the compilation. The standard build commands are: `compile`, `watch` and `release`.
+=== O Classpath
 
-=== Development Mode
-
-You can either `compile` a development build once or run a `watch` process which will monitor your source files and re-compile them automatically (and live-reload the code if desired).
-
-All development builds are optimized for the developer experience with fast feedback cycles and other features like a REPL to directly interact with your running code.
-
-A development build should never be shipped publicly since they can become quite large and may only work on the machine they were compiled on depending on the `:target`.
-
-=== Release Mode
-
-Creating a `release` build will strip out all the development related code and finally run the code through the Closure Compiler. This is an optimizing Compiler for JavaScript which will significantly reduce the overall size of the code.
-
-
-== Important Concepts
-
-There are several important concepts that you should familiarize yourself with when using `shadow-cljs`. They are integral to understanding how everything fits together and how the tool works with your code.
-
-=== The Classpath
-
-`shadow-cljs` uses the Java Virtual Machine (JVM) and its "classpath" when working with files. This is a virtual filesystem composed of many classpath entries. Each entry is either
+`shadow-cljs` usa a Java Virtual Machine (JVM) e o "classpath" quando trabalhando com arquivos. Esse é o filesystem virtual composto de muitas entidades classpath. Cada entidade é
 
 - A local filesystem directory, managed by `:source-paths` entry in the configuration.
 - Or a `.jar` file, representing Clojure(Script) or JVM libraries. These are compressed archives containing many files (basically just a `.zip` file). These are added by your `:dependencies`.

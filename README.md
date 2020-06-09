@@ -20,4 +20,4 @@ Para as pessoas que preferem desenvolvimento com Docker é possível usar o `Doc
 
 ### Visual Studio Code
 
-Partindo do ponto que você tem a extensão "Visual Studio Code Remote - Container" instalada, os usuários do Visual Studio Code são capazes de desenvolver com Docker container imediatamente.
+Provided that you have you have the "Visual Studio Code Remote - Container" extension installed, Visual Studio Code users will be able to develop against the Docker container immediately.
