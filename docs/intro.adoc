@@ -40,26 +40,26 @@ Existe vários conceitos importantes que você deveria estar familiarizado quand
 
 `shadow-cljs` usa a Java Virtual Machine (JVM) e o "classpath" quando trabalhando com arquivos. Esse é o filesystem virtual composto de muitas entidades classpath. Cada entidade é
 
-- A local filesystem directory, managed by `:source-paths` entry in the configuration.
-- Or a `.jar` file, representing Clojure(Script) or JVM libraries. These are compressed archives containing many files (basically just a `.zip` file). These are added by your `:dependencies`.
+- O diretório filesystem local, gerenciado pela entidade `:source-paths` na configuração.
+- Ou o arquivo `.jar`, representando Clojure(Script) ou bibliotecas JVM. Esses são arquivos comprimidos contento muitos arquivos (basicamente apenas um arquivo `.zip`). Esses são adicionados pelo `:dependencies`.
 
-In the Clojure(Script) everything is namespaced and each name is expected to resolve to a file. If you have a `(ns demo.app)` namespace the compiler expects to find a `demo/app.cljs` (or `.cljc`) on the classpath. The classpath will be searched in order until it is found. Suppose you configured the `:source-paths ["src/main" "src/test"]` the compiler will first look for a `src/main/demo/app.cljs` and then `src/test/demo/app.cljs`. When the file is not found on any source path the JVM will begin looking into the `.jar` files on the classpath. When it finds a `demo/app.cljs` at the root of any of the libraries that file it will be used.
+Em um projeto Clojure(Script) tudo é um namespace e cada nome representa um arquivo. Se existe um namespace `(ns demo.app)` o compilador espera encontra um `demo/app.cljs` (ou `cljs`) no classpath. O classpath será procurado em ordem até ser encontrado. Supnha que o `:source-paths` foi configurado da seguinte maneira ["src/main" "src/test"] o compilador vai procurar primeiro por um `src/main/demoi/app.cljs` e então `src/test/demo.app.cljs`. Quando o arquivo não é encontrado em nenhum source path a JVM vai começar a procurar dentro dos arquivos `.jar` no classpath. Quando encontra um `demo/app.cljs` na raíz de qualquer biblioteca o arquivo será usado.
 
-IMPORTANT: When a filename exists multiple times on the classpath then only the first one is used. Everything on the JVM and Clojure(Script) is namespaced to avoid such conflicts. Very similar to `npm` where each package must have a unique name.
+IMPORTANTE: Quando o nome do arquivo existe múltiplas vezes no classpath então apenas o primeiro é usado. Tudo na JVM e Clojure(Script) é namespaced para evitar quaisquer conflitos. Muito similar ao `npm` onde cada pacote deve ter um nome único.
 
-It is therefore recommended to be very disciplined about the names you choose and properly namespacing everything. It may seem repetitive to always use `(ns your-company.components.foo)` over `(ns components.foo)` but it will save you from lot of headaches later on.
+É portanto recomendado ser bem disciplinado quanto a escolha dos nomes e aplicar namespace em tudo. Deve parecer repetitivo sempre usar `(ns your-company.components.foo)` ao invés de `(ns components.foo)` porém esse detalhe vai evitar um monte de dor de cabeça no futuro.
 
-This is unlike `npm` where the package name itself is never used inside the package itself and only relative paths are used.
+É o contrário do `npm` onde o nome dos pacotes nunca é usado dentro do pacote em si e apenas relativo aos paths usados.
 
 
-=== Server Mode
+=== Modo de Servidor
 
-`shadow-cljs` can be started in "server" mode which is required for long-running tasks such as `watch`. A `watch` will implicitly start the server instance if it is not already running. The server will provide the Websocket endpoint that builds will connect to as well as all the other endpoints for nREPL, Socket REPL and the development HTTP servers.
+`shadow-cljs` pode ser iniciado em um modo de "servidor" do qual é requerido para tarefas long-running tal como `watch`. Um `watch` vai implicitamente começar uma instância se já não estiver rodando. O servidor prover um endpoint Websocket que vai se conectar assim como todos os outros endpoints para nREPL, Socket REPL e o desenvolvimento de HTTP servers.
 
-When using the `shadow-cljs` CLI interface all commands will re-use a running server instance JVM instead of starting a new JVM. This is substantially faster since start-up time can be quite slow.
+Quando usando o CLI do `shadow-cljs` todos os comandos são resusáveis rodando em uma instância do servidor da JVM ao invês de iniciar uma nova JVM. Isso é substancialmente rápido desde que o tempo start-up pode ser um pouco lento.
 
-Once the server is running however you only have to restart it whenever your `:dependencies` change and everything else can be done via the REPL.
+Uma vez o servidor rodando contudo, só vai ser preciso reiniciar apenas quando mudar o `:dependencies` e tudo mais pode ser feito via REPL.
 
 === REPL
 
-The REPL is at the heart of all Clojure(Script) development and every CLI command can also be used directly from the REPL as well. It is absolutely worth getting comfortable with the REPL even if the command line may seem more familiar.
+O REPL é o coração de todo o desenvolvimento CLojure(Script) e cada comando do CLI pode ser usando diretamente do REPL. E vale muito a pena se sentir confortável com o REPL mesmo se a linha de comando parecer mais familiar.
