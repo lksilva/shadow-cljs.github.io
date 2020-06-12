@@ -66,43 +66,42 @@ project.clj
 ...
 ```
 
-Muito dos examples estão no arquivo de configuração do compilador. Esse arquivo contém
-Many of the examples are of the configuration file for the compiler. This file contains an EDN map. Where we have already discussed required options we will often elide them for clarity. In this case we'll usually include an ellipsis to indicate "content that is required but isn't in our current focus":
+Muito dos examples estão no arquivo de configuração do compilador. Esse arquivo contém um mapa EDN. Onde já discutimos opções obrigatórias e iremos frequentemente omitir eles pro questão de clareza. Nesse caso iremos na verdade incluir três pontinhos para indicar "conteúdo é obrigatório mas não é nosso foco atual":
 
-.Example 1. Specify dependencies
+.Exemplo 1. Especificar dependências
 ```
 {:dependencies [[lib "1.0"]]}
 ```
 
-.Example 2. Add source paths
+.Exemplo 2. Adicionar source paths
 ```
 {...
  :source-paths ["src"]
  ...}
 ```
 
-This allows us to concisely include enough context to understand the nesting of the configuration of
-interest:
+Isso nos permite incluir contexto suficiente para entender a configuração aninhada:
 
-.Example 3. Nested option
+
+.Exemplo 3. Opção aninhada
 ```
 {...
  :builds {:build-id {...
                      :output-dir "resources/public/js"}}}
 ```
 
-Code examples may be similarly shortened.
+Exemplos de código devem ser similarmente encurtados.
 
 
-= Installation
+= Instalação
 
-== Standalone via `npm`
+== Padrão via `npm`
 
-You will need:
+Você vai precisar:
 
-- https://nodejs.org[`node.js`] (v6.0.0+, most recent version preferred)
-- https://www.npmjs.com[`npm`] or https://www.yarnpkg.com[`yarn`]
-- Any Java SDK (Version 8 or higher). http://openjdk.java.net/install/[OpenJDK] or http://www.oracle.com/technetwork/java/javase/downloads/index.html[Oracle]
+- https://nodejs.org[`node.js`] (v6.0.0+, ou versões mais recentes)
+- https://www.npmjs.com[`npm`] ou https://www.yarnpkg.com[`yarn`]
+- Alguma SDK Java (Versão 8 ou superior). http://openjdk.java.net/install/[OpenJDK] ou http://www.oracle.com/technetwork/java/javase/downloads/index.html[Oracle]
 
 .NPM
 ```bash
