@@ -1,4 +1,4 @@
-= Shadow CLJS User's Guide
+= Guia do usuário Shadow CLJS
 :author: Thomas Heller and Tony Kay
 :revdate: Jan 10, 2018
 :revnumber: 1.0
@@ -40,33 +40,33 @@ endif::[]
 
 include::intro.adoc[]
 
-== About this Book
+== Sobre o livro
 
 === Work in Progress
 
-This is a work in progress. If you find an error, please submit a PR to fix it, or an issue with details of the problem.
+Está processo de construção. Se você encontrar algum error, por favor nos envie um PR, ou um issue com detalhes do problema.
 
-=== Contributing
+=== Contribuindo
 
-This source for this book is hosted on https://github.com/shadow-cljs/shadow-cljs.github.io[Github].
+Os recursos para esse livro estão hospedado em https://github.com/shadow-cljs/shadow-cljs.github.io[Github].
 
-=== Conventions Used
+=== Convenções usadas
 
-There are many examples in this book. Most things used in these should be obvious from their context,
-but to prevent misunderstanding it is important to know the author's intentions.
+Existem vários exemplos nesse livro. Muitas coisas usadas aqui deveriam ser óbvia para esse contexto,
+mas para prevenir mal-entendidos é importante conhecer as intenções do autor.
 
-When command-line examples are given we may include BASH comments (starting with `#`), and will
-usually include the standard user UNIX prompt of `$` to indicate separation of the command
-from its output.
+Quando exemplos de command-line são dados, devemos incluir comentários BASH (começando com `#`), e
+normalmente incluir o padrão de usuário UNIX `$` para indicar separação do comando a partir da saída.
 
 ```bash
-# A comment. This command lists files:
+# Um breve comentário. Esse comando lista arquivos:
 $ ls -l
 shadow-cljs.edn
 project.clj
 ...
 ```
 
+Muito dos examples estão no arquivo de configuração do compilador. Esse arquivo contém
 Many of the examples are of the configuration file for the compiler. This file contains an EDN map. Where we have already discussed required options we will often elide them for clarity. In this case we'll usually include an ellipsis to indicate "content that is required but isn't in our current focus":
 
 .Example 1. Specify dependencies
