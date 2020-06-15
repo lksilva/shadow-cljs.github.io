@@ -115,11 +115,11 @@ $ yarn add --dev shadow-cljs
 $ yarn global add shadow-cljs
 ```
 
-== Library
+== Biblioteca
 
-Although it is recommended to run the standalone version via `npm` you can also embed `shadow-cljs` into any other Clojure JVM tool (eg. `lein`, `boot`, ...).
+Apesar de ser recomendado rodar a versão padrão via `npm` também é possível embutir `shadow-cljs` em qualquer outra ferramenta JVM (eg. `lein`, `boot`, ...).
 
-The artifact can be found at:
+O artefato pode ser encontrado em
 
 image::https://img.shields.io/clojars/v/thheller/shadow-cljs.svg[link=https://clojars.org/thheller/shadow-cljs]
 image::https://img.shields.io/npm/v/shadow-cljs.svg[link=https://github.com/thheller/shadow-cljs]
@@ -128,11 +128,11 @@ include::usage.adoc[]
 
 include::repl.adoc[]
 
-= Configuration [[config]]
+= Configuração [[config]]
 
-`shadow-cljs` is configured by a `shadow-cljs.edn` file in your project root directory. You can
-create a default one by running `shadow-cljs init`. It should contain a map with some global
-configuration and a `:builds` entry for all your builds.
+`shadow-cljs` é configurado por um arquivo `shadow-cljs.edn` na raíz do projeto. Você pode
+criar um template padrão rodando `shadow-cljs init`. Isso deve conter um map com alguma configuração
+global e um `:builds`, entrada para todos seus builds.
 
 ```
 {:source-paths [...]
@@ -140,7 +140,7 @@ configuration and a `:builds` entry for all your builds.
  :builds {...}}
 ```
 
-An example config could look like this:
+Um exemplo de configuração poderia parecer tal como:
 
 ```clojure
 {:dependencies
@@ -156,7 +156,7 @@ An example config could look like this:
         :modules {:main {:entries [my.app]}}}}}
 ```
 
-The file structure for this example should look like this:
+A estrutura desse exemplo poderia parecer com:
 ```text
 .
 ├── package.json
@@ -168,17 +168,19 @@ The file structure for this example should look like this:
 
 == Source Paths [[source-paths]]
 
+`:source-paths` configura o classpath da JVM. O compiler vai usar esse config para encontrar arquivos Clojure(Script) (eg `.cljs`).
 `:source-paths` configures your JVM classpath. The compiler will use this config to find Clojure(Script) source files (eg. `.cljs`).
 
-It is fine to put everything into one source path but you can use multiple if you want to "group" source files in certain ways. It is useful if you want to keep your tests separate for example.
+Está tudo bem colocar qualquer coisa em um source path mas você não pode usar multiplos se você quiser "agrupar" arquivos fonte de uma determinada maneira. É útil se vocie quiser manter seus testes separados por exemplo.
 
 .Using multiple source paths
+.Usando multiplos source paths
 ```
 {:source-paths ["src/main" "src/test"]
  ...}
 ```
 
-.File Structure
+.Estrutura de arquivo
 ```text
 .
 ├── package.json
@@ -192,7 +194,7 @@ It is fine to put everything into one source path but you can use multiple if yo
             └── app_test.cljs
 ```
 
-It is not recommended to separate source files by extension (eg. `src/clj`, `src/cljs`, `src/cljc`). For some reason this is widely used in CLJS project templates but it just makes things harder to use.
+Não é recomendado separar os arquivos fonte por extensão (eg. `src/clj`, `src/cljs`, `src/cljc`). Por alguma razão isso é amplamente usado em projetos CLJS mas isso só deixa as coisas mais difíceis de usar.
 
 == Dependencies
 
