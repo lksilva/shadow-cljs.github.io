@@ -200,32 +200,32 @@ Não é recomendado separar os arquivos fonte por extensão (eg. `src/clj`, `src
 
 === Clojure(Script)
 
-Your dependencies are managed via the `:dependencies` key at the root of the `shadow-cljs.edn` config file. They are declared in the same notation that other Clojure tools like `lein` or `boot` use.
+As dependência são gerenciadas através da key `:dependencia` na raíz do arquivo de configuração `shadow-cljs.edn`. Utiliza a mesma notação que outras ferramentas Clojure como `lein` e `boot`
 
-Each dependency is written as a vector using `[library-name "version-string"]` nested in one outer vector.
+Cada dependência é escrita como um vetor usando `[nome-biblioteca "versão"]` aninhados em um vetor exterior.
 
-.Example :dependencies
+
+.Exemplo :dependencies
 ```clojure
 {:source-paths ["src"]
  :dependencies [[reagent "0.9.1"]]
  :builds ...}
 ```
-
-Notice that the source path is *only* specified once in the entire configuration. The system will use namespace dependency graphs to determine what code is needed in the final output of any given build.
+Perceba que o caminho de origem é *only* especificado apenas uma vez na estrutura. O sistema utilizará grafos de dependência nos namespace para determinar qual código será necessário no final do output para uma determinada build.
 
 === JavaScript [[npm-install]]
 
 `shadow-cljs` integrates fully with the https://www.npmjs.com/[`npm`] ecosystem to manage JavaScript dependencies.
 
-You can use `npm` or `yarn` to manage your dependencies, please refer to their respective documentation.
+É possível utilizar `npm` ou `yarn` para gerenciar as dependência, por favor recorra as respectivas documentações.
 
 [horizontal]
 npm:: https://docs.npmjs.com/
 yarn:: https://yarnpkg.com/en/docs
 
-Both manage your dependencies via a `package.json` file in your project directory.  Almost every package available via `npm` will explain how to install it. Those instructions now apply to `shadow-cljs` as well.
+Ambas gerenciam as dependência através do arquivo `package.json`. Quase sempre o pacote disponível via `npm` vai explicar how instalar ele. Essas instruções agora são aplicadas ao `shadow-cljs` também.
 
-.Installing a JavaScript package
+.Instalando um pacote JavaScript
 ```bash
 # npm
 $ npm install the-thing
