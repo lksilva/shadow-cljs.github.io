@@ -234,28 +234,27 @@ $ npm install the-thing
 $ yarn add the-thing
 ```
 
-Nothing more is required. Dependencies will be added to the `package.json` file and this will be used to manage them.
+Não é preciso nada mais. As dependências serão adicionadas para o arquivo `package.json` e isso será usado para gerênciar as dependências.
 
-TIP: If you don’t have a `package.json` yet run `npm init` from a command line.
+TIP: Se não existe um `package.json` ainda, rode o comando `npm init` a partir do terminal.
 
-==== Missing JS Dependency?
+==== Ta faltando dependências JS?
 
-You might run into errors related to missing JS dependencies. Most ClojureScript libraries do not yet declare the `npm` packages they use since they still expect to use <<cljsjs, CLJSJS>>. We want to use `npm` directly which means you must manually install the `npm` packages until libraries properly declare the `:npm-deps` themselves.
+Muitas bibliotecas ClojureScript ainda não declaram os pacotes `npm`, ainda usam o <<cljsjs, CLJSJS>>. Nós queremos usar `npm` diretamente o que significa que você deve instalar manualmente os pacotes `npm` até as bibliotecas declararem o `:npm-deps`.
 
 ```text
 The required JS dependency "react" is not available, it was required by ...
 ```
 
-This means that you should `npm install react`.
+Isso significa que você deve instalar o React `npm install react`.
 
-TIP: In the case of `react` you probably need these 3 packages: `npm install react react-dom create-react-class`.
+TIP: Nesse caso do `react`, é necessário esses três pacotes: `npm install react react-dom create-react-class`.
 
+== Configuração do usuário [[user-config]]
 
-== User Configuration [[user-config]]
-
-Most configuration will be done in the projects themselves via `shadow-cljs.edn` but some config may be user-dependent. Tools like https://docs.cider.mx[CIDER] may require the additional `cider-nrepl` dependency which would be useless for a different team member using Cursive when adding that dependency via `shadow-cljs.edn`.
-
-A restricted set of config options can be added to `~/.shadow-cljs/config.edn` which will then apply to all projects built on this users machine.
+A maioria das configurações serão feitas no projeto de maneira automática através do `shadow-cljs.edn` mas algumas configurações devem ser user-dependent. Ferramentas como https://docs.cider.mx[CIDER] deve solicitar a dependência adicional `cider-nrepl` da qual seria inútil para a pessoa que usar Cursive quando adicionando essa dependência via `shadow-cljs.edn`.
+ 
+Um restrito conjunto de opções configuração pode ser adicionado para `~/.shadow-cljs/config.edn`dos quais vai aplicar para todos os projetos construídos nessa máquina.
 
 Adding dependencies is allowed via the usual `:dependencies` key. Note that dependencies added here will apply to ALL projects. Keep them to a minimum and only put tool related dependencies here. Everything that is relevant to a build should remain in `shadow-cljs.edn` as otherwise things may not compile for other users. These dependencies will automatically be added when using `deps.edn` or `lein` as well.
 
