@@ -256,16 +256,17 @@ A maioria das configurações serão feitas no projeto de maneira automática at
  
 Um restrito conjunto de opções configuração pode ser adicionado para `~/.shadow-cljs/config.edn`dos quais vai aplicar para todos os projetos construídos nessa máquina.
 
-Adding dependencies is allowed via the usual `:dependencies` key. Note that dependencies added here will apply to ALL projects. Keep them to a minimum and only put tool related dependencies here. Everything that is relevant to a build should remain in `shadow-cljs.edn` as otherwise things may not compile for other users. These dependencies will automatically be added when using `deps.edn` or `lein` as well.
+Adicionar dependência é permitido via a key `:dependencies`. Perceba que as dependências adicionadas aqui serão aplicadas a TODOS os projetos. Mantenha só os pacotes relacionados as dependências aqui. Tudo que é relevante a build deve permanecer em `shadow-cljs.edn` de outra maneira as coisas não serão compiladas pra outros usuários.
+Essas dependências serão automaticamente ser adicionadas quando usando `deps.edn` ou `lein` também.
 
-.Example ~/.shadow-cljs/config.edn
+.Exemplo ~/.shadow-cljs/config.edn
 ```
 {:dependencies
  [[cider/cider-nrepl "0.21.1"]]}
 ;; this version may be out of date, check whichever is available
 ```
 
-When using `deps.edn` to resolve dependencies you may sometimes want to activate additional aliases. This can be done via `:deps-aliases`.
+Quando usando `deps.edn` para resolver dependências você deve querer algumas vezes ativar apelidos adicionais. Isso pode ser feito através `:deps-aliases`.
 
 ```
 ;; shadow-cljs.edn in project
@@ -274,11 +275,11 @@ When using `deps.edn` to resolve dependencies you may sometimes want to activate
 ;; ~/.shadow-cljs/config.edn
 {:deps-aliases [:cider]}
 ```
-This will make the `shadow-cljs` command use the `[:cider :cljs]` aliases in projects using `deps.edn`. This might be useful if you have an additional `:cider` alias in your `~/.clojure/deps.edn`.
+Isso vai fazer o comando `shadow-cljs` usar o apelido `[:cider :cljs]` no projeto usando `deps.edn`. Isso deve ser útil se você tem um apelido adicional `:cider` no seu `~/.clojure/deps.edn`.
 
-By default the `shadow-cljs` server-mode will launch an embedded nREPL server which you might not need. You can disable this by setting `:nrepl false` in user config.
+Por padrão o server-mode `shadow-cljs` lançará o servidor nREPL embedado do qual você não precisa. É possível desabilitar essa configuração `:nrepl false` nas configurações de usuário.  
 
-The only other currently accepted value in the user config is the <<open-file-command, :open-file-command>>. No other options are currently have any effect.
+O outro valor aceito para a configuração de usuário é o <<open-file-command, :open-file-command>>. Nenhuma outra opção atualmente terá um efeito aqui.
 
 == Server Options
 
