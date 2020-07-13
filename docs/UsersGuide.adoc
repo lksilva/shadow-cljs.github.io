@@ -283,11 +283,11 @@ O outro valor aceito para a configuração de usuário é o <<open-file-command,
 
 == Server Options
 
-This section is for other options that configure the `shadow-cljs` server instance. They are optional.
+Essa sessão é para as outras opções que configura a instância do servidor `shadow-cljs`. É opcional.
 
 === nREPL [[nREPL]]
 
-The `shadow-cljs` <<server-mode, server>> provides a https://nrepl.org[nREPL] server via TCP. If you look at the startup message you'll see the port of nREPL, and the port will also be stored in `target/shadow-cljs/nrepl.port`:
+O `shadow-cljs` <<server-mode, server>> provê um servidor https://nrepl.org[nREPL] via TPC. Se você olhar a mensagem de startup você vera a porta do nREPL, e a porta também está salva no `target/shadow-cljs/nrepl.port`:
 
 ```bash
 $ shadow-cljs watch app
@@ -299,7 +299,7 @@ shadow-cljs - watching build :app
 [:app] Compiling ...
 ```
 
-You can configure the port and additional middleware with `shadow-cljs.edn`:
+É possível configurar a porta e o middleware adicional com `shadow-cljs.edn`:
 
 ```clojure
 {...
@@ -308,11 +308,13 @@ You can configure the port and additional middleware with `shadow-cljs.edn`:
  ...}
 ```
 
-The default global config file in `~/.nrepl/nrepl.edn` or the local `.nrepl.edn` will also be loaded on startup and can be used to configure `:middleware`.
+O arquivo de configuração padrão está em `~/.nrepl/nrepl.edn` ou `.nrepl.edn` também carregado no startup e pode ser usado para configurar o `:middleware`.
 
-If the popular middleware https://github.com/clojure-emacs/cider-nrepl[cider-nrepl] is found on the classpath (e.g. it's included in `:dependencies`), it will be used automatically. No additional configuration required. This can be disabled by setting `:nrepl {:cider false}`.
+Se o popular middleware https://github.com/clojure-emacs/cider-nrepl[cider-nrepl] é encontrado no classpath (incluido no `:dependencies`), será usado automaticamente. Nenhuma configuração adicional é necessária. Pode ser desabilitada pela configuração `:nrepl {:cider false}`.
 
-You may configure the namespace you start in when connecting by setting `:init-ns` in the `:nrepl` options. It defaults to `shadow.user`.
+
+
+Você deve configurar o namespace que vai iniciar a aplicação quando conectando pela configuração `:init-ns` na opção `:nrepl`. O padrão para `shadow.user`.
 
 ```clojure
 {...
@@ -320,7 +322,7 @@ You may configure the namespace you start in when connecting by setting `:init-n
  ...}
 ```
 
-The nREPL server can be disabled by setting `:nrepl false`.
+O servidor nREPL pode ser desabilitado configurando `:nrepl false`.
 
 ==== nREPL Usage
 
