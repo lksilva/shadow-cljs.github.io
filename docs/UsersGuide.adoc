@@ -324,23 +324,22 @@ Você deve configurar o namespace que vai iniciar a aplicação quando conectand
 
 O servidor nREPL pode ser desabilitado configurando `:nrepl false`.
 
-==== nREPL Usage
+==== Usando nREPL
 
-When connecting to the nREPL server the connection always starts out as a Clojure REPL. Switching to a CLJS REPL works similarly to the <<cljs-repl, non-nREPL version>>. First the `watch` for the given build needs to be started and then we need to select this build to switch the current nREPL session to that build. After selecting the build everything will be eval'd in ClojureScript instead of Clojure.
-
+Quando conectando para o servidor nREPL a conexão sempre inicia como um Clojure REPL. Trocar para um CLJS REPL funciona de maneira semelhante para ao <<cljs-repl, non-nREPL version>>. Primeiro o `watch` para uma determinada build precisa ser iniciada e então nós precisamos selecionar essa build para trocar para a sessão do nREPL atual para que ele build. Depois de selecionar o build tudo será avaliado em ClojureScript ao invés de Clojure.
 
 ```repl
 (shadow/watch :the-build)
 (shadow/repl :the-build)
 ```
 
-TIP: Use `:cljs/quit` to return to Clojure.
+Dica: Use `:cljs/quit` to voltar ao Clojure.
 
-==== Embedded nREPL Server
+==== Servidor nREPL Embedado
 
-When you use `shadow-cljs` embedded in other tools that provide their own nREPL server (eg. `lein`) you need to configure the `shadow-cljs` middleware. Otherwise you won't be able to switch between CLJ and CLJS REPLs.
+Quando você usa `shadow-cljs` embedado em outra ferramenta que provê o próprio servidor nREPL (eg. `lein`) você precisa configurar o middleware `shadow-cljs`. De outra forma você não será capaz de trocar entre as REPLs CLJ e CLJS.
 
-.Example Leiningen `project.clj`
+.Exemplo Leiningen `project.clj`
 ```clojure
 (defproject my-amazing-project "1.0.0"
   ...
@@ -351,13 +350,13 @@ When you use `shadow-cljs` embedded in other tools that provide their own nREPL 
   ...)
 ```
 
-TIP: You still need to start the <<embedded, embedded server>> manually before using the CLJS REPL.
+Dica: Precisa começar o <<embedded, embedded server>> manualmente antes de usar o CLJS REPL.
 
 === Socket REPL [[socket-repl]]
 
-A Clojure Socket REPL is started automatically in server-mode and uses a random port by default. Tools can find the port it was started under by checking `.shadow-cljs/socket-repl.port` which will contain the port number.
+Um socket Clojure REPL é iniciado automaticamente em server-mode e usa uma porta randômica por padrão. Ferramentas podem encontrar a porta que foi iniciada checando `.shadow-cljs/socket-repl.port` do qual vai conter o número da porta.
 
-You can also set a fixed port by via `shadow-cljs.edn`.
+É possível configurar uma porta fixa através do `shadow-cljs.edn`.
 
 ```clojure
 {...
