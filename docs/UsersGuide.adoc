@@ -169,7 +169,6 @@ A estrutura desse exemplo poderia parecer com:
 == Source Paths [[source-paths]]
 
 `:source-paths` configura o classpath da JVM. O compiler vai usar esse config para encontrar arquivos Clojure(Script) (eg `.cljs`).
-`:source-paths` configures your JVM classpath. The compiler will use this config to find Clojure(Script) source files (eg. `.cljs`).
 
 Está tudo bem colocar qualquer coisa em um source path mas você não pode usar multiplos se você quiser "agrupar" arquivos fonte de uma determinada maneira. É útil se vocie quiser manter seus testes separados por exemplo.
 
@@ -365,13 +364,13 @@ Um socket Clojure REPL é iniciado automaticamente em server-mode e usa uma port
  ...}
 ```
 
-The Socket REPL can be disabled by setting `:socket-repl false`.
+O Socket REPL pode ser desabilitado pela configuração `:socket-repl false`.
 
 === SSL
 
-The `shadow-cljs` HTTP servers support SSL. It requires a Java Keystore that provides a matching private key and certificate.
+O servidor HTTP `shadow-cljs` suporta SSL. Ele requer uma Keystore Java que provê uma chave privada e certificado.
 
-.`shadow-cljs.edn` with SSL configured
+.`shadow-cljs.edn` com SSL configurado
 ```
 {...
  :ssl {:keystore "ssl/keystore.jks"
@@ -379,23 +378,22 @@ The `shadow-cljs` HTTP servers support SSL. It requires a Java Keystore that pro
  ...}
 ```
 
-The above are the defaults so if you want to use those it is fine to just set `:ssl {}`.
+O exemplo acima são padrão então se você quiser usar ele, tudo bem apenasar configurar `:ssl {}`.
 
+É possível criar uma Keystore usando o comando java `keytool`. Criando um certificado self-signed é também possível mas um pouco complicado.
 
-You can create a Keystore using the java `keytool` command. Creating a trusted self-signed certificate is also possible but somewhat complicated.
+- https://gist.github.com/jchandra74/36d5f8d0e11960dd8f80260801109ab0[OpenSSL] instruções para Linux e Windows (via WSL)
+- https://certsimple.com/blog/localhost-ssl-fix[macOS] instruções
 
-- https://gist.github.com/jchandra74/36d5f8d0e11960dd8f80260801109ab0[OpenSSL] instructions for Linux and Windows (via WSL)
-- https://certsimple.com/blog/localhost-ssl-fix[macOS] instructions
-
-The created `Certificates.p12` (macOS) or `localhost.pfx` (Linux, Windows) file can be turned into the required `keystore.jks` via the `keytool` utility.
+O certificado criado `Certificates.p12` (macOS) ou `localhost.pfx` (Linux, Windows) pode ser ligado dentro do requerido `keystore.jks` através do `keytool`.
 
 ```bash
 $ keytool -importkeystore -destkeystore keystore.jks -srcstoretype PKCS12 -srckeystore localhost.pfx
 ```
 
-IMPORTANT: You must generate the Certificate with a SAN (Subject Alternative Name) for "localhost" (or whichever host you want to use). SAN is required to get Chrome to trust the Certificate and not show warnings. The password used when exporting must match the password assigned to the Keystore.
+IMPORTANTE: Você deve gerar o Certificado com a SAN (Subject Alternative Name) para "localhost" (ou qualquer que seja que você quer usar). SAN é obrigatório para Chrome para o Certificado confiável e não mostra alertas. A senha usada quando exportando deve combinar a senha assinada para o Keystore.
 
-// TODO: full guide, other platforms
+// TODO: guia completo, outras plataformas
 
 === Primary HTTP(S) [[http]]
 
