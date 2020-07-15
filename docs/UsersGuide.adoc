@@ -395,22 +395,22 @@ IMPORTANTE: Você deve gerar o Certificado com a SAN (Subject Alternative Name) 
 
 // TODO: guia completo, outras plataformas
 
-=== Primary HTTP(S) [[http]]
+=== HTTP(S) Primário [[http]]
 
-The `shadow-cljs` server starts one primary HTTP server. It is used to serve the UI and websockets used for Hot Reload and REPL clients. By default it listens on Port 9630. If that Port is in use it will increment by one and attempt again until an open Port is found.
+O servidor `shadow-cljs` inicia em um servidor primário HTTP. Ele é usado para prover a UI e o websocket usado para o Hot Reload e clientes REPL. Por padrão ele escuta a porta 9630. Se essa porta está em uso ela vai incrementar com mais uma tentativa até encontrar uma porta livre.
 
-.Startup message indicating the Port used
+.Mensagem de Startup para a porta sendo usada
 ```bash
 shadow-cljs - server running at http://0.0.0.0:9630
 ```
 
-When `:ssl` is configured the server will be available via `https://` instead.
+Quando o `:ssl` é configurado, o servidor será avaliado via `https://` ao invés.
 
-TIP: The server automatically supports HTTP/2 when using `:ssl`.
+DICA: O servidor automáticamente suporta HTTP/2 quando usando `:ssl`.
 
-If you prefer to set your own port instead you can do this via the `:http` config.
+Se você preferir enviar sua própria porta ao invés, é possível fazer isso via a configuração `:http`.
 
-.`shadow-cljs.edn` with `:http` config
+.`shadow-cljs.edn` com a configuração `:http`
 ```
 {...
  :http {:port 12345
@@ -418,7 +418,7 @@ If you prefer to set your own port instead you can do this via the `:http` confi
  ...}
 ```
 
-`:ssl` switches the server to server `https://` only. If you want to keep the `http://` version you can configure a separate `:ssl-port` as well.
+`:ssl` troca apenas entre servidores `:https://`. Se você quiser manter a versão `http://` você pode configurar um `:ssl-port` separado também.
 
 ```
 {...
