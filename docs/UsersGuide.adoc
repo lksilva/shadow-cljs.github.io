@@ -428,55 +428,54 @@ Se você preferir enviar sua própria porta ao invés, é possível fazer isso v
  ...}
 ```
 
-=== Development HTTP(S) [[dev-http]]
+=== Desenvolvimento HTTP(S) [[dev-http]]
 
-`shadow-cljs` can provide additional basic HTTP servers via the `:dev-http` config entry. By default these will serve all static files from the configured paths, and fall back to `index.html` when a resource is not found (this is what you typically want when developing an application which uses browser push state).
+`shadow-cljs` consegue provê servidores HTTP adicionais através da configuração `:dev-http`. Por padrão isso vai servir todos os arquivos estáticos a partir do path configurado, e um fall bak para o `index.html` quando o recurso não é encontrado (isso é oque tipicamente queremos quando desenvolvendo uma aplicaçnao do qual usa browser push state).
 
-These servers are started automatically when `shadow-cljs` is running in server mode. They are not specific to any build and can be used to serve files for multiple builds as long as a unique `:output-dir` is used for each.
+Esses servidors são iniciados automáticamente quando `shadow-cljs` esta rodando em modo servidor. Eles não são espcficos para alguma build e pode ser usado para servir arquivos de multiplos builds enquanto um único `:output-dir` é usado para cada um.
 
-IMPORTANT:: These are just generic web servers that server static files. They are not required for any live-reload or REPL logic. Any webserver will do, these are just provided for convenience.
+IMPORTANTE:: Esses são apenas servidores web genéricos que serve arquivos estáticos. Não é requerido para qualquer live-reload ou lógica REPL. Qualquer webserver vai funcionar, esse são fornecidos apenas por conveniência.
 
-.Basic example serving the `public` directory via `http://localhost:8000`
+.Exemplo básico servindo o diretório `public` através `http://localhost:8000`
 ```
 {...
  :dev-http {8000 "public"}
  :builds {...}}
 ```
 
-`:dev-http` expects a map of `port-number` to `config`. The `config` supports several shortcuts for the most common scenarios.
+`:dev-http` espera um mapa com `port-number` para o `config`. O `config` suporta vários atalhos para os cenários mais comuns.
 
-.Serve directory from filesystem root
+.Serve o diretório a apartir do filesystem raíz
 ```
 :dev-http {8000 "public"}
 ```
 
-.Serve from classpath root
+.Serve a partir do classpath raíz
 ```
 :dev-http {8000 "classpath:public"}
 ```
 
-This would attempt to find a request to `/index.html` via `public/index.html` on the classpath. Which may include files in `.jar` files.
+Esse por sua vez, tentaria encontra uma request para `/index.html` através `public/index.html` no classpath. Do qual deve incluir arquivos nos arquivos `.jar`.
 
-.Serve from multiple roots
+.Serve múltiplos roots
 ```
 :dev-http {8000 ["a" "b" "classpath:c"]}
 ```
 
-This would first attempt to find `<project-root>/a/index.html` then `<project-root>/b/index.html` then `c/index.html` on the classpath. If nothing is found the default handler will be called.
+Isso deveria primeiro tentar encontrar `<project-root>/a/index.html` e então `<project-root>/b/index.html` e por último `c/index.html` no classpath. Se nenhum dos três for encontrado o comportamento padrão será chamado.
 
-The longer config version expects a map and the supported options are:
+A versão de configuração mais longa espera um mapa e as opções suportadas são:
 
-`:root`:: (String) The path from which to serve requests. Paths starting with `classpath:` will serve from the classpath instead of the filesystem. All filesystem paths are relative to the project root.
-`:roots`:: (Vector of Strings) If you need multiple root paths, use instead of `:root`.
-`:ssl-port`:: When `:ssl` is configured use this port for ssl connections and server normal HTTP on the regular port. If `:ssl-port` is not set but `:ssl` is configured the default port will only server SSL requests.
-`:host`:: Optional. The hostname to listen on. Defaults to localhost.
-`:handler`:: Optional. A fully qualified symbol. A `(defn handler [req] resp)` that is used
-if a resource is not found for the given request. Defaults to `shadow.http.push-state/handle`.
+`:root`:: (String) O caminho serve as requisições. Paths começando com `classpath:` vão servir a partir do classpath ao invés do filesystem. Todos os caminhos do filesystem são relativos ao projeto raíz.
+`:roots`:: (Vector of Strings) Se você precisa múltiplos caminhos raíz, ao invés use `root`.
+`:ssl-port`:: Quando `:ssl` is configurado, use essa porta para conexões ssl e fornecer HTTP na porta padrão. Se `:ssl-port` não é configurado mas `:ssl` é configurado, a porta padrão vai servir apensas requisições SSL.
+`:host`:: Opcional. O hostname a ouvir. Padrão é localhost.
+`:handle`:: Opcional. Um totalmente symbol qualificado. Um `(defn handler [req] resp)` que é usado se um recurso não é enconrtado para uma determinada request. Padrão para `shadow.http.push-state/handle`.
 
-The following two options only apply when using the default, built-in handler and typically do not need to be changed:
+As seguintes duas opções são apenas aplicadas quando usando a padrão, construida no handler e tipicamente não precisa ser apenas modificada:
 
-`:push-state/headers`:: (optional) A map of HTTP headers to respond with. Defaults to `text/html` standard headers.
-`:push-state/index`:: (optional) The file to serve. Defaults to `index.html`.
+`:push-state/headers`:: (opcional) Um mapa de headers HTTP. Padrão para `text/html` padrão headers.
+`:push-state/index`:: (opcional) O arquivo para incial a servir. Padrão para `index.html`.
 
 
 ```clojure
