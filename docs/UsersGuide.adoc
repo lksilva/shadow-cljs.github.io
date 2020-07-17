@@ -485,9 +485,9 @@ As seguintes duas opções são apenas aplicadas quando usando a padrão, constr
         :handler my.app/handler}}}
 ```
 
-==== Reverse Proxy Support [[dev-http-proxy]]
+==== Suporte a Proxy Reverso [[dev-http-proxy]]
 
-By default the dev server will attempt to serve requests locally but sometimes you may want to use an external web server to serve requests (eg. API request). This can be configured via `:proxy-url`.
+Por padrão o servidor de dev vai tentar servir as requests localmente mas algumas vezes vocie quer usar um servidor web externo para servir as requests (eg. API request). Isso pode ser configurado via `:proxy-url`.
 
 ```
 {...
@@ -497,23 +497,21 @@ By default the dev server will attempt to serve requests locally but sometimes y
    :proxy-url "https://some.host"}}}
 ```
 
-A request going to `http://localhost:8000/api/foo` will serve the content returned by `https://some.host/api/foo` instead. All request that do not have a local file will be served by the proxied server.
+Uma requisição para `http://localhost:8000/api/foo` vai servir o conteúdo retornado por `https://some.host/api/foo`. Todas as requisições que não tem um arquivo local vai ser servido pelo servidor proxied.
 
-Additional optional Options to configure the connection handling are:
+Opções Adicionais para configurar o manipulador de conexão são:
 [Horizontal]
-`:proxy-rewrite-host-header`:: boolean, defaults to true. Determines whether the original Host header will be used or the one from the `:proxy-url`. `localhost` vs `some.host` using the example above.
-`:proxy-reuse-x-forwarded`:: boolean, defaults to false. Configures if the proxy should add itself to `X-Forwarded-For` list or start a new one.
-`:proxy-max-connection-retries`:: int, defaults to 1.
-`:proxy-max-request-time`:: ms as int, defaults to 30000. 30sec request timeout.
+`:proxy-rewrite-host-header`:: boolean, padrão é true. Determina se o Host original vai ser usado ou um apartir do `:proxy-url`. `localhost` vs `some.host` usando o exemplo acima.
+`:proxy-reuse-x-forwarded`:: boolean, padrão é falso. Configura se o proxy deveria adicionar se próprio para a lista `X-Forwarded-For` ou começar um novo.
+`:proxy-max-connetion-retries`:: int, padrão para 1.
+`:proxy-max-request-time`:: ms como int, padrão para 30000. 30 segundos request timeout.
 
+== Configuração da JVM [[jvm-opts]]
+Quando `shadow-cljs.edn` é usado no comando de partida, a JVM pode configurar argumentos de linha de comando adicionais para ser passado diretamente para a JVM. Por exemplo, você quer diminuir ou aumentar a quantidade de memória RAM usada pelo shadow-cljs. 
 
-== JVM Configuration [[jvm-opts]]
+Isso é feito apenas configurando `:jvm-opts` na raíz do `shadow-cljs.edn` esperando um vetor de strings.
 
-When `shadow-cljs.edn` is used in charge of starting the JVM you can configure additional command line arguments to be passed directly to the JVM. For example you may want to decrease or increase the amount of RAM used by shadow-cljs.
-
-This is done by configuring `:jvm-opts` at the root of `shadow-cljs.edn` expecting a vector of strings.
-
-.Example limited RAM use to 1GB
+.Exemplo limitando RAM para usar 1GB
 ```clojure
 {:source-paths [...]
  :dependencies [...]
@@ -521,28 +519,28 @@ This is done by configuring `:jvm-opts` at the root of `shadow-cljs.edn` expecti
  :builds ...}
 ```
 
-The arguments that can be passed to the JVM vary depending on the version but you can find an example list https://docs.oracle.com/javase/8/docs/technotes/tools/windows/java.html[here]. Please note that assigning too little or too much RAM can degrade performance. The defaults are usually good enough.
+Os argumentos que podem ser passado para a JVM varia dependendo da versão mas é possível encontrar uma lista de exemplos https://docs.oracle.com/javase/8/docs/technotes/tools/windows/java.html[here]. Por favor perceba que atribuir muita ou poca RAM pode prejudicar o desempenho. O padrão é bom o suficiente.
 
-IMPORTANT: When using `deps.edn` or `project.clj` the `:jvm-opts` need to be configured there.
+IMPORTANTE: Quando usando `deps.edn` ou `project.clj` o `:jvm-opts` precisa ser configurado.
 
-= Build Configuration
+= Configuração de Build
 
 include::build-config.adoc[]
 
-= Targeting the Browser [[target-browser]]
+= Navegador como alvo [[target-browser]]
 
 include::target-browser.adoc[]
 
-= Targeting React Native [[target-react-native]]
+= React Native como alvo [[target-react-native]]
 
 include::target-react-native.adoc[]
 
-= Targeting node.js [[target-node]]
+= Node.js como alvo [[target-node]]
 
-There is built-in support for generating code that is intended to be used as a stand-alone
-script, and also for code that is intended to be used as a library. See the
-section on <<config,common configuration>> for the base settings needed in
-a configuration file.
+Existe suport built-in para geraçnao de código que é pretendido ser usado como um script stand-alone,
+e também para o código que é esperado ser usado como uma biblioteca. Veja a sessão
+em <<config,common configuration>> para a configuração base
+necessaria no arquivo de configuração.
 
 == node.js Scripts [[target-node-script]]
 
@@ -553,24 +551,24 @@ include::target-node-script.adoc[]
 include::target-node-library.adoc[]
 
 
-== Creating `npm` packages
+== Criando pacotes `npm`
 
-// TODO: Thomas: I think it would be useful to show a package.json and a little bit of an example
-// on how you could set up to deploy this on NPM.
+// TODO: Thomas: Eu acho que seria útil mostrar um package.json e trecho de um exemplo
+// em como você poderia configurar um deploy desses no NPM.
 
-= Embedding in the JS Ecosystem -- The `:npm-module` Target [[target-npm-module]]
+= Embedando em uma ecossistema JS -- O alvo `:npm-module` [[target-npm-module]]
 
 include::target-npm-module.adoc[]
 
-= Testing
+= Testando
 
-`shadow-cljs` provides a few utility targets to make building tests a little easier.
+`shadow-cljs` provê alguns destinos de utilidade para tornar a construção de testar um pouco mais simples.
 
-All test targets generate a test runner and automatically add all namespaces matching the configurable `:ns-regexp`. The default test runners were built for `cljs.test` but you can create custom runners if you prefer to use other test frameworks.
+Todos os testes geram um test runner e automáticamente combinar todos os namcespace para ser configuravel `:ns-regexp`. O padrão para test runners eram construídos para `cljs.test` mas você consegue criar runners customizaveis se você preferir para usar outros frameworks de teste.
 
-The default `:ns-regexp` is `"-test$"`, so your first test could look like:
+O padrão `:ns-regexp` é `"-test$"`, então seu primeiro test deveria paracer com:
 
-.File: `src/test/demo/app_test.cljs`
+.Arquivo: `src/test/demo/app_test.cljs`
 ```clojure
 (ns demo.app-test
   (:require [cljs.test :refer (deftest is)]))
@@ -579,29 +577,29 @@ The default `:ns-regexp` is `"-test$"`, so your first test could look like:
   (is (= 1 2)))
 ```
 
-In the Clojure world it is common to keep test files in their own source paths so the above example assumes you have configured `:source-paths ["src/main" "src/test"]` in your `shadow-cljs.edn` config. Your usual app code goes into `src/main` and the tests go into `src/test`. This however is optional and it is totally fine to keep everything in `src` and just use `:source-paths ["src"]`.
+No mundo Clojure é comum manter os arquivos de test em seu próprio caminho de origem então o exemplo assume que você tem configurado o `:source-paths ["src/main" "src/test"]` no seu arquivo `shadow-cljs.edn`. Geralmente o código do aplicativo vai dentro de `src/main` e os testes dentro `src/test`. Isso contudo é opcional e esta tudo bem manter tudo dentro de `src` e apenas usar `:source-paths ["src"]`.
 
-== Testing in node.js [[target-node-test]]
+== Testando em node.js [[target-node-test]]
 
 include::target-node-test.adoc[]
 
-== Testing in the Browser [[target-browser-test]]
+== Testando no navegador [[target-browser-test]]
 
 include::target-browser-test.adoc[]
 
-== Targeting Tests to Karma for Continuous Integration [[target-karma]]
+== Alvo de testes com Karma para Integração Contínua [[target-karma]]
 
 include::target-karma.adoc[]
 
-= JavaScript Integration [[js-deps]]
+= Integração JavaScript [[js-deps]]
 
 include::js-deps.adoc[]
 
-= Generating Production Code -- All Targets [[release]]
+= Gerando código de produção -- Todos os alvos [[release]]
 
 include::release.adoc[]
 
-= Editor Integration
+= Integração com o Editor
 
 include::editor-integration.adoc[]
 
@@ -609,20 +607,19 @@ include::repl-troubleshoot.adoc[]
 
 include::maven-publish.adoc[]
 
-= What to do when things don’t work?
+= O que fazer quando as coisas não funcionam?
 
-Since the JS world is still evolving rapidly and not everyone is using the same way to write and
-distribute code there are some things `shadow-cljs` cannot work around automatically. These
-can usually be solved with custom `:resolve` configs, but there may also be bugs or oversights.
+Desde que o mundo do JS ainda está evoluindo e nem todos estão usando a mesma maneira para escrever e
+distribuir código existem algumas coisas em `shadow-cljs` que não funcionam de maneira automática. Essas
+coisa podem geralmente ser resolvidas com `:resolve` configs, mas também pode existir bugs ou descuidos.
 
-If you cannot resolve such an issue with the instructions in this chapter, then try asking on the
+Se você não consegue resolver um problema com as instruções no capitulo, então tente perguntar no 
 https://clojurians.slack.com/messages/C6N245JGG[`#shadow-cljs` Slack channel].
 
 = Hacking
 
 == Patching Libraries
 
-The `shadow-cljs` compiler ensures that things on your source paths are compiled first, overriding files from JARs. This means that you can copy a source file from a library, patch it, and include it in your own source directory.
+O compilador `shadow-cljs`garanti que as coisas em seu source paths são compiladas primeiro, sobrescrevendo arquivos a partir de JARs. Isso significa que é possível copiar um arquivo fonte a partir de uma bibliotéca, modificar, e incluir isso em seus próprio diretório fonte.
 
-This is a convenient way to test out fixes (even to `shadow-cljs` itself!) without having to clone
-that project and understand its setup, build, etc.
+Essa é a maneira conveninente para testar ou corrigir (mesmo para o próprio`shadow-cljs`) em precisar clonar o projeto e entender seu setup, build, etc.
