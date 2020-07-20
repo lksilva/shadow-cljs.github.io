@@ -1,6 +1,6 @@
-`shadow-cljs.edn` will also need a `:builds` section. Builds should be a map of builds *keyed* by build ID:
+`shadow-cljs.edn` também precisa de uma sessão de `:builds`. Builds deve ser um mapa de builds *keyed* pelo ID da build: 
 
-.A configuration file with a build map.
+.Um arquivo de configuração com um mapa da build.
 ```
 {:dependencies [[some-library "1.2.1"] ...]
  :source-paths ["src"]
@@ -11,28 +11,26 @@
           ... karma-specific options ...}}}
 ```
 
-Each build describes artifacts that the compiler will build. The build target is an extensible feature of `shadow-cljs`, and the compiler comes with quite a few of them already.
+Cada build descreve artefatos que o compilador vai construir. O build target é uma funcionalidade extensível do `shadow-cljs`, e o compilador já vem com algumas delas. 
 
 == Build Target
 
-Each build in `shadow-cljs` must define a `:target` which defines where you intend your code to be executed. There are default built-ins for the <<target-browser,browser>> and <<target-node,`node.js`>>. They all share the basic concept of having `:dev` and `:release` modes. `:dev` mode provides all the usual development goodies like fast compilation, live code reloading and a REPL. `:release` mode will produce optimized output intended for production.
+Cada build em `shadow-cljs` deve definir um `:target` qual define onde você pretende que seu código seja executado. Existem padrões built-ins para cada <target-browser,browser>> e <<target-node,`node.js`>>. Eles também compartilham os conceitos básicos de ter os modos `:dev` e `:release`. O modo `:dev` provê todas as facilidades do desenvolvimento como compilação rápida, live reloading e a REPL. O modo `:release` vai produzir um output otimizado para produção. 
 
-Targets are covered in separate chapters.
+Targets é coberto em um capítulo separado
 
-Here are some of them:
+Aqui tem alguns deles:
 
 [Horizontal]
-<<target-browser, `:browser`>>:: Output code suitable for running in a web browser.
-<<target-bootstrap, `:bootstrap`>>:: Output code suitable for running in bootstrapped cljs environment.
-<<target-browser-test, `:browser-test`>>:: Scan for tests to determine required files, and output tests suitable for running in the browser.
-<<target-karma, `:karma`>>:: Scan for tests to determine required files, and output karma-runner compatible tests. See http://karma-runner.github.io/2.0/index.html[Karma].
-<<target-node-library, `:node-library`>>:: Output code suitable for use as a node library.
-<<target-node-script, `:node-script`>>:: Output code suitable for use as a node script.
-<<target-npm-module, `:npm-module`>>:: Output code suitable for use as an NPM module.
+<<target-browser, `:browser`>>:: Código de output adequado para rodar no navegador.
+<<target-bootstrap, `:bootstrap`>>:: Código de output adequado para rodar em um ambiente cljs.
+<<target-browser-test, `:browser-test`>>:: Examina os arquivos de testes arquivos obrigatórios, e a saída de testes adequada para rodar no navegador.
+<<target-karma, `:karma`>>:: Examina os arquivos de testes arquivos obrigatórios, e uma saída de testes compatível com o  karma-runner. Mais informações http://karma-runner.github.io/2.0/index.html[Karma].
+<<target-node-library, `:node-library`>>:: Saída de código adequada para usar como uma biblioteca Node.
+<<target-node-script, `:node-script`>>:: Saída de código adequada para usar como um script node.
+<<target-npm-module, `:npm-module`>>:: Saída de código adequada para usar como um módulo npm.
 
-Each target is covered in more detail in its own chapter since the remaining build options vary on
-the target you select.
-
+Cada target é coberto com mais detalhes no próprio capitulo desde que as opções de build remanescentes varia de acordo com o target selecionado.
 
 == Development Options [[devtools]]
 
