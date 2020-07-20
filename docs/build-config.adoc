@@ -32,9 +32,9 @@ Aqui tem alguns deles:
 
 Cada target é coberto com mais detalhes no próprio capitulo desde que as opções de build remanescentes varia de acordo com o target selecionado.
 
-== Development Options [[devtools]]
+== Opções de desenvolvimento [[devtools]]
 
-Each build `:target` typically provides some development support. They are grouped under the `:devtools` key for each `:build`.
+Cada build `:target` tipicamente provê algum suporte de desenvolvimento. Eles são agrupado debaixo da chave `:devtools` para cada `:build`.
 
 === REPL
 
