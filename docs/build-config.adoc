@@ -82,17 +82,17 @@ Com a finalidade de usar isso simplesmente rode:
 shadow-cljs watch build-id
 ```
 
-=== Lifecycle Hooks
+=== Ciclo de vida dos Hooks
 
-You can configure the compiler to run functions just before hot code reload brings in updated code, and just after. These are useful for stopping/starting things that would otherwise close over old code.
+É possível configurar o compilador para rodar funções antes antes do hot reload do código se transformar em código atualizado, e depois também. Eles são úteis para parar/iniciar as coisas que caso contrários, se apróxima do código antigo.
 
-These can be configured via the `:devtools` section in your build config or directly in your code via metadata tags.
+Podem ser configuradas através da sessão `:devtools` no seu arquivo de configuraçnao ou diretamente no código através dos tags metadados.
 
-==== Metadata
+==== Metadados
 
-You can set certain metadata on normal CLJS `defn` vars to inform the compiler that these functions should be called at a certain time when live reloading.
+É possível configurar certos metadados em CLJS `defn` para informar ao compilador que aquelas funções deveriam ser chamadas em certo momento quando estiver em live reloading.
 
-.hook config via metadata
+.configuração hook via metadata
 ```clojure
 (ns my.app)
 
@@ -103,11 +103,11 @@ You can set certain metadata on normal CLJS `defn` vars to inform the compiler t
   (js/console.log "start"))
 ```
 
-This would call `my.app/stop` before loading any new code and `my.app/start` when all new code was loaded. You can tag multiple functions like this and they will be called in dependency order of their namespaces.
+Isso chamaria `my.app/stop` antes de carregar qualquer código novo e `my.app/start` quando todo o novo código for carregado. É possível também tagear multiplas funções como essa e eles serão chamados em uma ordem de depêndencia o seus namespaces.
 
-There are also async variants of these in case you need to do some async work that should complete before proceeding with the reload process.
+Existem também variantes assíncronas, nesse caso você precisa fazer algum trabalho assíncrono que deveria completar antes de processar com o processo de reload.
 
-.async hooks example
+.exemplo de async hooks
 ```clojure
 (ns my.app)
 
@@ -126,20 +126,21 @@ There are also async variants of these in case you need to do some async work th
       (done)))
 ```
 
-IMPORTANT: The functions will receive one callback function that must be called when their work is completed. If the callback function is not called the reload process will not proceed.
+IMPORTANTE: A função vai receber uma função callback que deve ser chamada quando esse trabalho for completado. Se a função callback não for chamada o processo não será processado.
 
-It is possible to tag namespaces with metadata so they will never be reloaded even if they are recompiled.
+É possível tagear os namespaces com metadados então eles não irão nunca ser carregados mesmo sendo compilados. 
 
-.A non-reloadable ns
+.Um non-reloadable ns
 ```
 (ns ^:dev/once my.thing)
 
 (js/console.warn "will only execute once")
 ```
 
+Namespaces podem ser tageados para sempre serem recarregados.
 Namespaces can also be tagged to always reload.
 
-.An always-reloadable ns
+.Um always-reloadable ns
 ```
 (ns ^:dev/always my.thing)
 
