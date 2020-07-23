@@ -148,20 +148,18 @@ Namespaces can also be tagged to always reload.
 ```
 
 
-==== Config
+==== Configuração
 
-In addition to the metadata you can configure the lifecycle hooks via `shadow-cljs.edn`.
+Além do metada é possível configurar os hooks do clico de vida através do `shadow-cljs.edn`.
 
 [Horizontal]
-`:before-load`:: A symbol (with namespace) of a function to run just before refreshing
-files that have been recompiled.  This function *must* by synchronous in nature.
-`:before-load-async`:: A symbol (with namespace) of a function `(fn [done])` to run just before refreshing. This function can do async processing, but *must* call `(done)` to indicate it is complete.
-`:after-load`:: A symbol (with namespace) of a function to run after hot code reload is complete.
-`:after-load-async`:: A symbol (with namespace) of a function `(fn [done])` to run after hot code reload is complete. This function can do async processing, but *must* call `(done)` to indicate it is complete.
-`:autoload`:: A boolean controlling whether code should be hot loaded. Implicitly set to `true` if either of the callbacks is set. Always enabled for the `:browser` target by default, set to `false` to disable.
-`:ignore-warnings`:: A boolean controlling whether code with warnings should be reloaded. Defaults to `false`.
+`:before-load`:: Um símbolo (com namespace) de uma função para rodar antes de atualizar 
+os arquivos que precisam ser recompilados. Essa função *must* é síncrona em natureza.
+`:before-load-async`:: Um símbolo (com namespace) de uma função `(fn[done])` para rodar depois que o hot reload estiver completo. Essa função consegue fazer processamento assíncrono, mas o *must* chama `(done)` para indicar isso está completo.
+`:autoload`:: Um boolean controlando se o código deveria ser hot loaded. Implicitamente `true` se qualquer uma das duas callbacks é setada. Sempre habilitado para o alvo `:browser` por padrão, configure para `false` para desabilitar.
+`:ignore-warnings`:: Um boolean controlando se o código com alertas deveria ser recarregado. Padrão é `false`.
 
-.A sample of lifecycle hooks.
+.Um exemplo do ciclo de vida dos hooks.
 ```
 {...
  :builds
@@ -171,8 +169,7 @@ files that have been recompiled.  This function *must* by synchronous in nature.
                    ...}}}}
 ```
 
-TIP: If neither `:after-load` nor `:before-load` are set the compiler will only attempt to hot reload the code in the `:browser` target. If you still want hot reloading but don't need any of the callbacks you can set `:autoload true` instead.
-
+DICA: Se nem `:after-load` nem `:before-load` estão configurados, o compilador vai apenas se preocupar para recarregar o código no alvo `:browser`. Se você ainda quer recarregar mas não precisa de algum dos callback, você pode configurar `:autoload true`, ao invés.
 
 == Build Hooks [[build-hooks]]
 
