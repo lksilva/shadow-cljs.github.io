@@ -173,11 +173,11 @@ DICA: Se nem `:after-load` nem `:before-load` estão configurados, o compilador 
 
 == Build Hooks [[build-hooks]]
 
-It is sometimes desirable to execute some custom code at a specific stage in the compilation pipeline. `:build-hooks` let you declare which functions should be called and they have full access to the build state at that time. This is quite powerful and opens up many possible tool options.
+Algumas vezes desejamos executar código customizado em um estágio especifico na pipeline de compilação. `:build-hooks` permite declarar quais funções devem ser chamados e eles tem controle total ao estado de build nesse tempo. Isso é bastante poderoso e abre muitas possibilidades de opções de ferramentas.
 
-They are configured per build under the `:build-hooks` key
+Eles são configurados por build dentro da chave `:build-hooks`
 
-.Exampe :build-hooks
+.Exemplo :build-hooks
 ```clojure
 {...
  :builds
@@ -187,7 +187,7 @@ They are configured per build under the `:build-hooks` key
         ...}}}}
 ```
 
-.Example hook code
+.Exemplo de código hook
 ```clojure
 (ns my.util)
 
@@ -198,34 +198,34 @@ They are configured per build under the `:build-hooks` key
   build-state)
 ```
 
-This example would call `(my.util/hook build-state 1 2 3)` after the build completed the `:flush` <<compilation-stages, stage>> (ie. written to disk). The example would print `[:hello-world (1 2 3)]` but please do something more useful in actual hooks.
+Esse exemplo chamaria `(my.util/hook build-state 1 2 3)` antes da build completar o `:flush` <<compilation-stages, stage>> (ex.: escreva no disco). O exemplo deveria exibir `[:hello-world (1 2 3)]` mas por favor, faça algo mais últil nos hooks de verdade.
 
-The hook is a just a normal *Clojure* function with some additional metadata. The `{:shadow.build/stage :flush}` metadata informs the compiler to call this hook for `:flush` only. You may instead configure `{:shadow.build/stages #{:configure :flush}}` if the hook should be called after multiple stages. At least one configured stage is required since the hook otherwise would never do anything.
+O hook é apenas uma função *Clojure* normal com alguns metadados adicionais. O metadado `{:shadow.build/stage :flush}` informa ao compilador para chamar esse hook para `:flush` apenas. Você deve ao invés configurar `{"shadow.build/stages #{:configure :flush}}` se o hook deve ser chamado depois de múltiplos estágios. Pelo menos um estagio configurado é obrigatório desde o hook de outra forma nunca faz nada.
 
-All build hooks will be called after the `:target` work is done. They will receive the `build-state` (a clojure map with all the current build data) as their first argument and *must* return this `build-state` modified or unmodified. When using multiple stages you can add additional data to the `build-state` that later stages can see. It is strongly advised to use namespaced keys only to ensure not accidentally breaking the entire build.
+Toda build de hooks será chamada depois do `:target` concluído. Ele vai recever o `build-state` (um mapa clojure como todos os dados de build atuais) como primeiro argumento e *must* retornar esse `build-state` modificado ou não modificado. Quando usando múltiplos estágios você pode adicionar dados para o `build-state` que outras etapas podem acessar. Isso é fortemenete aconselhavel usar chaves namespaced apenas para ter certeza de não quebrar a build acidentalmente.
 
-The `build-state` has some important entries which might be useful for your hooks:
+O `build-state` tem algumas imporantes entidades das quais deve ser úteis para seus hooks:
 
-- `:shadow.build/build-id` - the id of the current build (eg. `:app`)
-- `:shadow.build/mode` - `:dev` or `:release`
-- `:shadow.build/stage` - the current stage
-- `:shadow.build/config` - the build config. You can either store config data for the hook in the build config directly or pass it as arguments in the hook itself
+- `:shadow.build/build-id` - o id do build atual (ex. `:app`)
+- `:shadow.build/mode` - `:dev` ou `:release`
+- `:shadow.build/stage` - a etapa atual
+- `:shadow.build/config` - a build de configuração. É possível ao invés de salvar o dado de configuração para o hook em um build config diretamente ou passar ele como argumento para o hook em si
 
-IMPORTANT: With a running `watch` all hooks will be called repeatedly for each build. Avoid doing too much work as they can considerably impact your build performance.
+IMPORTANTE: Rodando `watch` todos os hooks serão chamados repetidamente para cada build. Evite fazer muito trabalho porque eles podem consideravelmente impactar a performance da build
 
-=== Compilation Stages [[compile-stages]]
+=== Estapas de compilação [[compile-stages]]
 
-The possible stages the `:build-hooks` can use are:
+As possíveis estapas de `:build-hooks` são:
 
-- `:configure` - initial `:target` specific configuration
-- `:compile-prepare` - called before any compilation is done
-- `:compile-finish` - called after all compilation finishes
-- `:optimize-prepare` - called before running the Closure Compiler optimization phase (`:release` only)
-- `:optimize-finish` - called after Closure is done (`:release` only)
-- `:flush` - called after everything was flushed to disk
+- `:configure` - inicial `:target` configuração especifica
+- `:compile-prepare` - chamado antes que qualquer compilação seja feita
+- `:compile-finish` - chamado depois que toda compilação é feita
+- `:optimize-prepare` - chamado antes de rodar a fase de otimização do Closure Compiler (`:release` only)
+- `:optimize-finish` - chamado depois que o Closure é feito (`:release` only)
+- `:flush` - chamado depois que tudo foi embutido no disco
 
-With a running `watch` the `:configure` is only called once. Any of the others may be called
-again (in order) for each re-compile. The `build-state` will be re-used until the build config changes at which point it will be thrown away and a fresh one will be created.
+Enquanto `watch` o `:configure` é chamado apenas uma vez. Qualquer dos outros deve ser chamado 
+novamente (em rodem) para cada re-compilação. O `build-state` será re-usado até o build config mudar aquele pedaço e isso será jogado fora e um novo será criado.
 
 == Compiler Cache
 
