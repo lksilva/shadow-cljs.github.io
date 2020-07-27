@@ -227,29 +227,30 @@ As possíveis estapas de `:build-hooks` são:
 Enquanto `watch` o `:configure` é chamado apenas uma vez. Qualquer dos outros deve ser chamado 
 novamente (em rodem) para cada re-compilação. O `build-state` será re-usado até o build config mudar aquele pedaço e isso será jogado fora e um novo será criado.
 
-== Compiler Cache
+== Cache do Compilador
 
-`shadow-cljs` will cache all compilation results by default. The cache is invalidated whenever anything relevant to the individual source files changes (eg. changed compiler setting, changed dependencies, etc.). This greatly improves the developer experience since incremental compilation will be **much** faster than starting from scratch.
+`shadow-cljs` vai cachear todos os resultados da compilação por padrão. O cache é invalidade sempre que alguma coisa relevante para o arquivo fonte muda (ex.: modificar as configurações do compilador, mudar dependências, etc.). Isso melhora significativamente a experiência do desenvolvedor desde que a compilação incremental vai ser *muito* mais rápido que começar do zero.
 
-Invalidating the cache however can not always be done reliably if you are using a lot of macros with side-effects (reading files, storing things outside the compiler state, etc.). In those cases you might need to disable caching entirely.
 
-Namespaces that are known to include side-effecting macros can be blocked from caching. They won't be cached themselves and namespaces requiring them will not be cached as well. The https://github.com/cerner/clara-rules[clara-rules] library has side-effecting macros and is blocked by default. You can specify which namespaces to block globally via the `:cache-blockers` configuration. It expects a set of namespace symbols.
+Invalidando o cache contudo pode nem sem sempre ser feito confiável se você estiver usando um monte de macros com efeitos coloterais (lendo arquivos, salvando coisas fora do estado do compilador, etc.). Nesses casos vocie deve precisar desabilitar o cache por completo.
 
-.clara.rules cache blocking example (this is done by default)
+Namespaces que são conhecidos por incluir efeitos colaterais macros prodem ser bloqueados. Eles não serão cacheados por si só e os namespaces exigindo que eles não sejam cacheados também. A bibliotéca https://github.com/cerner/clara-rules[clara-rules] tem efeitos colaterais macros e é bloqueado por padrão. Você pode especificar quais namespaces bloquear globalmente através da configuração `:cache-blockers`. Ele espera um conjunto de simbolos de namespace.
+
+.clara.rules exemplo de bloqueio de cache (feito por padrão)
 ```
 {...
  :cache-blockers #{clara.rules}
  :builds {...}}
 ```
 
-In addition you can control how much caching is done more broadly via the `:build-options` `:cache-level` entry. The supported options are:
+Além do mais é possível controlar quanto de cache é feito através do `:build-options` `:cache-level`. As opções suportadas são:
 
 [horizontal]
-`:all`:: The default, all CLJS files are cached
-`:jars`:: Only caches files from libraries, ie. source files in `.jar` files
-`:off`:: Does not cache any CLJS compilation results (by far the slowest option)
+`:all`:: O padrão, todos os arquivos CLJS são cacheados
+`:jars`:: Apenas cacheia os arquivos das bibliotécas, arquivos fonte nos arquivos `.jar`
+`:off`:: Não cacheia nenhum resultado de compilação do CLJS (a opção mais lenta)
 
-.Compiling without Cache
+.Compilação sem cache
 ```
 {...
  :builds
