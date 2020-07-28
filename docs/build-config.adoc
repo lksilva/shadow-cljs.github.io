@@ -261,14 +261,14 @@ Além do mais é possível controlar quanto de cache é feito através do `:buil
    {:cache-level :off}}}}
 ```
 
-The cache files are stored in a dedicated directory for each build so the cache is never shared between builds. A build with the id `:app` will have the `:dev` cache in the directory:
+Os arquivos de cache são guardados em um diretório dedicado para cada build então o cache nunca é compartilhado entre o builds. Um build com o id `:app` possui o o diretorio de cache `:dev` em: 
 
 .Cache location for `cljs/core.cljs`
 ```
 target/shadow-cljs/builds/app/dev/ana/cljs/core.cljs.cache.transit.json
 ```
 
-The `:cache-root` setting defaults to `target/shadow-cljs` and controls where ALL cache files will be written. It can only be configured globally, not per build.
+A configuração `:cache-root` padrão para `target/shadow-cljs` controla onde todo os arquivos de cache serão escritos. Só é possível ser configurado globalmente, não por build.
 
 ```
 {:source-paths [...]
@@ -276,17 +276,17 @@ The `:cache-root` setting defaults to `target/shadow-cljs` and controls where AL
  :cache-root ".shadow-cljs"
  :builds ...}
 
-;; cache then goes to
+;; cache vai para
 ;; .shadow-cljs/builds/app/dev/ana/cljs/core.cljs.cache.transit.json
 ```
 
-The `:cache-root` is always resolved relative to the project directory. You can also specify absolute paths (eg. `/tmp/shadow-cljs`).
+O `:cache-root` é sempre resolvido relativo ao diretório do projeto. É possível especificar paths absolutos também (ex. `/tmp/shadow-cljs`).
 
 == Closure Defines [[closure-defines]]
 
-The Closure Library & Compiler allow you to define variables that are essentially compile time constants. You can use these to configure certain features of your build. Since the Closure compiler treats these as constants when running `:advanced` optimizations they are fully supported in the Dead-Code-Elimination passes and can be used to remove certain parts of the code that should not be included in `release` builds.
+A Biblioteca & Compilador Closure permite você definir variáveis que são essencialmente constantes em tempo de compilação. Você pode usar isso para configurar determinadas funcionalidades da sua build. Desde de que o compilador Closure trata esses como constantes quando rodando otimizações `:advanced` que são inteiramente suportados no Dead-Code-Eliminitation e pode ser usado para remover certas partes de código que deveria não ser incluido no build de `release`.
 
-You can define them in your code
+Defina eles em seu código
 
 ```clojure
 (ns your.app)
@@ -297,7 +297,7 @@ You can define them in your code
   (println "Hello World"))
 ```
 
-This defines the `your.app/VERBOSE` variable as `false` by default. This will cause the `println` to be removed in `:advanced` compilation. You can toggle this to `true` via the `:closure-defines` options which will enable the `println`. This can either be done for development only or always.
+Isso define as variáveis `your.app/VERBOSE` como `false` por padrão. Isso vai causar o `println` para ser removido na compilação `:advanced`. Você pode esconder esse detalhe `true` através da opção `:closure-defines` da qual vai habilitar o `println`. Isso pode ser feito apenas para modo de desenvolvimento ou para sempre.
 
 ```clojure
 {...
@@ -315,12 +315,12 @@ This defines the `your.app/VERBOSE` variable as `false` by default. This will ca
    }}
 ```
 
-TIP: It is generally safer to use the "disabled" variant as the default since it makes things less likely to be included in a `release` build when they shouldn't be. Forgetting to set a `:closure-defines` variable should almost always result in less code being used not more.
+DICA: Geralmente é seguro usar a variante "disabled" como padrão desde que ela faz menos coisas prováveis de ter incluida no build de `release` quando eles não deveriam. Esquecendo de setar a variável `:closure-defines` deveria nem sempre resultar em menos código sendo não mais usado.
 
-*Closure Defines from the Closure Library*
+*Closure Defines a partir de uma Biblioteca Closure*
 
-- `goog.DEBUG`: The Closure Library uses this for many development features. `shadow-cljs` automatically sets this to `false` for `release` builds.
-- `goog.LOCALE` can be used to configure certain localization features like `goog.i18n.DateTimeFormat`. It accepts a standard locale string and defaults to `en`. Pretty much all locales are supported, see https://github.com/google/closure-library/blob/master/closure/goog/i18n/datetimesymbols.js[here] and https://github.com/google/closure-library/blob/master/closure/goog/i18n/datetimesymbolsext.js[here].
+- `goog.DEBUG`: A biblioteca Closure usa isso para várias funcionalidades de desenvolvimento. `shadow-cljs` automaticamente configura ela para `false` para builds de `release`.
+- `goog.LOCALE` Pode ser usado para configurar certas funcionalidades de localização como `goog.i18n.DateTimeFormat`. Aceita uma string local sendo o valor padrão `en`. Praticamente todas as locales são suportadas, veja https://github.com/google/closure-library/blob/master/closure/goog/i18n/datetimesymbols.js[aqui] e https://github.com/google/closure-library/blob/master/closure/goog/i18n/datetimesymbolsext.js[aqui].
 
 == Compiler Options [[compiler-options]]
 
