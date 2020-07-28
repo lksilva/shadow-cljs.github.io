@@ -324,9 +324,9 @@ DICA: Geralmente é seguro usar a variante "disabled" como padrão desde que ela
 
 == Compiler Options [[compiler-options]]
 
-The CLJS compiler supports several options to influence how some code is generated. For the most part `shadow-cljs` will pick some good defaults for each `:target` but you might occasionally want to change some of them.
+O compilador CLJS suporta varias opções que influência como algum código é gerado. Para a maior parte do `shadow-cljs` vai pegar alguns bons padrões para cada `:target` mas você deve ocasionalmente querer mudar alguns deles.
 
-These are all grouped under the `:compiler-options` key in your build config.
+Eles são todos agrupados dentro da chave `:compiler-options` no seu build de configuração.
 
 ```clojure
 {:dependencies [...]
