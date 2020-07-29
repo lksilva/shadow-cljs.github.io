@@ -337,24 +337,25 @@ Eles são todos agrupados dentro da chave `:compiler-options` no seu build de co
    :compiler-options {:fn-invoke-direct true}}}}
 ```
 
-Most of the standard ClojureScript https://clojurescript.org/reference/compiler-options[Compiler Options] are either enabled by default or do not apply. So very few of them actually have an effect. A lot of them are also specific to certain `:target` types and do not apply universally (e.g. `:compiler-options {:output-wrapper true}` is only relevant for `:target :browser`).
+Muito dos padrões do ClojureScript https://clojurescript.org/reference/compiler-options[Compiler Options] são habilitados por padrão ou não se aplica. Então 
+pouco deles na verdade tem algum efeito. Um monte deles são especificos para certo tipo de `:target` e não aplicado universalmente (ex.: `:compiler-options {:output-wrapper true}` é apenas relevante para `:target :browser`).
 
-Currently supported options include
+A opções atualmente suportadas são:
 
-- `:optimizations` supports `:advanced`, `:simple` or `:whitespace`, defaults to `:advanced`. `:none` is the default for development and cannot be set manually. `release` with `:none` won't work.
-- `:infer-externs` `:all`, `:auto`, `true` or `false`, defaults to `true`
-- `:static-fns` (Boolean) defaults to `true`
-- `:fn-invoke-direct` (Boolean) defaults to `false`
-- `:elide-asserts` (Boolean) default to `false` in development and `true` in `release` builds
-- `:pretty-print` and `:pseudo-names` default to `false`. You can use `shadow-cljs release app --debug` to enable both temporarily without touching your config. This is very useful when running into problem with `release` builds
-- `:source-map` (Boolean) defaults to `true` during development, `false` for `release`.
-- `:source-map-include-sources-content` (Boolean) defaults to `true` and decides whether source maps should contains their sources in the `.map` files directly.
-- `:source-map-detail-level` `:all` or `:symbols` (`:symbols` reduces overall size a bit but also a bit less accurate)
-- `:externs` vector of paths, defaults to `[]`
-- `:checked-arrays` (Boolean), defaults to `false`
+- `:optimizations` suporta `:advanced`, `:simple` ou `:whitespace`, padrão para `:advanced`. `:none` é o padrão para desenvolvimento e não pode ser configurado manualmente.
+- `:infer-externs` `:all`, `:auto`, `true` ou `false`, padrão para `true`
+- `:static-fns` (Boolean) padrão para `true`
+- `:fn-invoke-direct` (Boolean) padrão para `false`
+- `:elide-asserts` (Boolean) padrão para `false` em desenvolvimento e `true` em `release`
+- `:pretty-print` e `:pseudo-names` padrão para `false`. É possível usar `shadow-cljs release app --debug` para habilitar ambos temporáriamente sem tocar no seu config. É bastante útil quando rodando em problemas com `release` builds
+- `:source-map` (Boolean) padrão para `true` durante desenvolvimento, `false` para `release`.
+- `:source-map-include-sources-content` (Boolean) padrão para `true` e decide se o source maps deveria conter seus sources no arquivo `.map` diretamente.
+- `:source-map-detail-level` `:all` ou `:symbols` (`:symbols` no geral reduz o tamanho mas é menos preciso)
+- `:externs` vetor de paths, padrão para `[]`
+- `:checked-arrays` (Boolean), padrão para `false`
 - `:anon-fn-naming-policy`
-- `:rename-prefix` and `:rename-prefix-namespace`
-- `:warnings` as a map of `{warning-type true|false}`, eg. `:warnings {:undeclared-var false}` to turn off specific warnings.
+- `:rename-prefix` e `:rename-prefix-namespace`
+- `:warnings` como um map de `{warning-type true|false}`, ex. `:warnings {:undeclared-var false}` to desligar alertas em especifico.
 
 *Unsupported or non-applicable Options*
 
