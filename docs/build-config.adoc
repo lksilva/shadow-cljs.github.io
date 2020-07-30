@@ -357,32 +357,30 @@ A opções atualmente suportadas são:
 - `:rename-prefix` e `:rename-prefix-namespace`
 - `:warnings` como um map de `{warning-type true|false}`, ex. `:warnings {:undeclared-var false}` to desligar alertas em especifico.
 
-*Unsupported or non-applicable Options*
+*Opções não suportadas*
 
-Options that don't have any effect at all include
-
-- `:verbose` is controlled by running `shadow-cljs compile app --verbose` not in the build config.
-- `:foreign-libs` and `:libs`
-- `:stable-names` always enabled, cannot be disabled
+- `:verbose` é controlado rodando `shadow-cljs compile app -versobe` não no build de configuração.
+- `:foreign-libs` e `:libs`
+- `:stable-names` sempre habilitados, não pode ser disabilitado
 - `:install-deps`
-- `:source-map-path`, `:source-asset-path` and `:source-map-timestamp`
-- `:cache-analysis` always enabled, cannot be disabled.
+- `:source-map-path`, `:source-asset-path` e `:source-map-timestamp`
+- `:cache-analysis` sempre habilitado.
 - `:recompile-dependents`
 - `:preamble`
-- `:hashbang` (the `:node-script` target supports this, others don't)
-- `:compiler-stats` use `--verbose` to get detailed information instead
-- `:optimize-constants` always done for `release` builds, cannot be disabled
-- `:parallel-build` always enabled
+- `:hashbang` (apeneas o target `:node-script` suporta isso)
+- `:compiler-stats` usa `--verbose` para capturar informações detalhadas ao invés
+- `:optimize-constants` sempre para builds de release, não pode ser desabilitado
+- `:parallel-build` sempre habilitado
 - `:aot-cache`
 - `:package-json-resolution` see <<js-resolve, :js-options :resolve>> instead
 - `:watch-fn`
 - `:process-shim`
 
-=== Warnings as Errors [[warnigs-as-errors]]
+=== Alertas como errors [[warnigs-as-errors]]
 
-It is sometimes desireable to fail a build with warnings rather than continuing with the build (eg. in CI envs). You can use the `:warnings-as-errors` compiler options to customize how that is handled.
+É aqueel momento que indesejavelmente a build falha com alertas ao invés de continuar o build (ex.: nos evento do CI). Você pode usar a opção do compilador `:warnings-as-errors` para customizar como isso é manipulado.
 
-.Treat all warnings as errors
+.Tratar todos os alertas como erro
 ```
 {...
  :builds
@@ -391,7 +389,7 @@ It is sometimes desireable to fail a build with warnings rather than continuing 
    :compiler-options {:warnings-as-errors true}}}}
 ```
 
-.Only throw certain warnings
+.Capturar apenas determinados alertas
 ```
 {...
  :builds
@@ -400,9 +398,9 @@ It is sometimes desireable to fail a build with warnings rather than continuing 
    :compiler-options {:warnings-as-errors #{:undeclared-var}}}}
 ```
 
-A set of possible warning-type keywords can be found https://github.com/clojure/clojurescript/blob/5ad96a8b3ae2e3616a19715ba9ba2471a36933a2/src/main/clojure/cljs/analyzer.cljc#L124-L163[here].
+Um conjunto de possíveis keywords warning-type pode ser encontradas em https://github.com/clojure/clojurescript/blob/5ad96a8b3ae2e3616a19715ba9ba2471a36933a2/src/main/clojure/cljs/analyzer.cljc#L124-L163[here].
 
-.Only throw for certain namespaces
+.Lançar apenas para determinados namespaces
 ```
 {...
  :builds
@@ -412,8 +410,7 @@ A set of possible warning-type keywords can be found https://github.com/clojure/
                                            :warnings-types #{:undeclared-var}}}
 ```
 
-`:ignore` takes a set of symbols refering to namespaces. Either direct matches or `.*` wildcards are allowed. `:warning-types` has the same functionality as above, not specifying it means all warnings will throw except the ignored namespaces.
-
+`:ignore` aceita um conjunto de símbolos referente a namespaces. Ao invés corresponder diretamente ou `.*` são permitidos. `:warning-type` tem a mesma funcionalidade como acima. não especificando que isso significando que todos os alertas vão disparar exceto os namespaces ignorados. 
 
 == Output Language Options
 
