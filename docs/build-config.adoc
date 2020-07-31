@@ -414,24 +414,24 @@ Um conjunto de possíveis keywords warning-type pode ser encontradas em https://
 
 == Output Language Options
 
-By default the generated JS output will be compatible with ES5 and all "newer" features will be transpiled to compatible code using polyfills. This is currently the safest default and supports most browsers in active use (including IE10+).
+Por padrão a saída do output gerado é compatível com ES5 e todas as "novas" funcionalidade serão transpiladas usando polyfills. Isso é atualmente o padrão mais seguro e suportado pela maioria dos navegadores (incluindo IE10+).
 
-You can select other output options if you only care about more modern environments and want to keep the original code without replacements (eg. `node`, Chrome Extensions, ...)
+É possível selecionar outras opções de saída se você apenas se preocupa com ambiente mais mordernos e quer manter o código original sem substituições (ex.: `node`, Extensões Chrome, ...)
 
-IMPORTANT: Note that this mostly affects imported JS code from <<npm, npm>> or `.js` files from the <<classpath-js, classpath>>. CLJS will currently only generate ES5 output and is not affected by setting higher options.
+IMPORTANT: Perceba que na maioria das vezes afeta código JS importando do <<npm, npm>> ou arquivos `.js` a partir do <<classpath-js, classpatch>>. CLJS vai gerar apenas saída ES5 e isso não é afetado por configurações em camadas mais altas.
 
-You can configure this via the `:output-feature-set` in `:compiler-options`. The older `:language-out` option should not be used as `:output-feature-set` replaced it.
+É possível configurar isso através do `:output-feature-set` no `:compiler-options`. A opção antiga `:language-out` não deveria ser usada como `:output-feature-set`.
 
-Supported options are:
+Opções suportadas
 
 - `:es3`
 - `:es5`
 - `:es6` - `class`, `const`, `let`, ...
-- `:es7` - exponent `**` operator
-- `:es8` - `async/await`, `generators`, object literals with spread, ...
-- `:es-next` - all the features the Closure Compiler currently supports
+- `:es7` - operador `**`
+- `:es8` - `async/await`, `generators`, ...
+- `:es-next` - todas as funcionalidades que o Closure Compiler suporta atualmente
 
-.Example
+.Exemplo
 ```
 {...
  :builds
@@ -442,16 +442,16 @@ Supported options are:
    :compiler-options {:output-feature-set :es7}}}}
 ```
 
-Documentation on these options is a bit sparse and is mostly documented in the code https://github.com/google/closure-compiler/blob/master/src/com/google/javascript/jscomp/parsing/parser/FeatureSet.java[here].
+A documentação dessas opções está um pouco espalhada e é melhor documentada no código https://github.com/google/closure-compiler/blob/master/src/com/google/javascript/jscomp/parsing/parser/FeatureSet.java[here].
 
 
-== Conditional Reading
+== Leitura condicional
 
-CAUTION: This feature only works in `shadow-cljs`. It was officially https://dev.clojure.org/jira/browse/CLJS-2396[rejected] by the ClojureScript project. It will still compile fine in CLJS but only the official branches work (e.g. `:cljs`). It might still be https://groups.google.com/d/msg/clojure-dev/8YJJM8lJuQs/hR5_vUZPCQAJ[supported] one day but as of now it is not.
+ATENÇÃo: Essa funcionalidade funciona apenas em `shadow-cljs`. Foi oficialmente rejeitada pelo ClojureScript https://dev.clojure.org/jira/browse/CLJS-2396[rejected]. Ainda vai compilar bem em CLJS mas funciona apenas na branch oficial. Ainda deve ser https://groups.google.com/d/msg/clojure-dev/8YJJM8lJuQs/hR5_vUZPCQAJ[suportado] um dia ainda não é
 
-`shadow-cljs` lets you configure additional reader features in `.cljc` files. By default you can only use reader conditionals to generate separate code for `:clj`, `:cljs` or `:cljr`. In many CLJS builds however it is also desirable to select which code is generated based on your `:target`.
+`shadow-cljs` permite configurar um leitor de funcionalidade adicional no arquivo `.cljc`. Por padrão você pode apenas usar leitor condicional para gerar código separado para `:clj`, `:cljs` ou `:cljr`. Contudo em diversos builds CLJS também é desejável selecionar qual código é gerado baseado no seu `:target`. 
 
-Example: Some `npm` packages only work when targeting the `:browser`, but you may have a `ns` that you also want to use in a `:node-script` build. This might happen frequently when trying to use Server-Side Rendering (SSR) with your React App. `codemirror` is one such package.
+Exemplo: Algum pacote `npm` apenas funciona quando apontando para `:browser`, mas você deve ter um `ns` que também quer usar no build do `:node-script`. Isso deve acontecer com frequência quando tentando usar Server-Side Rendering (SSR) com seu React App. `codemirror` é um desses pacotes. 
 
 ```clojure
 (ns my.awesome.component
@@ -467,9 +467,9 @@ Example: Some `npm` packages only work when targeting the `:browser`, but you ma
 ...
 ```
 
-This namespace will compile fine for both builds (`:node-script` and `:browser`) but when trying to run the `:node-script` it will fail since the `codemirror` package tries to access the DOM. Since `react-dom/server` does not use refs the `init-cm` function will never be called anyways.
+Esse namespace vai compilar bem para ambos os builds (`:node-script` e `:browser`) mas quando tento rodar o `:node-scriot` isso vai falhar desde que o pacote `codemirror` tenta acessar o DOM. Desde `react-dow/server` não use resf `init-cm` a função nunca será chamada.
 
-While you can use <<closure-defines, :closure-defines>> to conditionally compile away the `init-cm` fn you can not use it to get rid of the extra `:require`. Reader conditionals let you do this easily.
+Enquando usar <<closure-defines, :closure-defines>> para condicionalmente compilar longe a fn `init-cm` você não pode usar isso para livrar-se do `:require` extra. Leitores condicionais permite vocie fazer isso facilmente.
 
 ```clojure
 (ns my.awesome.component
@@ -491,7 +491,7 @@ While you can use <<closure-defines, :closure-defines>> to conditionally compile
 ...
 ```
 
-.`:reader-features` config examples
+.`:reader-features` exemplo de configuração
 ```clojure
 {...
  :builds
@@ -507,7 +507,7 @@ While you can use <<closure-defines, :closure-defines>> to conditionally compile
    {:reader-features #{:node}}}}}
 ```
 
-The `:server` build will then no longer have the `codemirror` require and the `init-cm` function is removed. Becoming only
+O build `:server` então ira não mais tão longe tendo o `codemirror` requerido e a função `init-cm` é removida. Se tortando apenas
 
 ```clojure
 (ns my.awesome.component
@@ -520,8 +520,7 @@ The `:server` build will then no longer have the `codemirror` require and the `i
 (defn init-cm [dom-node] :no-op)
 ...
 ```
-
-IMPORTANT: This feature is only available in `.cljc` files and will fail in `.cljs` files.
+IMPORTANT: Essa funcionalidade é apenas disponível em arquivos `.cljc` e irá falhar em arquivos `.cljs`.
 
 == Overriding from the CLI [[config-merge]]
 
