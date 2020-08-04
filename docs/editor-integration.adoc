@@ -1,8 +1,8 @@
 == Cursive
 
-Cursive does not currently support resolving dependencies via `shadow-cljs.edn`. You can run `shadow-cljs pom` to generate a `pom.xml` and import that using the IntelliJ.
+Atualmente cursivo não suporta resolver as dependências através do `shadow-cljs.edn`. É possível rodar `shadow-cljs pom` para gerar um `pom.xml` e importar ele usando o IntelliJ.
 
-Alternatively you can create a dummy `project.clj` or use the full <<Leiningen, Leiningen integration>>.
+Também é possível criar um `project.clj` ou usar <<Leiningen, Leiningen integration>>.
 
 ```
 (defproject your/project "0.0.0"
@@ -13,35 +13,36 @@ Alternatively you can create a dummy `project.clj` or use the full <<Leiningen, 
   ["src"])
 ```
 
-You can run `npx shadow-cljs server` inside the Terminal provided by IntelliJ and use `Clojure REPL -> Remote` Run Configuration to connect to the provided <<nREPL, nREPL server>>.
+É possível rodar `npx shadow-cljs server` dentrodo terminal provido pelo IntelliJ e usar `Clojure REPL -> Remote` Run Configuration para se conectar ao <<nREPL, nREPL server>> fornecido.
 
 == Emacs / CIDER [[cider]]
 
-This section is written for CIDER version 0.20.0 and above. Ensure your Emacs environment has this version of the `cider` package or later. Refer to the link:https://docs.cider.mx[CIDER documentation] for full installation details.
+Essa sessão é escrita para versão do CIDER 0.20.0 e acima. Tenha certeza que seu Emacs possui a versão do pacote `cider` mais recente. Referências no link:https://docs.cider.mx[CIDER documentation] para instalação completa.
 
-=== Launch the ClojureScript REPL
 
-Launch the nREPL and a ClojureScript REPL.
+=== Launch o ClojureScript REPL
+
+Launch o nREPL e um ClojureScript REPL.
 
 ```console
 M-x cider-jack-in-cljs
 ```
 
-CIDER will prompt you for the type of ClojureScript REPL:
+CIDER vai abrir um prompt para que você digite o tipo de ClojureScript REPL:
 
 ```console
 Select ClojureScript REPL type:
 ```
 
-Enter `shadow`.
+Digite `shadow`.
 
 ```console
 Select shadow-cljs build:
 ```
 
-Enter the name of your build target, for example, `app`.
+Digite o nome do seu build target, por exemplo `app`.
 
-Emacs should now open a new nREPL connection to the `shadow-cljs` server of its sibling, bootstrapping into a ClojureScript REPL environment:
+Emacs deveria abrir uma nova conexão nREPL para o servidor `shadow-cljs`servido de seu irmão, transformando em um ClojureScript REPL:
 
 ```console
 shadow.user> To quit, type: :cljs/quit
