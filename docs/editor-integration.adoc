@@ -50,17 +50,17 @@ shadow.user> To quit, type: :cljs/quit
 cljs.repl>
 ```
 
-You should now be able to eval ClojureScript, jump to the definitions of vars (with `cider-find-var`) and much more.
+Agora você deve ser capaz de avaliar ClojureScript, pulando para as definições de variáveis (com `cide-find-var`) e muito mais.
 
-For example, to display an alert in the browser:
+Por exemplo, tente exibit um alerta no navegador:
 
 ```console
 cljs.repl> (js/alert "Jurassic Park!")
 ```
 
-=== Simplify startup with dir-local
+=== Simplificando inicialização com dir-local
 
-You can simplify startup flow by a creating a `.dir-locals.el` file at project root.
+É possível simplificar o fluxo inicialização criando um arquivo `.dir-locals.el` na ráiz do projeto.
 
 ```
 ((nil . ((cider-default-cljs-repl . shadow)
