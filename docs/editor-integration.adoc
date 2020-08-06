@@ -69,11 +69,11 @@ cljs.repl> (js/alert "Jurassic Park!")
 
 == Proto REPL (Atom)
 
-Proto REPL is mostly intended for Clojure development so most features do not work for ClojureScript. It is however possible to use it for simple evals.
+Proto REPL é principalmente destinado ao desenvolvimento Clojure então a maria das funcionalidades não funciona para ClojureScript. No entando é possível usa-las para avalições simples.
 
-You need to setup a couple of things to get it working.
+É preciso configurar um conjunto de coisas para isso funcionar
 
-1)  Create a `user.clj` in on of your `:source-paths`.
+1) Crie um `user.clj` no `:source-paths`.
 
 ```clojure
  (ns user)
@@ -81,37 +81,37 @@ You need to setup a couple of things to get it working.
  (defn reset [])
 ```
 
-The file must define the `user/reset` fn since Proto REPL will call that when connecting. If `user/reset` is not found it will call `tools.namespace` which destroys the running `shadow-cljs` server. We don't want that. You could do something here but we don't need to do anything for CLJS.
+O arquivo deve definir a fn `user/rest` do qual Proto REPL irá chamar quando conectando. Se `user/reset` não for encontrada isso irá chamar `tools.namespace` do qual destroi o servidor `shadow-cljs` que estiver rodando. Não queremos isso. Você poderia fazer alguma coisa aqui mas não queremos fazer nada para CLJS.
 
-2) add `[proto-repl "0.3.1"]` to your `:dependencies` in <<user-config, ~/.shadow-cljs/config.edn>> or `shadow-cljs.edn`.
+2) adicione `[proto-repl "0.3.1"]` para sua `:dependencies` em <<user-config, ~/.shadow-cljs/config.edn>> ou `shadow-cljs.edn`.
 
-3) Configure a fixed <<nREPL, nREPL port>>
+3) Configura uma porta fixa <<nREPL, nREPL port>>
 
-4) Start `shadow-cljs server` or `shadow-cljs watch your-build`.
+4) Inicie `shadow-cljs server` ou `shadow-cljs watch your-build`.
 
-5) Run the Atom Command `Proto Repl: Remote Nrepl Connection` connect to `localhost` and the port you configured
+5) Rode o comando Atom `Proto Repl: Remote Nrepl Connection` para se conectar ao `localhost` e a porta que você configurou
 
-6) Eval `(shadow.cljs.devtools.api/watch :your-build)` (if you used `server` in 4)
+6) Avalie `(shadow.cljs.devtools.api/watch :your-build)` (se você usou `server` no passo 4)
 
-7) Eval `(shadow.cljs.devtools.api/nrepl-select :your-build)`. The REPL connection is now in CLJS mode, meaning that everything you eval will be eval'd in JS. You can eval `:repl/quit` to get back to Clojure Mode. If you get `[:no-worker :browser]` you need to start the `watch` first.
+7) Avalie `(shadow.cljs.devtools.api/nrepl-select :your-build)`. A conexão REPL está agora conectada no modo CLJS, significando que tudo que você avalia será avaliado em JS. É possível avaliar `:repl/quit` para voltar ao modo Clojure. Se por acaso aparecer `[:no-worker :browser]` você precisa iniciar o `watch` antes.
 
-8) Before you can eval CLJS you need to connect your client (eg. your Browser when building a `:browser` App).
+8) Antes que você consiga avaliar CLJS você precisa conectar ao seu cliente (ex.: quando seu browser estiver construindo um App `:browser`).
 
-9) Eval some JS, eg. `(js/alert "foo")`. If you get `There is no connected JS runtime` the client is not connected properly. Otherwise the Browser should show an alert.
+9) Avalie algo em JS, ex.: `(js/alert "foo")`. Se por acaso aparecer `There is no connected JS runtime` o cliente não está conectado adequadamente. De outro modo o navegador deveria mostrar um alerta.
 
 == Chlorine (Atom)
 
-Chlorine connects Atom to a Socket REPL, but also tries to refresh namespace. So first, open up Chlorine package config and check if configuration `Should we use clojure.tools.namespace to refresh` is set to `simple`, otherwise it'll destroy the running `shadow-cljs` server.
+Chlorine conecta Atom a um Socket REPL, mas também tenta atualizar o namespace. Então primeira, abra o pacote de configuração Chlorine e verifique se a configuração `Should we use clojure.tools.namespace to refresh` está setada como `simple`, de outro modo isso vai ser destruido quando rodando um servidor `shadow-cljs`.
 
-Once you checked that the configuration is right, you can start your shadow app (replace `app` with whatever build):
+Uma vez verifica que a configuração está correta, é possível começar seu app shadow (substitua `app` por qualquer build):
 
 ```
 $ shadow-cljs watch app
 ```
 
-Now, all you have to do is to run the atom command `Chlorine: Connect Clojure Socket Repl`. This will connect a REPL to evaluate Clojure code. Next you need to run `Chlorine: Connect Embeded`, and it'll connect the ClojureScript REPL too.
+Agora tudo que você tem que fazer é rodar o comando atom `Chlorine: Connect Clojure Socket Repl`. Isso irá conectar a REPL para avaliar código Clojure. No próximo passo você vai precisar rodar `Chlorine: Connect Embeded`, e isso vai conectar o ClojureScript ao REPL também.
 
-Now, you can use the `Chlorine: Evaluate...` commands to evaluate any Clojure or ClojureScript REPL. It'll evaluate `.clj` files as Clojure, and `cljc` files as ClojureScript.
+Agora, é possível usar o comando `Chlorine: Evaluate...` para avaliar qualquer Clojure ou ClojureScript REPL. Isso vai avaliar os arquivos `.clj` como Clojure, e os arquivos `cljc` como ClojureScript.
 
 == Calva (VS Code)
 
