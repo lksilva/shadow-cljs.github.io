@@ -115,56 +115,56 @@ Agora, é possível usar o comando `Chlorine: Evaluate...` para avaliar qualquer
 
 == Calva (VS Code)
 
-(Only tested with `browser` targets so far. Probably works with other targets too.)
+(Testado apenas com o target `browser` por enquanto. Provavelmente vai funcionar com outros targets também.)
 
-=== Dependencies
+=== Dependências
 
-You need VS Code and install the https://marketplace.visualstudio.com/items?itemName=cospaia.clojure4vscode#overview[Calva] extension.
+Você precisa de VS Code a da extensão https://marketplace.visualstudio.com/items?itemName=cospaia.clojure4vscode#overview[Calva].
 
-Since Calva uses nREPL and the `cider-nrepl` middlewares you need to include this dependency in <<user-config, ~/.shadow-cljs/config.edn>> or `shadow-cljs.edn`:
+Desde que o Calva use nREPL e o middleware `cider-nrepl` é necessário incluir essa dependência no <<user-config, ~/.shadow-cljs/config.edn>> ou `shadow-cljs.edn`:
 
 ```clojure
 [cider/cider-nrepl "0.21.0"]
 ```
 
-`shadow-cljs` will inject the required `cider-nrepl` middleware once it sees this dependency.
+`shadow-cljs` ira injetar o middleware requqerido `cider-nrepl` uma vez que ele exergue essa dependência.
 
-=== Connecting Calva to the REPLs
+=== Conectando Calva as REPLs
 
-Once that is done start your shadow app. (Using whatever build instead of `app`.):
+Uma vez feito inicie seu shadow app. (Usando qualquer build ao invés do `app.`):
 
 ```
 $ shadow-cljs watch app
 ```
 
-Once the app is loaded in the browser, and you see `JS runime connected` in the terminal where you started the app, Calva can connect to its repl. Open the project in VS Code and Calva will by default try to auto connect and prompt you with a list of builds read from `shadow-cljs.edn`. Select the right one (`:app` in this example) and Calva's Clojure and Clojurescript support is activated.
+Uma vez que o app é carregado no navegador, e seja visível `JS runtime connected` no terminal onde você iniciou o app, Calva consegue se conectar a essa repl. Abra o projeto no VS Code e Calva vai conectar por padrão tentando se auto conectar e solicitar uma lista de builds de leitura a partir do `shadow-cljs.edn`. Selecione o correto (`:app` nesse exemplo) e o suporte Calva para Clojure e ClojureScript é ativado.
 
-(If you already have the project open in VS Code when you start the app, issue the `clojure4vscode: connect` command.)
+(Se você já tem o projeto aberto no VS Code quando iniciando o app, issue emita o comando `clojure4vscode: connect`.)
 
-=== Features
+=== Funcionalidades
 
-Some of the things you can now do:
+Alguma das coisas que você pode fazer agora:
 
-==== Intellisense and stuff
+==== Intellisense
 
-- Peek at definitions on hover.
-- Get auto completion help.
-- Navigate to definitions (`cmd-click` on Mac, might be `ctrl-click` on Windows and Linux).
+- Observar as definições no hover.
+- Ajuda de auto-complete.
+- Navegar para as definições (`cmd-click` no Mac, deve ser `ctrl-click` no Windows e Linux).
 
-==== Evaluation of the file, forms and selection
+==== Avaliação de arquivos, forms e seleção
 
-- Evaluate the file: `ctrl+alt+c enter` (This is done automatically one opening files.)
-- Evaluate inline: `ctrl+alt+c e`
-- Evaluate and replace them in the editor: `ctrl+alt+c r`
-- Pretty print evaluation resuls: `ctrl+alt+c p`
-- Send forms to the integrated terminal repls for evaluation: `ctrl+alt+c alt+e`
+- Avalie o arquivo: `ctrl+alt+c ender` (Isso é feito automáticamente ao abrir arquivos.)
+- Avalie inline: `ctrl+alt+c e`
+- Avalie e substitua eles no editor: `ctrl+alt+c r`
+- Pretty print avaliando resultados `ctrl+alt+c p`
+- Envia forms para o repls terminal integrado para avaliação : `ctrl+alt+c alt+e`
 
-==== Run tests
+==== Rodando testes
 
-- Run namespace tests: `ctrl+alt+c t`
-- Run all tests: `ctrl+alt+c shift+t` (Really clunky in large projects so far.)
-- Rerun previously failing tests: `ctrl+alt+c ctrl+t`
-- Test failures are marked in the explorer and editors and listed in the Problem tab for easy access.
+- Rode namespace testes: `ctrl+alt+c t`
+- Rode todos os testes: `ctrl+alt+c shift+t`
+- Rodar novamente os testes que estão falhando: `ctrl+alt+c ctrl+t`
+- Testes falhando são marcado no explorer and editor e listado na tab de problemas para fácil acesso
 
 ==== Terminal repls
 
