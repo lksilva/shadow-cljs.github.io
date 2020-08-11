@@ -177,7 +177,7 @@ Alguma das coisas que você pode fazer agora:
 
 == Fireplace.vim (Vim/Neovim)
 
-https://www.vim.org/scripts/script.php?script_id=4978[Fireplace.vim] é um Vim/Neovim plug-in que fornece uma integraçnao ao Clojure REPL agindo como um cliente https://nrepl.org/[nREPL]. Quando combinado com Shadow-CLJS, também fornece uma integração ClojureScript REPL.
+https://www.vim.org/scripts/script.php?script_id=4978[Fireplace.vim] é um Vim/Neovim plug-in que fornece uma integração ao Clojure REPL agindo como um cliente https://nrepl.org/[nREPL]. Quando combinado com Shadow-CLJS, também fornece uma integração ClojureScript REPL.
 
 Esse guia usa um exemplo, uma aplicação criada no guia oficial https://github.com/thheller/shadow-cljs#quick-start[Shadow-CLJS Quick Start] portanto refere-se a poucos itens de configuração no app's `shadow-cljs.edn`. Como dito, esses items de configuração são bastante genéricos então deveriam ser aplicados para outros apps com poucas modificações. 
 
@@ -185,53 +185,53 @@ Esse guia usa um exemplo, uma aplicação criada no guia oficial https://github.
 
 Instale https://www.vim.org/scripts/script.php?script_id=4978[Fireplace.vim] usando seu método de instalação favorito Vim/Neovim.
 
-Como um cliente https://nrepl.org/[nREPL], https://www.vim.org/scripts/script.php?script_id=4978[Fireplace.vim] depende de https://docs.cider.mx/cider-nrepl/[CIDER-nREPL] (que é um middleware nREPL que provê comum, operações editor-agnostic REPL) portando você precisa incluir essas dependências no <<user-config, ~/.shadow-cljs/config.edn>> ou `shadow-cljs.edn` (como mostra a próxima sub-sessão) Shadow-CLJS vai injetar o obrigatório middleware CIDER-nREPL uma vez que ele vê essa dependência.
+Como um cliente https://nrepl.org/[nREPL], https://www.vim.org/scripts/script.php?script_id=4978[Fireplace.vim] depende de https://docs.cider.mx/cider-nrepl/[CIDER-nREPL] (que é um middleware nREPL que provê comum, operações editor-agnostic REPL) portando você precisa incluir essas dependências no <<user-config, ~/.shadow-cljs/config.edn>> ou `shadow-cljs.edn` (como mostra a próxima sub-sessão) Shadow-CLJS vai injetar o middleware obrigatório CIDER-nREPL uma vez que ele vê essa dependência.
 
-=== Preparing the app
+=== Preparando o app
 
-Create the example app by following the official https://github.com/thheller/shadow-cljs#quick-start[Shadow-CLJS Quick Start] guide and modify its `shadow-cljs.edn` as follows:
+Crie um exemplo de app seguindo guia oficial https://github.com/thheller/shadow-cljs#quick-start[Shadow-CLJS Quick Start] e modifique o `shadow-cljs.edn` como o seguinte:
 
 ```clojure
-;; shadow-cljs configuration
+;; shadow-cljs configuração
 {:source-paths
  ["src/dev"
   "src/main"
   "src/test"]
 
- ;; ADD - CIDER-nREPL middleware required by Fireplace.vim
+ ;; Adicione - CIDER-nREPL middleware requerido pelo Fireplace.vim
  :dependencies
  [[cider/cider-nrepl "0.22.4"]]
 
- ;; ADD - a port (e.g., 3333) for the REPL server to which Fireplace.vim connects
+ ;; Adicione - uma porta (e.x., 3333) para o servidor REPL do qual o Fireplace.vim vai se conectar
  :nrepl
  {:port 3333}
 
- ;; ADD - a port (e.g., 8080) for the development-time HTTP server that serves the app
+ ;; Adicione - uma porta (e.x., 8080) para o servidor HTTP development-time que fornece o app
  :dev-http
  {8080 "public"}
 
  :builds
- {:frontend  ; NOTE - This is the build ID referenced at various places below.
+ {:frontend  ; OBS - Esse é o build ID referenciado por vários lugares abaixo.
   {:target :browser
    :modules {:main {:init-fn acme.frontend.app/init}}}}}
 ```
 
-Once that is done, start the app (note the Shadow-CLJS build ID, `frontend`, specified in `shadow-cljs.edn`):
+Uma vez isso feito, inicie o app (perceba que o build ID Shadow-CLJS, `frontend`, especificado em `shadow-cljs.edn`):
 
 ```sh
 npx shadow-cljs watch frontend
 ```
 
-Open the app in a browser at http://localhost:8080/. Without this step, you would get the following error message from https://www.vim.org/scripts/script.php?script_id=4978[Fireplace.vim] if you attempt to connect to the REPL server from within Vim/Neovim:
+Abra o app no navegador em http://localhost:8080/. Sem esse passo, você iria capturar a seguinte mensagem de error https://www.vim.org/scripts/script.php?script_id=4978[Fireplace.vim] se você tentar se conectar ao servidor REPL de dentro do Vim/Neovim:
 
 ```
 No application has connected to the REPL server. 
 Make sure your JS environment has loaded your compiled ClojureScript code.
 ```
 
-=== Connecting Fireplace.vim to REPL Server
+=== Conectando Fireplace.vim ao servidor REPL
 
-Open a ClojureScript source file in Vim/Neovim and execute the following command to connect https://www.vim.org/scripts/script.php?script_id=4978[Fireplace.vim] to the REPL server (note the port for the REPL server, `3333`, specified in `shadow-cljs.edn`):
+Abra o arquivo fonte ClojureScript no Vim/Neovim e execute o seguinte comando para conectar https://www.vim.org/scripts/script.php?script_id=4978[Fireplace.vim] ao servidor REPL (perceba a prota para o servidor REPL, `3333`, especificado em `shadow-cljs.edn`):
 
 ```
 :Connect 3333
@@ -240,7 +240,7 @@ Connected to nrepl://localhost:3333/
 Scope connection to: ~/code/clojurescript/acme-app (ENTER)
 ```
 
-This creates a Clojure (instead of ClojureScript) REPL session. Execute the following command to add ClojureScript support to the session (note the Shadow-CLJS build ID, `frontend`, specified in `shadow-cljs.edn`):
+Isso cria uma sessão Clojure no REPL (ao invés de ClojureScript). Execute o seguinte comando para adicionar suporte ao ClojureScript para a sessão (perceba o shadow-cljs build id, `frontend`, especificado em `shadow-cljs.edn`):
 
 ```
 :CljEval (shadow/repl :frontend)
@@ -250,4 +250,4 @@ To quit, type: :cljs/quit
 Press ENTER or type command to continue
 ```
 
-You should now be able to execute https://www.vim.org/scripts/script.php?script_id=4978[Fireplace.vim] commands against the REPL server. Please refer to the https://www.vim.org/scripts/script.php?script_id=4978[Fireplace.vim] documentation for the full list of commands you can execute.
+Agora você consegue executar os comandos diante do servidor REPL https://www.vim.org/scripts/script.php?script_id=4978[Fireplace.vim]. Por favor recorra a documentação https://www.vim.org/scripts/script.php?script_id=4978[Fireplace.vim] para a lista completa de comando que você quer executar.
