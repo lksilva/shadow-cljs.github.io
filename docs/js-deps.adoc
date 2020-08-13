@@ -21,18 +21,17 @@ Tanto faz o parâmetro "string" usado quando chamando require nos transferimos p
 (react/createElement "div" nil "hello world")
 ```
 
-In `shadow-cljs`: *always use the `ns` form and whatever `:as` alias you provided.* You may also use `:refer` and `:rename`. This is different than what `:foreign-libs`/CLJSJS does where you include the thing in the namespace but then used a global `js/Thing` in your code.
+No `shadow-cljs`: *sempre usa o `ns` from e tanto faz o apelido `:as` que você forneceu.* Você deve também usar `:refer` e `:rename`. Isso é diferente do que `:foreign-libs`/CLJSJS faz onde você inclui a coisa no namespace mas então usa um global `js/Thing` no seu código.
 
-Some packages just export a single function which you can call directly by
-using `(:require ["thing" :as thing])` and then `(thing)`.
+Alguns pacotes penas exporta uma única função da qual você chama diretamente usando `(:require ["thing" :as thing])` e então `(thing)`.
 
-More recently some packages started using ES6 `import` statements in their examples. Those also translate pretty much 1:1 with one slight difference related to default exports.
+Mais recentemente alguns pacotes começam usando ES6 a declarção `import` em seus exemplos. Esses também são muito bem traduzidos 1:1 com uma pequena diferença relacionada ao export padrão.
 
-The following table can be used for translation:
+A seguinte tabela pode ser usada para trandução:
 
-IMPORTANT: This table only applies if the code you are consuming is packaged as actual ES6+ code. If the code is packaged as CommonJS instead the `:default` may not apply. See the section below for more info.
+IMPORTANTE: Essa tabela apenas se aplica se o código que você está rodando consome o pacote como um código ES6+. Se o código do pacote é um CommonJS o `:default` não deve ser aplicado. Veja a sessão abaixo para mais informações.
 
-.ES6 Import to CLJS Require
+.ES6 import para CLJS
 |===
 |ES6 Import|CLJS Require
 
@@ -64,8 +63,7 @@ IMPORTANT: This table only applies if the code you are consuming is packaged as 
 |`(:require ["module-name"])`
 |===
 
-Notice that previously we were stuck using bundled code which included a lot of code we didn’t actually need. Now we're in a better situation:
-Some libraries are also packaged in ways that allow you to include only the parts you need, leading to much less code in your final build.
+Perceba que anteriormente estavamos presos usando um bunde do qual incluia um monte de código que atualmente não é preciso. Agora estamos em uma situação melhor: Agumas bibliotecas estão empacotadas em uma maneira que permite que você inclue apenas as partes necessárias, levando a muito menos código no build final.
 
 `react-virtualized` is a great example:
 
@@ -80,7 +78,7 @@ import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer'
 import List from 'react-virtualized/dist/commonjs/List'
 ```
 
-With our improved support we we can easily translate this to:
+Com nossa melhoria de suporte podemos facilmente traduzir em:
 
 ```
 (ns my-ns
