@@ -89,14 +89,13 @@ Com nossa melhoria de suporte podemos facilmente traduzir em:
             ["react-virtualized/dist/commonjs/List" :default virtual-list]))
 ```
 
-==== About :default Exports
+==== Sobre :default Exports
 
-The `:default` option is currently only available in `shadow-cljs`, you can
-https://dev.clojure.org/jira/browse/CLJS-2376[vote here] to hopefully make it standard. You can always use `:as alias` and then call `alias/default` if you prefer to stay compatible with standard CLJS in the meantime.
+A opção `:default` é atualmente apenas disponível com `shadow-cljs`, você pode https://dev.clojure.org/jira/browse/CLJS-2376[votar aqui] para esperançosamente tornar isso um padrão. Mas você pode sempre usar `:as alias` e então chamar `alias/default` se você preferir ficar totalmente compatível com o padrão CLJS.
 
-Default exports are a new addition in ECMAScript Modules and do not exist in CommonJS code. Sometimes you will see examples of `import Foo from "something"` when the code is actually CommonJS code. In theses cases `(:require ["something" :default Foo])` will not work and `(:require ["something" :as Foo])` must be used instead.
+Default exports são um acrescimo ao módules ECMAScript e não existe no código CommonJS. Algumas vezes você vai ver exemplos de `import Foo from "something"` quando o código é na verdade um código CommonJS. Nesses casos `(:require ["something" :default Foo])` não vai funcionar e invés disso `(:require ["something" :as Foo])` deve ser usado.
 
-If a `:require` does not seem to work properly it is recommended to try looking at it in the REPL.
+Se o `:require` não estiver funcionando da maneira esperada é recomendado tentar olhar ele na REPL.
 
 ```
 $ shadow-cljs browser-repl (or node-repl)
