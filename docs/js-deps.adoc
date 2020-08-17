@@ -110,26 +110,26 @@ nil
 nil
 ```
 
-Since printing arbitrary JS objects is not always useful (as seen above) you can use `(js/console.dir x)` instead to get a more useful reprensentation in the browser console. `goog/typeOf` may also be useful at times. Since the above example shows `"function"` using `:default` would not work since `:default` basically is just syntax sugar for `x/default`.
+Desde que printar objetos JS nem sempre é útil (como visto acima) é possível usar `(js/console.dir x)` para conseguir uma representação mais útil no console do navegador. `goog/typeOf` também deve ser útil as vezes. Desde que o exemplo acima mostra `"function"` usando `:default` não deveria funcionar uma vez que o `:default` é basicamente uma syntax sugar para `x/default`.
 
 === Package Provider [[js-provider]]
 
-`shadow-cljs` supports several different ways to include `npm` packages into your build. They are configurable via the `:js-options :js-provider` setting. Each `:target` usually sets the one appropriate for your build most often you won't need to touch this setting.
+`shadow-cljs` suporta diversas maneiras diferentes de incluir pacotes `npm` no seu build. Eles são configurados através das configurações `:js-options :js-provider`. Cada `:target` geralmente define aquele apropriado para seu build, na maioria das vezes você não vai precisar tocar nessa configuração.
 
-Currently there are 3 supported JS Providers:
+Atualmente são suportados três providers:
 
 [Horizontal]
-`:require`:: Maps directly to the JS `require("thing")` function call. It is the default for all `node.js` targets since it can resolve `require` natively at runtime. The included JS is not processed in any way.
-`:shadow`:: Resolves the JS via `node_modules` and includes a minified version of each referenced file in the build. It is the default for the `:browser` target. `node_modules` sources do not go through `:advanced` compilation.
-`:closure`:: Resolves similarly to `:shadow` but attempts to process all included files via the Closure Compiler CommonJS/ES6 rewrite facilities. They will also be processed via `:advanced` compilation.
+`:require`:: Mapeado diretamente para a chamada de função JS `require("thing")`. É o padrão para todos os alvos `node.js` uma vez que ele pode resolver `require` nativamente em tempo de execução. O JS incluido não é processado de nenhuma maneira.
+`:shadow`:: Resolve o JS através do `node_modules` e inclui uma versão minificada para cada arquivo referênciado no build. É o padrão para o target `:browser`. `node_modules` não passa pela compilação `:advanced`.
+`:closure`:: Funciona de maneira parecida com o `:shadow` mas tenta processar todos os arquivos incluidos através do Closure Compiler CommonJS/ES6, facilidade de reescritas. Também são processado através da compilação `:advanced`.  
 
 .`:shadow` vs `:closure`
 ****
-Ideally we want to use `:closure` as our primary JS Provider since that will run the entire application through `:advanced` giving us the most optimized output. In practice however lots of code available via `npm` is not compatible with the aggressive optimizations that `:advanced` compilation does. They either fail to compile at all or expose subtle bugs at runtime that are very hard to identify.
+Idealmente quermos usar `:closure` como nosso Provider de JS primário desde que ele vai rodar toda a aplicação através `:advanced` nos fornecendo o mais otimizado output. Contudo na prática a maioria dos códigos disponíveis via `npm` não é compátivel com as agressivas otimizações que a compilação `:advanced` faz. Eles também falham em compilar tudo ou expoem pequenos bugs em tempo de execução que são muito dificeis de identificar.
 
-`:shadow` is sort of a stopgap solution that only processes code via `:simple` and achieves much more reliable support while still getting reasonably optimized code. The output is comparable (or often better) to what other tools like `webpack` generate.
+`:shadow` é uma ordenada solução paliativa que processa o código de maneira `:simple` e alcança um suporte confiável enquanto ainda consegue código razoavelmente otimizado. A saída é comparável (ou frequentemente melhor) a outras ferramentas como a gerada pelo `webpack` por exemplo.
 
-Until support in Closure gets more reliable `:shadow` is the recommend JS Provider for `:browser` builds.
+Até suport em Closure ser mais confiável em `:shadow` é recomendado o JS provider para `:browser`.
 ****
 
 
