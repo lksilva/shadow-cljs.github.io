@@ -133,7 +133,7 @@ Até suport em Closure ser mais confiável em `:shadow` é recomendado o JS prov
 ****
 
 
-.Example config for using `:closure` in a `:browser` build.
+.Exemplo de config parar usar `:closure` em um `:browser` build.
 ```clojure
 {...
  :builds
@@ -145,15 +145,15 @@ Até suport em Closure ser mais confiável em `:shadow` é recomendado o JS prov
 ```
 
 
-=== Resolving Packages [[js-resolve]]
+=== Resolvendo pacotes [[js-resolve]]
 
-By default `shadow-cljs` will resolve all `(:require ["thing" :as x])` requires following the `npm` convention. This means it will look at `<project>/node_modules/thing/package.json` and follow the code from there. To customize how this works `shadow-cljs` exposes a `:resolve` config option that lets you override how things are resolved.
+Por padrão `shadow-cljs` vai resolver todos os requires `(:require ["thing" :as x])` seguinte a convensão `npm`. Isso significa que isso vai olhar o `<project>/node_modules/thing/package.json` e seguir o código de lá. Para customizar como isso funciona `shadow-cljs` expõe uma opção de configuração `:resolve` que permite você sobrescrever como as coisas são resolvidas.
 
-==== Using a CDN [[js-resolve-global]]
+==== Usando uma CDN [[js-resolve-global]]
 
-Say you already have React included in your page via a CDN. You could just start using `js/React` again but we stopped doing that for a good reason. Instead you can continue to use `(:require ["react" :as react])` but configure how "react" resolves!
+Digamos que você já tenha React incluido na página via um CDN. Você deveria apenas começar usando `js/React` novamente mas nós paramos de fazer isso por uma boa razão. Ao invés disso você pode continuar a usar (:require ["react" :as react])` mas configura como resolve o "react"!
 
-Here is a sample `shadow-cljs.edn` config for such a build:
+Aqui está um exemplo de config `shadow-cljs.edn` para tal construção:
 
 ```
 {...
@@ -170,7 +170,7 @@ Here is a sample `shadow-cljs.edn` config for such a build:
    ...}}}
 ```
 
-The `:app` build will now use the global `React` instance while the `:server` build continues using the "react" npm package! No need to fiddle with the code to make this work.
+A build `app` vai agora usar uma instância do `React` global enquanto o `:server` build continua usando o pacote npm "react". Não há necessidade de violar o código pra fazer isso funcionar.
 
 ==== Redirecting “require” [[js-resolve-npm]]
 
