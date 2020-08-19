@@ -172,9 +172,9 @@ Aqui está um exemplo de config `shadow-cljs.edn` para tal construção:
 
 A build `app` vai agora usar uma instância do `React` global enquanto o `:server` build continua usando o pacote npm "react". Não há necessidade de violar o código pra fazer isso funcionar.
 
-==== Redirecting “require” [[js-resolve-npm]]
+==== Redirecionando “require” [[js-resolve-npm]]
 
-Sometimes you wan't more control over which `npm` package is actually used depending on your build. You can "redirect" certain requires from your build config without changing the code. This is often useful if you either don't have access to the sources using such packages or you just want to change it for one build.
+Algumas vezes você quer mais controle sobre quais pacotes `npm` estão na realidade dependendo da sua build. Você consegue "redirect" determinados requires do build config sem mudar o código. Isso é frequente útil se você não tem acesso ao fonte do qual seu pacote esta usando ou você apenas quer mudar ele para um build. 
 
 ```
 {...
@@ -187,11 +187,11 @@ Sometimes you wan't more control over which `npm` package is actually used depen
                        :require "preact-compat"}}}
 ```
 
-==== Limitations [[js-resolve-limitations]]
+==== Limitações [[js-resolve-limitations]]
 
-The `:shadow-js` and `:closure` have full control over `:resolve` and everything mentioned above works without any downsides. The `:js-provider :require` however is more limited. Only the initial require can be influenced since the standard `require` is in control after that. This means it is not possible to influence what a package might `require` internally. It is therefore not recommended to be used with targets that use `require` directly (eg. `:node-script`).
+O `:shadow-js` e `:closure` tem total controle sobre `:resolve` e tudo mencionado acima funciona sem desvantagens. O `:js-provider :require` contudo, é mais limitado. Apenas o require inicial pode ser influênciado desde o padrão `require` está no controle depois disso. Isso significa que não é possível influênciar o que o pacote deve `require` internamente. É portanto não recomendado ser usado com targets que sua `require` diretamente (ex. `:node-script`).
 
-.Redirecting "react" to "preact"
+.Redirecionando "react" para "preact"
 ```
 {...
  :builds
@@ -202,14 +202,14 @@ The `:shadow-js` and `:closure` have full control over `:resolve` and everything
    {:resolve {"react" {:target :npm
                        :require "preact-compat"}}}
 ```
-.Example use of react-table
+.Exemplo use react-table
 ```
 (ns my.app
   (:require
     ["react-table" :as rt]))
 ```
 
-The above works fine in the Browser since every `"react"` require will be replaced, including the `"react"` require `"react-table"` has internally. For `:js-provider :require` however a `require("react-table")` will be emitted and `node` will be in control how that is resolved. Meaning that it will resolve it to the standard `"react"` and not the `"preact"` we had configured.
+O exemplo acima funciona bem no navegador desde que cara `"react"` requerido seja substituido, incluindo o `"react"` requer `"react-table"` internamente. Para `:js-provider :require` contudo um `require("react-table")` será emitido e `node` esta controlando como isso é resolvido. Significando que isso será resolvido no padrão `"react"` e não o `"preact"` que tinhamos configurado.
 
 === Alternate Modules Directories [[alt-node-modules]]
 
