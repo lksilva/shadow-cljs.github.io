@@ -211,20 +211,20 @@ O `:shadow-js` e `:closure` tem total controle sobre `:resolve` e tudo mencionad
 
 O exemplo acima funciona bem no navegador desde que cara `"react"` requerido seja substituido, incluindo o `"react"` requer `"react-table"` internamente. Para `:js-provider :require` contudo um `require("react-table")` será emitido e `node` esta controlando como isso é resolvido. Significando que isso será resolvido no padrão `"react"` e não o `"preact"` que tinhamos configurado.
 
-=== Alternate Modules Directories [[alt-node-modules]]
+=== Alternar diretório de módulos [[alt-node-modules]]
 
-By default `shadow-cljs` will only look at the `<project-dir>/node_modules` directory when resolving JS packages. This can be configured via the `:js-package-dirs` option in `:js-options`. This can be applied globally or per build.
+Por padrão `shadow-cljs` só olha para o `<project-dir>/node_modules` quando resolvendo pacotes JS. Isso pode ser configurado através da opção `:js-package-dirs` em `:js-options`. Isso pode ser aplicado globalmente ou por build.
 
-Relative paths will be resolved relative to the project root directory. Paths will be tried from left to right and the first matching package will be used.
+Paths relativos serão resolvido para a raíz do projeto. Paths serão scaneados da esquerda para a direita e o primeiro pacote que combine será usado.
 
-.Global config in `shadow-cljs.edn`
+.Config global `shadow-cljs.edn`
 ```
 {...
  :js-options {:js-package-dirs ["node_modules" "../node_modules"]}
  ...}
 ```
 
-.Config applied to single build
+.Config aplicado para um único build
 
 ```
 {...
@@ -235,19 +235,17 @@ Relative paths will be resolved relative to the project root directory. Paths wi
 ```
 
 
-== Dealing with .js Files [[classpath-js]]
+== Lidando com arquivos .js [[classpath-js]]
 
 ****
-*DANGER: This feature is an experiment!* It is currently only supported in `shadow-cljs` and other CLJS tools will yell at you if you attempt to use it. Use at your own risk. The feature was initially rejected from CLJS core but I think it is useful and should not have been https://dev.clojure.org/jira/browse/CLJS-2061?focusedCommentId=46191&page=com.atlassian.jira.plugin.system.issuetabpanels:comment-tabpanel#comment-46191[dismissed] without further discussion.
+*Atenção: Essa funcionalidade é um experimento!* É suportado atualmente em `shadow-cljs` e outras ferramentas CLJS podem gerar problemas se você tentar usar ela. Use isso colocando sua conta em risco. A funcionalidade foi inicialmente rejeitada a partir do CLJS core mas eu acredito ser útil e não deveria ter sido https://dev.clojure.org/jira/browse/CLJS-2061?focusedCommentId=46191&page=com.atlassian.jira.plugin.system.issuetabpanels:comment-tabpanel#comment-46191[anulada] sem um discussão mais longa.
 
-CLJS has an alternate https://clojurescript.org/guides/javascript-modules[implementation] which in turn is not supported by `shadow-cljs`. I found this implementation to be lacking in certain aspects so I opted for the different solution. Happy to discuss the pros/cons of both approaches though.
+CLJS tem uma alternada https://clojurescript.org/guides/javascript-modules[implementacão] que por sua vez não é suportada pelo `shadow-cljs`. Eu achei que essa implementação esta se perdendo em certos aspectos então eu optei por diferentes soluções. Feliz em discutir os prós/contra de ambas abordagens. 
 ****
 
-We covered how <<npm, npm>> packages are used but you may be working on a codebase that already has lots of plain JavaScript and you don't want to rewrite everything in ClojureScript just yet. `shadow-cljs` provides 100% full interop between JavaScript and ClojureScript. Which means your JS can use your CLJS and CLJS can use your JS.
+Nós cobrimos como os pacotes <<npm, npm>> são usados mas você deve estar trabalhando no codebase que já tem um monte de Javascript puro e você não quer sobrescrever tudo em ClojureScript ainda. `shadow-cljs` 100% de interoperabilidade entre JavasScript e ClojureScript. O que significa que seu JS pode usar CLJS e o CLJS pode usar o JS.
 
-There are only a few conventions you need to follow in order for this to work reliably but chances are that you are already doing that anyways.
-
-
+Só é necessário apenas algumas convenções que você precisa seguir com a finalidade disso funcionar mas há chances de você já estar fazendo isso de qualquer maneira.
 
 === Requiring JS
 
