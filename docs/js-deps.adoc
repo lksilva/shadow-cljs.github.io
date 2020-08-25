@@ -247,11 +247,11 @@ Nós cobrimos como os pacotes <<npm, npm>> são usados mas você deve estar trab
 
 Só é necessário apenas algumas convenções que você precisa seguir com a finalidade disso funcionar mas há chances de você já estar fazendo isso de qualquer maneira.
 
-=== Requiring JS
+=== Requerindo JS
 
-We already covered how `npm` packages are accessed by their name but on the classpath we access `.js` files by either a full path or relative to the current namespace.
+Já cobrimos como os pacotes `npm` são acessado através de seu nome mas no classpath acessamos os arquivos `.js` por ambos os caminhos, path absoluto ou relativo para o namespace atual.
 
-.Loading JS from the classpath
+.Carregando JS a partir do classpath
 ```clojure
 (ns demo.app
   (:require
@@ -259,15 +259,15 @@ We already covered how `npm` packages are accessed by their name but on the clas
     ["./bar" :as bar :refer (myComponent)]))
 ```
 
-TIP: For string requires the extension `.js` will be added automatically but you can specify the extension if you prefer. Note that currently only `.js` is supported though.
+TIP: A extensão `.js` será adicionada automáticamente mas é possível especificar a extensão se você preferir. Perceba que atualmente apenas o `.js` é suportado.
 
-Absolute requires like `/some-library/components/foo` mean that the compiler will look for a `some-library/components/foo.js` on the classpath; unlike `node` which would attempt to load the file from the local filesystem. The same classpath rules apply so the file may either be in your `:source-paths` or in some third-party `.jar` library you are using.
+Require absoluto como `/some-library/components/foo` significa que o compilador vai procurar por uma `some-library/components/foo.js` no classpath; ao contrário `node` que carregaria o arquivo a partir do filesystem. A mesma regra de classpath é aplicada para os arquivos no seu `:source-paths` ou em algumas biblioteca de terceiros `.jar` que você estiver usando.
 
-Relative requires are resolved by first looking at the current namespace and then resolving a relative path from that name. In the above example we are in `demo/app.cljs` to the `./bar` require resolves to `demo/bar.js`, so it is identical to `(:require ["/demo/bar"])`.
+Requires relativos são resolvidos primeiro procurando o namespace atual e então resolvendo um path relative a partir do nome. No exemplo acima estamos em `demo/app.cljs` para o requerimento `./bar` se resolver para  `demo/bar.js`, então isso é idêntico para `(:require ["/demo/bar"])`.
 
-IMPORTANT: The files must not be physically located in the same directory. The lookup for the file appears on the classpath instead. This is unlike node which expects relative requires to always resolve to physical files.
+IMPORTANTE: O arquivo não deve ser fisicamente alocado no mesmo diretório. Ao invés disso a procurar pelo arquivo vem a tona no classpath. Isso é o contrário de node do qual espera sempre resolver a arquivos físicos.
 
-.Example File Structure with Separate Paths
+.Exemplo de estrutura de arquivos com paths separados
 ```text
 .
 ├── package.json
