@@ -283,15 +283,15 @@ IMPORTANTE: O arquivo não deve ser fisicamente alocado no mesmo diretório. Ao 
 
 === Language Support
 
-IMPORTANT: It is expected that the classpath only contains JavaScript that can be consumed without any pre-processing by the Compiler. `npm` has a very similar convention.
+IMPORTANTE: É experado que o classpath contenha apenas JavaScript que podessa ser consumido sem qualquer pre processamento feito pelo compilador. `npm` tem uma convenção muito similar.
 
-The Closure Compiler is used for processing all JavaScript found on the classpath using its `ECMASCRIPT_NEXT` language setting. What exactly this setting means is not well documented but it mostly represents the next generation JavaScript code which might not even be supported by most browsers yet. ES6 is very well supported as well as most ES7 features. Similarly to standard CLJS this will be compiled down to ES5 with polyfills when required.
+O Closure Compiler é usado para processar todo o JavaScript encontrado no classpath usando a configuração de linguagem `ECMASCRIPT_NEXT`. E o que exatamente isso significa não é muito bem documentado mas é na maioria das vezes representa as próxima geração de código JavaScript da qual nem mesmo deve ser suportada pela maioria dos navegadores ainda. ES6 é muito suportado assim como a maioria das funcionalidades do ES7. Similarmente para o padrão CLJS isso será compilado para ES5 com polyfills quando necessário.
 
-=== JavaScript Dialects
+=== Dialetos JavaScript
 
-Since there are many popular JavaScript dialects (JSX, CoffeeScript, etc) that are not directly parsable by the Closure Compiler we need to pre-process them before putting them onto the classpath. https://babeljs.io/[babel] is commonly used in the JavaScript world so we are going to use `babel` to process `.jsx` files as an example here.
+Desde que existem muito dialetos populares em JavaScript (JSX, CoffeScript, etc) que não são diretamente analisaveis pelo Closure Compiler, precisamos pre-processar eles antes de colocar no classpath. https://babeljs.io/[babel] é comumente usado no mundo JavaScript então vamos usar `babel` para processar os arquivos `.jsx` como um exemplo aqui.
 
-.Example shadow-cljs.edn Config
+.Exemplo do config shadow-cljs.edn
 ```
 {:source-paths
  ["src/main"
@@ -299,7 +299,7 @@ Since there are many popular JavaScript dialects (JSX, CoffeeScript, etc) that a
  ...}
 ```
 
-.Example File Structure
+.Exemplo da estrutura de arquivos
 ```text
 .
 ├── package.json
@@ -314,7 +314,7 @@ Since there are many popular JavaScript dialects (JSX, CoffeeScript, etc) that a
             └── bar.jsx
 ```
 
-IMPORTANT: Notice how `src/js` is not added to `:source-paths` which means it will not be on the classpath.
+IMPORTANTE: Perceba como `src/js` não é adicionado para `:source-paths` o que significa que não vai estar no classpath.
 
 .src/js/demo/bar.jsx
 ```jsx
@@ -327,7 +327,7 @@ function myComponent() {
 export { myComponent };
 ```
 
-We run https://babeljs.io/docs/usage/cli/[babel] to convert the files and write them to the configured `src/gen` directory. Which directory you use it up to you. I prefer `src/gen` for generated files.
+Rodamos https://babeljs.io/docs/usage/cli/[babel para converter os arquivos e escrever eles para ser configurado no diretório `src/gen`. Que é o diretório que você vai usar para você. Eu prefiro `src/gen` para os arquivos gerados.
 
 ```bash
 $ babel src/js --out-dir src/gen
@@ -335,7 +335,7 @@ $ babel src/js --out-dir src/gen
 $ babel src/js --out-dir src/gen --watch
 ```
 
-`babel` itself is configured via the `src/js/.babelrc`. See the official https://babeljs.io/docs/plugins/transform-react-jsx/[example for JSX].
+`babel` é por si só configurado atrav;es do `src/js/.babelrc`. Veja o [exemplo oficial do JSX](https://babeljs.io/docs/plugins/transform-react-jsx/).
 
 .JSX minimal .babelrc
 ```json
@@ -344,13 +344,13 @@ $ babel src/js --out-dir src/gen --watch
 }
 ```
 
-Once `babel` writes the `src/gen/demo/bar.js` it will be available to use via ClojureScript and will even be hot loaded just like your ClojureScript sources.
+Uma vez que `babel` escreve o `src/gen/demo/bar.js` será possível usar ele via ClosureScript e vai ser recarregado assim como o código ClojureScript.
 
-IMPORTANT: `shadow-cljs` currently does not provide any support for running those transformation steps. Please use the standard tools (eg. `babel`, `coffeescript`, etc.) directly until it does.
+IMORTANTE: `shadow-cljs` atualmente não provê suporte para rodar essa transformação. Por favor, use as ferramentas padrões (ex. `babel`, `coffescript`, etc.).
 
-=== Access CLJS from JS
+=== Acessando CLJS a partir do JS
 
-The JS sources can access all your ClojureScript (and the Closure Library) directly by importing their namespaces with a `goog:` prefix which the Compiler will rewrite to expose the namespace as the default ES6 export.
+As fontes JS podem ser acessadas por todo seus ClojureScript (e a Closure Library) diretamente importando seus namespaces com o prefixo `goog:` do qual o Compiler vai subrescrever o namespace como o padrão de exportação ES6.
 
 ```
 import cljs, { keyword } from "goog:cljs.core";
@@ -359,7 +359,7 @@ import cljs, { keyword } from "goog:cljs.core";
 cljs.array_map(keyword("foo"), "hello world");
 ```
 
-TIP: The `goog:` prefix currently only works for ES6 file. `require("goog:cljs.core")` does not work.
+TIP: O prefixo `goog:` atualmente só funciona para os arquivos ES6. `require("goog:cljs.core")` não funciona.
 
 == Migrating cljsjs.* [[cljsjs]]
 
