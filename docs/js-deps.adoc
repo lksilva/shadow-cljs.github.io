@@ -361,15 +361,15 @@ cljs.array_map(keyword("foo"), "hello world");
 
 TIP: O prefixo `goog:` atualmente só funciona para os arquivos ES6. `require("goog:cljs.core")` não funciona.
 
-== Migrating cljsjs.* [[cljsjs]]
+== Migrando cljsjs.* [[cljsjs]]
 
-> CLJSJS is an effort to package Javascript libraries to be able to use them from within ClojureScript.
+> CLJSJS é um esforço para empacotar bibliotécas Javascript e ser capaz de usar elas com ClojureScript.
 
-Since `shadow-cljs` can access <<npm, npm packages>> directly we do not need to rely on re-packaged https://github.com/cljsjs/packages[CLJSJS] packages.
+Desde que `shadow-cljs` consegue acessar <<npm, npm packages>> diretamente nós não precisamos contar com um reembalo dos pacotes https://github.com/cljsjs/packages[CLJSJS].
 
-However many CLJS libraries are still using CLJSJS packages and they would break with `shadow-cljs` since it doesn't support those anymore. It is however very easy to mimick those `cljsjs` namespaces since they are mostly build from `npm` packages anyways. It just requires one shim file that maps the `cljsjs.thing` back to its original `npm` package and exposes the expected global variable.
+Contudo muitas bibliotecas CLJS ainda estão usando pacotes CLJSJS e eles quebrariam com `shadow-cljs` desde que isso não é mais suportado. Porém é bem simples de imitar esses namespaces `cljsjs` desde que eles são contruídos a partir dos pacotes `npm`. Isso deve requerer um arquivo que mapeia o `cljsjs.thing` para o pacote `npm` original e expõe a variavel globalmente.
 
-For React this requires a file like `src/cljsjs/react.cljs`:
+Para React isso requer um arquivo como `src/cljsjs/react.cljs`:
 
 ```
 (ns cljsjs.react
@@ -382,24 +382,20 @@ For React this requires a file like `src/cljsjs/react.cljs`:
 (js/goog.exportSymbol "React" react)
 ```
 
-Since this would be tedious for everyone to do manually I created the https://github.com/thheller/shadow-cljsjs[`shadow-cljsjs`]
-library which provides just that. It does not include every package but I’ll keep adding
-them and contributions are very welcome as well.
+Desde que será tedioso para todo mundo fazer isso manualmente criei a biblioteca https://github.com/thheller/shadow-cljsjs[`shadow-cljsjs`] da qual provê apenas isso. Não inclui cada pacote mas irei continuar adicionando eles e contribuições são muito bem vindas também.
 
-NOTE: The `shadow-cljsjs` library only provides the shim files. You’ll still need to
-`npm install` the actual packages yourself.
+NOTE: A biblioteca `shadow-cljsjs` provê apenas arquivos de "calço". Ainda é necessário dar o `npm install` para os pacotes atuais de qualquer modo.
 
+=== Por que nnao usar CLJSJS?
 
-=== Why not use CLJSJS?
+Pacotes CLJS basicamente pegam um pacote do `npm` e coloca ele dentro de um `.jar` e re-publica eles através do https://clojars.org[clojars]. Como um bônus eles frequentemente empacota pacotes externos. O compilador de outro modo não faz nada com esses arquivos e apenas prefixa eles para o output gerado.
 
-CLJSJS packages basically just take the package from `npm` and put them into a `.jar` and re-publish them via https://clojars.org[clojars]. As a bonus they often bundle Externs. The compiler otherwise does nothing with these files and only prepends them to the generated output.
+Isso foi bastante útil no passado quando nós não tinhamos acesso ao `npm` diretamente mas tem certos problemas desde que nem todos os pacotes são facilmente combinados com outros. Um pacote que deve contar com `react` mas ao invés de expressar isso via `npm` https://github.com/cljsjs/packages/tree/master/material-ui[eles]fazem o bundle do próprio `react`. Se você não tomar cuidado você poderia incluir duas versões diferentes de `react` no seu build do qual levaria a erros confusos ou pelo menos aumentar o tamanho do build substancialmente.
 
-This was very useful when we had no access to `npm` directly but has certain issues since not all packages are easily combined with others. A package might rely on `react` but instead of expressing this via `npm` https://github.com/cljsjs/packages/tree/master/material-ui[they] bundle their own `react`. If you are not careful you could end up including 2 different `react` versions in your build which may lead to very confusing errors or at the very least increase the build size substantially.
+Além disso não todo pacote `npm` é disponível via CLJSJS e manter as versões dos pacotes sincronizadas requer trabalho manual, do qual significa que os pacotes estão frequentemente desatualizados.
 
-Apart from that not every `npm` package is available via CLJSJS and keeping the package versions in sync requires manual work, which means packages are often out of date.
+`shadow-cljs` não suporta CLJSJS para evitar conflito no seu código. Uma biblioteca deve tentar usar a versão "antiga" do `cljsjs.react` enquando outra usa a nova `(:require ["react"])` diretamente. Isso iria novamente levar a duas versões de `react` na sua página novamente.
 
-`shadow-cljs` does not support CLJSJS at all to avoid conflicts in your code. One library might attempt to use the "old" `cljsjs.react` while another uses the newer `(:require ["react"])` directly. This would again lead to 2 versions of `react` on your page again.
+Então a única coisa que estamos esquecendo são os blundles externos. Em muitos exemplos eles não é requerido que seja melhorado <<infer-externs, externs inference>>. Frequentemente esses externos são gerados usando uma ferramenta de terceiros do qual significa que eles não são totalmente precisos de qualquer modo.
 
-So the only thing we are missing are the bundled Externs. In many instances these are not required due to improved <<infer-externs, externs inference>>. Often those Externs are generated using third-party tools which means they are not totally accurate anyways.
-
-Conclusion: Use <<npm, npm>> directly. Use <<infer-externs, :infer-externs auto>>.
+Conclusão: Use <<npm, npm>> diretamente. Use <<infer-externs, :infer-externs auto>>.
