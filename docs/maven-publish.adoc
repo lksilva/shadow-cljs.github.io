@@ -1,16 +1,16 @@
 # Publicando Bibliotecas[[publish]]
 
-Bibliotecas ClojureScript são publicads nos repositórios `mavens` assim como as feita em Clojure. Mais comumente são publicadas no https://clojars.org/[Clojars] mas todos os outros padrões de repositório maven também funcionam.
+Bibliotecas ClojureScript são publicadas nos repositórios `mavens` assim como as feita em Clojure. Mais comumente são publicadas no https://clojars.org/[Clojars] mas todos os outros padrões de repositório maven também funcionam.
 
-`shadow-cljs` itself does not have direct support for publishing but since ClojureScript libraries are just uncompiled source files published in a JAR (basically just a ZIP compressed file) any common tool that is able to publish to maven will work. (eg. `mvn`, `gradle`, `lein`, etc). No extra compilation or other steps are required to publish. The ClojureScript compiler and therefore shadow-cljs is not involved at all.
+`shadow-cljs` por si só não tem suporte para publicar mas desde que bibliotecas ClojureScrip são apenas arquivos não compilados publicados em um JAR (basicamente apenas um arquivo ZIP comprimido) qualquer ferramena que é capaz de publicar para o maven vai funcionar. (ex. `mvn`, `gradle`, `lein`, etc). Nenhuma compilação extra ou outros passos são obrigatórios para publicas. O compilador ClojureScript e portanto shadow-cljs não é involvido.
 
 ## Leiningen [[publish-lein]]
 
-There are a variety of options to publish libraries and I currently recommend https://leiningen.org/[Leiningen]. The setup is very straightforward and doesn't require much configuration at all.
+Existe uma grande variedade de opções para publicar bibliotecas e eu atualmente recomendo https://leiningen.org/[Leiningen]. A configuração é muito direta e não requer muita configuração.
 
-IMPORTANT: This does not mean that you have to use Leiningen during development of the library itself. It is recommended to just use Leiningen for publishing but use `shadow-cljs` normally otherwise. You'll only need to copy the actual `:dependencies` definition once you publish. Remember to keep development related dependencies out though.
+IMPORTANWTE: Isso não significa que você tem que usar Leiningen durante o desenvolvimento da biblioteca. É recomendado usar Leiningen apenas para publicar mas use `shadow-cljs` de outra forma. Você vai precisar copiar a atual definition `:dependencies` uma vez pra você publicar. Entretando relembre de manter o desenvolvimento relacionado a dependência.
 
-Assuming you are already using the recommended project structure where all your primary sources are located in `src/main` you can publish with a very simple `project.clj`.
+Assumindo que você já esta usando a estrutura de projeto recomendada onde todos as suas fontes primarias são localizadas no `src/main` você pode publicar com um simples `project.clj`.
 
 ```clojure
 (defproject your.cool/library "1.0.0"
