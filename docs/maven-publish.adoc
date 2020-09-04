@@ -29,12 +29,11 @@ Assumindo que você já esta usando a estrutura de projeto recomendada onde todo
   :source-paths
   ["src/main"])
 ```
+Isso vai gerar um `pom.xml` e colocar todos os fontos do `src/main` em um arquivo `.jar` publicavel. Tudo que você precisa rodar é `lein deploy clojars` para publicar ele. Quando fazendo isso pela primeira ve você vai primeiro precisar configurar adequadamente a autenticação. Por favor, se baseie na documentação oficial do Leinigen https://github.com/technomancy/leiningen/blob/stable/doc/DEPLOY.md[Leiningen] e https://github.com/clojars/clojars-web/wiki/Tutorial[Clojars].
 
-This will generate the required `pom.xml` and put all sources from `src/main` into the published `.jar` file. All you need to run is `lein deploy clojars` to publish it. When doing this for the first time you'll first need to setup proper authentication. Please refer to the official  https://github.com/technomancy/leiningen/blob/stable/doc/DEPLOY.md[Leiningen] and https://github.com/clojars/clojars-web/wiki/Tutorial[Clojars] documentation on how to set that up.
+### Desabilitando assinatura JAR
 
-### Disable JAR Signing
-
-Leiningen defaults to signing libraries via GPG before publishing which is a good default but given that this can be a hassle to setup and not many people are actually verifying the signatures you can disable that step via adding a simple `:repositories` config to the `project.clj`.
+O padrão do Leiningen é assinar bibliotécas via GPG antes de fazer a publicação o que é bom, porém isso pode ser um incômodo de configurar e muitas pessoas na verdade não verificam as assinaturas, você pode desabilitar esse passo adicionando uma simples config `:repositories` para o `project.clj`.
 
 ```clojure
 (defproject your.cool/library "1.0.0"
@@ -45,24 +44,24 @@ Leiningen defaults to signing libraries via GPG before publishing which is a goo
   ...)
 ```
 
-### Keep your JAR clean
+### Mantenha seu JAR limpo
 
-If you write tests or user other development related code for your library make sure to keep them in `src/dev` or `src/test` to avoid publishing them together with the library.
+Se você escrever testes ou usar outro código relacionado ao desenvolvimento para sua biblioteca, tenha certeza de manter ele no `src/dev` ou `src/test` para evitar publicar eles juntos com a biblioteca.
 
-Also avoid generating output to `resources/*` since Leiningen and other tools may include those files into the `.jar` which may cause problems for downstream users. Your `.jar` should ONLY contains the actual source files, no compiled code at all.
+Também evite gerar saída para `resources/*` desde que o Leiningen e outras ferramentas devem incluir esses arquivos dentro do `.jar` do quais devem causar problemas para os usuários. Seu `.jar` deveria APENAS conter os fontes atuais, e nenhum código compilado.
 
-IMPORTANT: You can and should verify that everything is clean by running `lein jar` and inspecting the files that end up in it via `jar -tvf target/library-1.0.0.jar`.
+IMPORTANTE: Você pode e deveria verificar que tudo está limpo rondando `lein jar` e inspecionandos os arquivos gerados via `jar -tvf target/liberary-1.0.0.jar`.
 
-## Declaring JS dependencies [[publish-deps-cljs]]
+## Declarando dependências JS [[publish-deps-cljs]]
 
-Please note that currently only `shadow-cljs` has a clean automatic interop story with `npm`. That may represent a problem for users of your libraries using other tools. You may want to consider providing a CLJSJS fallback and/or publishing extra documentation for `webpack` related workflows.
+Por favor perceba que atualmente apenas `shadow-cljs` tem um limpo e automática interoperabilidade com `npm`. Isso deve representar um problema para os usuários da sua biblioteca usando outras ferramentas. Você quer considerar prover um fallback CLJSJS e/ou publicar uma documentação extra pro `webpack` relacionado a fluxo de trabalho.
 
-You can declare `npm` dependencies directly by including a `deps.cljs` with `:npm-deps` in your project (eg. `src/main/deps.cljs`).
+É possível declarar dependências `npm` diretamente incluindo um `dps.cljs` com `:npm-deps` no seu projeto (ex.: `src/main/deps.cljs`).
 
-.Example src/main/deps.cljs
+.Exemplo src/main/deps.cljs
 ```clojure
 {:npm-deps {"the-thing" "1.0.0"}}
 ```
 
-You can also provide extra `:foreign-libs` definitions here. They won't affect `shadow-cljs` but might help other tools.
+É possível também provê definições extrar aqui `:foreign-libs`. Elas não irão afetar o `shadow-cljs` mas deve ajudar outras ferramentas.
 
