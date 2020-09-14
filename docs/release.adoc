@@ -154,9 +154,9 @@ Chamada no `:require` bindings são também inferidas automáticamente.
 (createElement "div" nil "hello world")
 ```
 
-=== Manual Externs
+=== Externs Manual
 
-Some libraries provide Externs as separate `.js` files. You can include them into your build via the `:externs` compiler options.
+Algumas bibliotecas provê externs como um arquivo `.js` separado. Você pode incluir eles dentro do seu build através da opção de compilação `:externs`.
 
 .Manual Externs Config
 ```
@@ -169,7 +169,7 @@ Some libraries provide Externs as separate `.js` files. You can include them int
    }}}
 ```
 
-TIP: The compiler looks for files relative to the project root first. It will also attempt to load them from the classpath if no file is found.
+DICA: O compiler procurar por arquivos relativos ao projeto raiz primeiro. Isso vai também mirar pra carregar eles a partir do classpath se nenhum arquivo for encontrado.
 
 === Simplified Externs
 
