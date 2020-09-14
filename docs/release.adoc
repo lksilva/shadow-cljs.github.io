@@ -171,7 +171,9 @@ Algumas bibliotecas provê externs como um arquivo `.js` separado. Você pode in
 
 DICA: O compiler procurar por arquivos relativos ao projeto raiz primeiro. Isso vai também mirar pra carregar eles a partir do classpath se nenhum arquivo for encontrado.
 
-=== Simplified Externs
+=== Externs Simplificado
+
+Escrevendo externs na mão pode ser desafiador e `shadow-cljs` provê uma maneira de escrever uma maneira mais coveniente para escrever eles.
 
 Writing Externs by hand can be challenging and `shadow-cljs` provides a way to write a more convenient way to write them. In combination with `shadow-cljs check <your-build>` you can quickly add the missing Externs.
 
