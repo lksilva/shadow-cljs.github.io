@@ -173,13 +173,11 @@ DICA: O compiler procurar por arquivos relativos ao projeto raiz primeiro. Isso 
 
 === Externs Simplificado
 
-Escrevendo externs na mão pode ser desafiador e `shadow-cljs` provê uma maneira de escrever uma maneira mais coveniente para escrever eles.
+Escrevendo externs na mão pode ser desafiador e `shadow-cljs` provê uma maneira de escrever uma maneira mais coveniente para escrever eles. Com `shadow-cljs check <your-build>` você pode rapidamente adicionar os externs missing.
 
-Writing Externs by hand can be challenging and `shadow-cljs` provides a way to write a more convenient way to write them. In combination with `shadow-cljs check <your-build>` you can quickly add the missing Externs.
+Comece criando um `externs/<your-buid>.txt`, então build `:app` seria `externs/app.txt`. Nesse arquivo cada lina deveria ser uma palavra especificando uma propriedade JS que não deveria ser renomeado. Variaveis globais deveriam ser prefixadas pelo `global:`
 
-Start by creating a `externs/<your-build>.txt`, so build `:app` would be `externs/app.txt`. In that file each line should be one word specifying a JS property that should not be renamed. Global variables should be prefixed by `global:`
-
-.Example externs/app.txt
+.Exemplo externs/app.txt
 ```
 # this is a comment
 foo
@@ -187,7 +185,7 @@ bar
 global:SomeGlobalVariable
 ```
 
-In this example the compiler will stop renaming `something.foo()`, `something.bar()`.
+Nesse exemplo o compilador vai parar de renomar o `something.foo()`, `something.bar()`.
 
 == Code Stripping
 
