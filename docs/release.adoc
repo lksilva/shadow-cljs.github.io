@@ -189,9 +189,9 @@ Nesse exemplo o compilador vai parar de renomar o `something.foo()`, `something.
 
 == Code Stripping
 
-The Closure Compiler supports removing unwanted code by name. This allows removing code that normal dead-code removal can't or won't remove. This is quite dangerous as it can remove code you actually care about but it can remove a lot of dev only code easily. It is grouped into 4 separate options of which pretty much only `:strip-type-prefixes` is relevant to ClojureScript but other may be useful as well.
+O Closure Compiler suporta remover código por nome. Isso permite remover código que o processor normal de dead-code não consegue remover. Isso é um pouco perigoso porque pode remover código que você na verdade se preocupa mas isso pode remover um monte de dev code facilmente. Isso é agrupado em 4 opções separadas das quais praticamente apenas a `:strip-type-prefixes` são relevantes para o ClojureScript mas os outros devem ser úteis também.
 
-.Example removing all uses of `cljs.pprint`
+.Exemplo removendo todos os usos de `cljs.pprint`
 ```
 {...
  :builds
@@ -202,24 +202,23 @@ The Closure Compiler supports removing unwanted code by name. This allows removi
    }}}
 ```
 
-Each of these options is specified as a Set of Strings. Please note that all the names specified here are JS names so certain CLJS names must be munged. `my-lib.core` becomes `my_lib.core`.
+Cada uma dessas opções são especificadas como um conjunto de Strings. Por favor, perceba que todos os nomes especificados aqui são nomes JS então certamente CLJS devem ser usados. `my-lib.core` se torna `my_lib.core`
 
 [Horizontal]
-`:strip-types`:: Allows removing deftype/defrecord declarations or uses. `#{"my.ns.FooBar}` removes `(defrecord FooBar [])`.
-`:strip-type-prefixes`:: Removes everything starting with any of the given Prefixes. Allows removing entire CLJS namespaces.
-`:strip-name-prefixes`:: Allows removing properties by prefix. `#{"log"}` removes `this.logX` or `(defn log-me [...])`
-`:strip-name-suffixes`:: Allows removing properties by suffix. `#{"log"}` removes `this.myLog` or `(defn my-log [...])`
+`:strip-types`:: Permite remover declarações deftype/defrecord. `#{"my.ns.FooBar"}` remove `(defrecord FooBar [])`.
+`:strip-type-prefixes`:: Remove tudo começando com um determinado Prefixo. Permite remover namespaces CLJS completos.
+`:strip-name-prefixes`:: Permite remover propriedades por prefixo. `#{"log"}` remove `this.logX` ou `(defn log-me [...])`
+`:strip-name-suffixes`:: Permite remover propriedades por sufixo. `#{"log"}` remove `this.myLog` ou `(defn my-log [...])`
 
 ****
-*DANGER: Be careful with these options. They apply to your entire build and may remove code you actually need. You may accidentally remove code in libraries not written by you. Always consider other options before using this.*
+*DANGER: Seja cuidado com essas opções. Elas são aplicadas ao seu build como um todo e deve remover código que na verdade é necessário. Você deve acidentalmente remover código em bibliotecas não escritas por você. Sempre conside outras opções antes de usar esse.*
 ****
-
 
 == Build Report
 
-`shadow-cljs` can generate a detailed report for your `release` builds which includes a detailed breakdown of the included sources and how much they each contributed to the overall size.
+`shadow-cljs` consegue gerar um relatório detalhado para o build de `release` dos quais inclui uma repartição detalhada dos fontes incluidos e quanto cada um deles contribue para o tamanho do build no geral.
 
-A sample report can be found https://code.thheller.com/demos/build-report/huge.html[here].
+Um relatório simples pode ser encontrado https://code.thheller.com/demos/build-report/huge.html[aqui].
 
 ```bash
 $ npx shadow-cljs run shadow.cljs.build-report <build-id> <path/to/output.html>
@@ -227,6 +226,6 @@ $ npx shadow-cljs run shadow.cljs.build-report <build-id> <path/to/output.html>
 $ npx shadow-cljs run shadow.cljs.build-report app report.html
 ```
 
-The above example will generate a `report.html` in the project directory for the `:app` build.
+O exemplo acima vai gerar um `report.html` no diretório do seu projeto para o build `:app`.
 
-TIP: The generated `report.html` is entirely self-contained and includes all the required data/js/css. No other external sources are required.
+DICA: O `report.html` gerado é inteiramente independente e inclue todos os requeridos data/js/css. Nenhuma outra fonta externa é requerida.
