@@ -1,32 +1,32 @@
 # REPL Troubleshooting [[repl-troubleshooting]]
 
-Getting a CLJS REPL working can sometimes be tricky and a lot can go wrong since all the moving parts can be quite complicated. This guide hopes to address the most common issues that people run into and how to fix them.
+Ter um CLJS REPL funcionando bem pode ser um pouco complicado as vezes e um monte de coisas pode dar errado desde que mover todas essas partes pode ser um pouco complicado. Esse guia tem a intenção de fornecer os problemas mais comuns que as pessoas enfretam e como corrigir eles.
 
 image::shadow-cljs-repl.png[]
 
-## Anatomy of the CLJS REPL [[cljs-repl-anatomy]]
+## Anatomia do REPL CLJS [[cljs-repl-anatomy]]
 
-A REPL in Clojure does exactly what the name implies: Read one form, Eval it, Print the result, Loop to do it again.
+Um REPL em Clojure faz exatamente o que o nome sugere: Ler um form, avalia ele, exibe o resultado, faz isso novamente.
 
-In ClojureScript however things are a bit more complicated since compilation happens on the JVM but the results are eval'd in a JavaScript runtime. There are a couple more steps that need to be done due in order to "emulate" the plain REPL experience. Although things are implemented a bit differently in `shadow-cljs` over regular CLJS the basic principles remain the same.
+Contude em ClojureScript as coisas são um pouco mais complicadas desde que a compilação acontece na JVM mas os resultados são avaliados em runtime no JavaScript. Existe um conjunto a mais de passos que precisam ser feitos com a finalidade de "emular" a experiência simples do REPL. Apesas das coisas serem implementadas um pouco diferentes com o `shadow-cljs` em comparação com o CLJS os principios básicos permanecem os mesmos.
 
-First you'll need a REPL client. This could just be the CLI (eg. `shadow-cljs cljs-repl app`) or your Editor connected via `nREPL`. The Client will always talk directly to the `shadow-cljs` server and it'll handle the rest. From the Client side it still looks like a regular REPL but there are a few more steps happening in the background.
+Primeiro você vai precisar de um cliente REPL. Isso poderia ser apenas o CLI (eg. `shadow-cljs cljs-repl app`) ou no seu Editor conectado via `nREPL`. O cliente vai sempre conversar diretamente ao servidor `shadow-cljs` e ele vai manipular o resto. A partir do lado do cliente isso ainda vai parecer como um simples REPL mas existe algumas coisinhas a mais acontecendo em segundo plano.
 
-1) Read: It all starts with reading a singular CLJS form from a given InputStream. That is either a blocking read directly from `stdin` or read from a string in case of `nREPL`. A Stream of characters are turned into actual datastructures, `"(+ 1 2)"` (a string) becomes `(+ 1 2)` (a list).
+1) Leitura: Isso tudo começa com a leitura de um único form CLJS para um determinado InputStream. Isso é um bloquei lido diretamente do `stdin` ou le a partir de uma string no caso do `nRPL`. Um Stream de caracteres são transformados em estrutura de dados, `"(+ 1 2)"` (uma string) se torna `(+ 1 2)` (uma lista).
 
-2) Compile: That form is then compiled on the `shadow-cljs` JVM side and transformed to a set of instructions.
+2) Compilação: Esse form é então compilado no lado da JVM `shadow-cljs` e transformado em um conjunto de instruções.
 
-3) Transfer Out: Those instructions are transferred to a connected JavaScript runtime. This could be a Browser or a `node` process.
+3) Transferir Out: Essas instruções são transferidas para a runtime Javascript conectada. Isso deveria ser um Browser ou um processo `node`.
 
-4) Eval: The connected runtime will take the received instructions and `eval` them.
+4) Eval: A runtime conectada vai pegar as instruções recebidas e `eval` elas.
 
-5) Print: The `eval` result is printed as a String in the JS runtime.
+5) Print: O resultado do `eval` é exibido como uma String na runtime JS.
 
-6) Transfer Back: The printed result is transferred back to the `shadow-cljs` JVM side.
+5) Transfer Back: O resultado exibido é transferido de volta para o lado da JVM `shadow-cljs`.
 
-7) Reply: The JVM side will forward the received results back to initial caller and the result is printed to the proper OutputStream (or sent as a nREPL message).
+6) Resposta: O lado da JVM vai encaminhar o resultado recebido de volta ao chamador inicial e o resultado e exibido para do OutputStream adequado (ou enviado como uma mensagem no nREPL).
 
-8) Loop: Repeat from 1).
+7) Loop: Volta ao estágio 1.
 
 
 ## JavaScript Runtimes
