@@ -43,7 +43,9 @@ Uma vez conectada a REPL está pronta para uso. Perceba que recarregado a runtim
 
 > No application has connected to the REPL server. Make sure your JS environment has loaded your compiled ClojureScript code.
 
-This error message just means that no JS runtime (eg. Browser) has connected to the `shadow-cljs` server. Your REPL client has successfully connected to the `shadow-cljs` server but as explained above we still need a JS runtime to actually `eval` anything.
+Essa mensagem de erro apenas significa que não tem nenhuma runtime (eg. Browser) conectado ao servidor `shadow-cljs`. Seu client REPL se conectou com sucesso ao servidor `shadow-cljs` mas como explicado acime nós ainda precisamos de uma runtime JS pra conseguir `avaliar` qualquer coisa.
+
+Simples build `shadow-cljs` não gerenciam qualquer runtime JS de seu próprio dono então você é responsável por rodar eles.
 
 Regular `shadow-cljs` builds do not manage any JS runtime of their own so you are responsible for running them.
 
