@@ -47,17 +47,14 @@ Essa mensagem de erro apenas significa que não tem nenhuma runtime (eg. Browser
 
 Simples build `shadow-cljs` não gerenciam qualquer runtime JS de seu próprio dono então você é responsável por rodar eles.
 
-Regular `shadow-cljs` builds do not manage any JS runtime of their own so you are responsible for running them.
-
 ### :target :browser [[repl-trouble-browser]]
 
-For <<target-browser, `:target :browser`>> builds the `watch` process will have compiled the given code to a configured `:output-dir` (defaults to `public/js`). The generated `.js` must be loaded in a browser. Once loaded the Browser Console should show a `WebSocket connected` message. If you are using any kind of custom HTTP servers or have over-eager firewalls blocking the connections you might need to set some additional configuration (eg. via <<proxy-support, :devtools-url>>). The goal is to be able to connect to the <<http, primary HTTP server>>.
-
+Para os builds <<target-browser, `:target :browser`>> o processo de `watch` vai ter compilado o código para o `:output-dir` configurado (padrão para `public/js`). O `.js` gerado deve ser carregado no navegador. Uma vez carregado o console do navegador deveria mostrar uma mensagem `WebSocket connected`. Se você está usando qualquer tipo de servidor HTTP customizado ou ter firewall ansiosos demais bloqueando as conexões você deve precisar configurar algumas configurações adicionais (ex. via <<proxy-support, :devtools-url>>). O objetivo é ser capaz de conectar ao <<http, primary HTTP server>>.
 
 ### :target :node-script, :node-library [[repl-trouble-node]]
 
-These targets will have produced a `.js` file that are intended to run in a `node` process. Given the variety of options however you'll need to run them yourself. For example a `:node-script` you'd run via `node the-script.js` and on startup it'll try to connect to the `shadow-cljs` server. You should see a `WebSocket connected` message on startup. The output is designed to only run on the machine they were compiled on, don't copy `watch` output to other machines.
+Esses alvos vão ter produzido um arquivo `.js` que são planejados pra rodar em um processo `node`. Dado a variedade de opções você vai precisar rodar eles você mesmo. Por exemplo um `:node-script` você rodaria via `node the-script.js` e na inicialização isso iria tentar se conectar ao servidor `shadow-cljs`. Você deveria ver uma mensagem `WebSocket connected` na inicialização. A saída é designada para rodar apenas na máquina onde eles foram compilados, não copia a saída do `watch` para outras máquinas.
 
 ### :target :react-native [[repl-trouble-react-native]]
 
-The generated `<:output-dir>/index.js` file needs to be added to your `react-native` app and then loaded on an actual device or emulator. On startup it will also attempt to connect to the `shadow-cljs` server. You can check the log output via `react-native log-android|log-ios` and should show a `WebSocket connected` message once the app is running. If you see a websocket related error on startup instead it may have failed to connect to the shadow-cljs process. This can happen when the IP detection picked an incorrect IP. You can check which IP was used via `shadow-cljs watch app --verbose` and override it via `shadow-cljs watch app --config-merge '{:local-ip "1.2.3.4"}'`.
+O arquivo `<:output-dir>/index.js` gerado precisa ser adicionado ao seu app `react-native` e então carregado no device ou emulador. Na inicialização isso também vai tentar se conectar ao servidor `shadow-cljs`. Você pode verificar a saída do log via `react-native log-android|log-ios` e deveria mostrar uma mensagem `WebSocket connected` uma vez que o app estiver rodando. Se você ver algum erro relacionado a websocket na inicialização ele deve ter falhado pra se conectar ao processo do shadow-cljs. Isso pode acontecer quando a detecção escolho o IP incorreto. Você pode checar qual IP foi usado via `shadow-cljs watch app --verbora` e sobrescrever ele via `shadow-cljs watch app --config-merge '{:local-ip "1.2.3.4"}'`.
