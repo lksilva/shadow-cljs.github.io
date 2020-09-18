@@ -6,7 +6,7 @@ Quando você rapidamente quer testar algum código externo o built-in REPLS deve
 
 == ClojureScript REPL
 
-By default you can choose between a `node-repl` and a `browser-repl`. They both work similarly and the differentiating factor is that one runs in a managed `node.js` process while the others opens a Browser Window that will be used to eval the actual code.
+Por padrão você pode escolher entre um `node-repl` e um `browser-repl`. Ambos trabalham similarmente e o fator diferenciado é que o um roda em um processo node controlado enquanto o outro abre o Browser Windows que vai ser usado para avaliar o código atual.
 
 === Node REPL [[node-repl]]
 
@@ -14,11 +14,11 @@ By default you can choose between a `node-repl` and a `browser-repl`. They both 
 $ shadow-cljs node-repl
 ```
 
-This starts a blank CLJS REPL with an already connected `node` process.
+Isso inicia um REPL CLJS em branco com um processo `node` já conectado.
 
-IMPORTANT: If you exit the Node REPL the `node` process is also killed!
+IMPORTANTE: Se você sair do REPL Node o processo `node` também vai ser fechado.
 
-`node-repl` lets you get started without any additional configuration. It has access to all your code via the usual means, ie. `(require '[your.core :as x])`. Since it is not connected to any build it does not do any automatic rebuilding of code when your files change and does not provide hot-reload.
+`node-repl` permite você iniciar sem uma configuração adicional. Ele tem acesso a todo seu código pelos meios usuais, ex. `(require '[your.code :as x])`. Desde que isso não está conectado a nenhum build ele não faz nenhum rebuilding automático do código quando seus arquivos mudarem e não provê um hot-reload.
 
 === Browser REPL [[browser-repl]]
 
@@ -26,20 +26,20 @@ IMPORTANT: If you exit the Node REPL the `node` process is also killed!
 $ shadow-cljs browser-repl
 ```
 
-This starts a blank CLJS REPL and will open an associated Browser window where the code will execute. Besides running in the Browser this has all the same functionality as the above `node-repl`.
+Isso inicia um REPL CLJS e vai abrir um Browser Window associoado onde o código vai ser executado. Além de rodar no Browser isso tem tudo a mesma funcionalidade como o `node-repl` acima.
 
-IMPORTANT: If you close the Browser window the REPL will stop working.
+IMPORTANTE: Se você fecha o Browser Window o REPL vai parar de funcionar.
 
 === Build-specific REPL [[build-repl]]
 
-`node-repl` and `browser-repl` work without any specific build configuration. That means they'll only do whatever you tell them to do but nothing on their own.
+`node-repl` e `browser-repl` funciona sem nenhuma configuração especifica de build. Isso significa que eles vão apenas fazer o que você falar pra fazer mas nada por eles próprio.
 
-If you want to build a specific thing you should configure a build using one of the provided build-targets. Most of them automatically inject the necessary code for a ClojureScript REPL. It should not require any additional configuration. For the build CLJS REPL to work you need 2 things
+Se você quer buildar uma coisa em especifico você deveria configurar um build usando um dos build-targets providos. A maioria deles automaticamente injeta o código necessário para o REPL ClojureScript. Isso não deveria requerer nenhuma configuração adicional. Para o build CLJS REPL funcionar você precisa de 2 coisas
 
-. a running `watch` for your build
-. connect the JS runtime of the `:target`. Meaning if you are using the `:browser` target you need to open a Browser that has the generated JS loaded. For node.js builds that means running the `node` process.
+. um `watch` para seu build
+. conectar a runtime JS do `:target`. Significando que se você está usando o target `:browser` você precisa abrir um Browser que tem o JS gerado carregado. Para  builds node.js que significa rodar o processo `node`.
 
-Once you have both you can connect to the CLJS REPL via the command line or from the Clojure REPL.
+Uma vez você tem ambos conectado você ao REPL CLJS via linha de comando ou a partir de um Clojure REPL.
 
 .CLI
 ```bash
@@ -65,23 +65,23 @@ $ shadow-cljs clj-repl
 [2:1]~cljs.user=>
 ```
 
-TIP: Type `:repl/quit` to exit the REPL. This will only exit the REPL, the `watch` will remain running.
+DICA: Digite `:repl/quit` para sair da REPL. Isso vai apenas sair do REPL, o `watch` vai permanecer rodando.
 
-TIP: You may run multiple `watch` "workers" in parallel and connect/disconnect to their REPLs at any given time.
+TIP: Você deve rodar multiplos `watch` "workers" em paralelo e conectar/disconectar to seus REPLs a qualquer momento.
 
-.No connected runtime error.
+.Erro nenhum runtime conectada.
 ``` text
 [3:1]~cljs.user=> (js/alert "foo")
 There is no connected JS runtime.
 ```
 
-If you see this you need to open your App in the Browser or start the `node` process.
+Se você ver isso você precisa abrir seu App no Browser ou começar um processo `node`.
 
 == Clojure REPL
 
-A Clojure REPL is also provided in addition to the provided ClojureScript REPLs. This is can be used to control the `shadow-cljs` process and run all other build commands through it. You can start with a Clojure REPL and then upgrade it to a CLJS REPL at any point (and switch back).
+Um REPL Clojure é também provido além do ClojureScript REPLs providos. Isso pode ser usado para controlar o processo `shadow-cljs` e rodar todos os outros comandos build através disso. Você pode começar com um Clojure REPL e então atualizar isso para um CLJS REPL em qualquer ponto (e voltar).
 
-.Running from the CLI
+.Rodando a partir de um CLI
 ```bash
 $ shadow-cljs clj-repl
 ...
@@ -89,9 +89,9 @@ shadow-cljs - REPL - see (help), :repl/quit to exit
 [1:0]~shadow.user=>
 ```
 
-The `shadow.cljs.devtools.api` namespace has functions that map more or less 1:1 to the CLI counterparts. It is aliased as `shadow` by default.
+O namespace `shadow.cljs.devtools.api` tem funções que mapeia maios ou menos 1:1 para o CLI. São apelidado como `shadow` por padrão.
 
-.Example commands
+.Exemplo dos commandos
 ```clojure
 ;; shadow-cljs watch foo
 (shadow.cljs.devtools.api/watch :foo)
@@ -121,9 +121,9 @@ The `shadow.cljs.devtools.api` namespace has functions that map more or less 1:1
 
 === Embedded [[embedded]]
 
-It is also possible to use `shadow-cljs` entirely from within any other CLJ process. As long as the `thheller/shadow-cljs` artifact was loaded on the classpath you are good to go.
+Também é possível usar o `shadow-cljs` inteiramente de dentro de qualquer outro processo CLJ. Enquanto o artefato `thheller/shadow-cljs` foi carregado no classpath você está pronto pra seguir.
 
-.Example using `lein repl`
+.Exemplo usando `lein repl`
 ```bash
 $ lein repl
 nREPL server started on port 57098 on host 127.0.0.1 - nrepl://127.0.0.1:57098
@@ -142,7 +142,6 @@ user=> (shadow/compile :foo)
 ...
 ```
 
-You can stop the embedded server by running `(shadow.cljs.devtools.server/stop!)`. This will also stop all running build processes.
+Você pode parar o servidor embedado rodando `(shadow.cljs.devtools.server/stop!)`. Isso também vai parar todos os processos de build rodando.
 
-IMPORTANT: If you want to switch to a CLJS REPL this may require additional setup in the tool you used to start the server in. Since `lein` will default to using nREPL it will require configuring additional nREPL `:middleware`. When using `clj` you are good to go since it doesn't use nREPL.
-
+IMPORTANTE: Se você quer mudar para o REPL CLJS isso deve requerer configuração adicional na ferramenta que você usou para começar o servidor. Desde que `lein` vai por padrão requerer configuração adicional nREPL `:middleware`. Quando usando `clj` você está pronto para ir desde que ele não use o nREPL.
