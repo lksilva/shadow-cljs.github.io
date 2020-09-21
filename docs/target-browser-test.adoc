@@ -1,8 +1,8 @@
-This target is meant for gathering up namespaces that contain tests (based on a filename pattern match),
-and triggering a test runner. It contains a built-in runner that will automatically scan for `cljs.test`
-tests and run them.
+Esse target destina-se a reunir namespaces que contém testes (pattern mach basedo no nome do arquivo),
+e dispara um test runner. Contém um runner built-in que vai scanear automáticamente para testes `cljs.test`
+e rodar eles.
 
-The relevant configuration options are:
+As opções relevantes de configuração são:
 
 [horizontal]
 `:target`::    `:browser-test`
@@ -12,8 +12,8 @@ will not scan jars. Defaults to "-test$".
 `:runner-ns`:: (optional) A namespace that can contain a start, stop, and init function. Defaults to
 `shadow.test.browser`.
 
-The normal `:devtools` options are supported, so you will usually create an http server to serve the files.
-In general you will need a config that looks like this:
+As opções normais de `:devtools` são suportadas, então você vai geralmente criar um servidor http para fornecer esses arquivos.
+Em geral você vai precisar de um config parecido com esse:
 
 ```
 {...
@@ -25,10 +25,9 @@ In general you will need a config that looks like this:
                                  :http-root          "resources/public/js/test"}}
 ```
 
+Relembre que o diretório de testes tem que ter um index.html, e uma pasta js.
 
-Remember that the test directory will have the index.html, and a js folder.
-
-If you choose to supply a custom `:runner-ns`, it might look like this:
+Se você escolher fornecer um `:runner-ns` costumizado, ele deve parecer algo como esse:
 
 ```
 (ns tests.client-test-main)
@@ -44,16 +43,13 @@ If you choose to supply a custom `:runner-ns`, it might look like this:
   (start))
 ```
 
-It just has `init`, `start`, `stop` methods. `init` will be called once on startup, `stop` will be called before any code is reloaded and `start` will be called after all code was reloaded.
+Ele apenas tem os métodos `init`, `start`, `stop`. `init` vai ser chamado uma vez no startup, `stop` vai ser chamado antes de qualquer que for código recarregado e o `start` será chamado depois que todo o código for recarregado.
 
-TIP: `:runner-ns` is optional, just leave it out to use the default.
+DICA: `:runner-ns` é opcional, apenas deixe ele de fora para usar o padrão.
 
-=== Generated output in `:test-dir`
+=== Saída gerada no `:test-dir`
 
-The output includes two primary artifacts in your `test-dir` folder:
+A saída inclue dois artefados primarios em sua pasta `test-dir`:
 
-* `index.html` - If and only if there was not already an `index.html` file present. By default the generated
-file loads the tests and runs `init` in the `:runner-ns`. You may edit or add a custom version that will
-not be overwritten.
-* `js/test.js` - The Javascript tests. The tests will always have this name. The entries for the module are
-auto-generated.
+* `index.html` - Se e apenas se não existia um arquivo `index.html`. Por padrão o arquivo gerado carrega os testes e roda o `init` no `:runner-ns`. Você deve editar ou adicionar versões customizadas que não iram ser sobrescritas.
+* `js/test.js` - Os testes Javascript. Os testes sempre vão ter esse nome. As entradas para o modulo são auto-geradas.
