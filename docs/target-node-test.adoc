@@ -1,6 +1,6 @@
-This target will create a test runner including all test namespaces matching the given regular expression.
+Esse target vai criar um test runner incluindo todos os namespaces de teste coincidindo a uma determinada expressão regular.
 
-The relevant configuration options are:
+As opções de configuração relevante são:
 
 [horizontal]
 `:target`::    `:node-test`
@@ -20,7 +20,7 @@ The relevant configuration options are:
    :autorun   true}}}
 ```
 
-The `:node-test` target only generates the test file. You can run it via `node`.
+O target `:node-test` apenas gera o arquivo de teste. Você pode rodar ele via `node`.
 
 ```bash
 $ shadow-cljs compile test
@@ -34,4 +34,4 @@ $ node out/node-tests.js
 $ shadow-cljs compile test && node out/node-tests.js
 ```
 
-The `node` process exit code will be set to `0` when successful and `1` on any failures. (The `node` process exit code will not be returned when using `:autorun`.)
+O exit code do processo `node` será setado para `0` quando obtiver sucesso e `1` em qualquer falha. (O exit code processo `node` não será retornado quando usando `:autorun`.) 
