@@ -1,6 +1,6 @@
-The `:browser` target produces output intended to run in a Browser environment. During development it supports live code reloading, REPL, CSS reloading. The `release` output will be minified by the Closure Compiler with `:advanced` optimizations.
+O target `:browser` produz a saída esperada pra rodar no ambiente do navegeador. Durante o desenvolvimento ele suporta live reloading do código, REPL, CSS reloading. A saída `release` será minificada pelo Closure Compiler com as otimizações `:advanced`.
 
-A basic browser configuration looks like this:
+A configuração básica do navegar parece algo como esse:
 
 ```
 {:dependencies [...]
@@ -15,26 +15,27 @@ A basic browser configuration looks like this:
 
 == Output Settings
 
-The browser target outputs a lot of files, and a directory is needed for them all. You'll need to serve
-these assets with some kind of server, and the Javascript loading code needs to know the server-centric
-path to these assets. The options you need to specify are:
+O target do navegador produz uma saída com um monte de arquivos, e um diretório é preciso para armazenar todos eles. Você vai precisar
+servir esses arquivos com algum tipo de servidor, e para carregar o código Javascript você precisa conhecer o caminho desses arquivos.
+As opções que você precisa especificar são:
 
 [Horizontal]
 `:output-dir`:: The directory to use for all compiler output.
 `:asset-path`:: The relative path from *web server's root* to the resources in `:output-dir`.
 
-Your entry point javascript file and all related JS files will appear in `:output-dir`.
+O ponto de entrada do arquivo JavaScript e todos os arquivos JS relacionados vão aparecer no `:output-dir`.
 
-WARNING: Each build requires its own :output-dir, you may not put multiple builds into the same directory.
-This directory should also be exclusively owned by the build. There should be no other files in there.
-While `shadow-cljs` won't delete anything it is safer to leave it alone. Compilation
-creates many more files than just the main entry point javascript file during development:
-source maps, original sources, and generated sources.
+ATENÇÃO: Cada build requer seu próprio :output-dir, você não deve atribuir multiplos builds para o mesmo diretório.
+Esse diretório deveria ser exclusivo do dono do build. Não deve haver nenhum outro arquivo lá.
+Enquanto `shadow-cljs` não for deleter nada é seguro deixar pra lá. Compilação
+cria muito mais arquivos que apenas o principal ponto de entrada do arquivo JS durante o desenvolvimento:
+source map, fontes originais, e fontes gerados.
 
-The `:asset-path` is a prefix that gets added to the paths of module loading code inside of the
-generated javascript. It allows you to output your javascript module to a particular subdirectory
-of your web server's root. The dynamic loading during development (hot code reload) and production
-(code splitting) need this to correctly locate files.
+O `:asset-path` é um prefixo que é adicionado ao paths do modulo quando carregando código dentro do 
+javascript gerado. Isso permito você delimitar a saída do seu modulo javascript para um sub-diretório em particular 
+da raíz do seu servidor web. O carregamento dinâmico durante o desenvolvimento (hot code reload) e produção 
+(code splitting) precisa disso alocar corretamente os arquivos.
+
 
 Locating your generated files in a directory and asset path like this make it so that other assets
 (images, css, etc.) can easily co-exist on the same server without accidental collisions.
