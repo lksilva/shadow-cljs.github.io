@@ -36,26 +36,28 @@ javascript gerado. Isso permito você delimitar a saída do seu modulo javascrip
 da raíz do seu servidor web. O carregamento dinâmico durante o desenvolvimento (hot code reload) e produção 
 (code splitting) precisa disso alocar corretamente os arquivos.
 
+Localizando seus arquivos gerados em diretório e o asset path como esse faz com que outros assets (images, css, etc.)
+possam facilmente co-existir no mesmo servidor sem colisões acidentais.
 
-Locating your generated files in a directory and asset path like this make it so that other assets
-(images, css, etc.) can easily co-exist on the same server without accidental collisions.
+Por exemplo: se seu servidor web servir a pasta `public/x` quando requisitade para o URI `/x`,
+e seu `output-dir` para um module é `public/assets/app/js` então seu asset-path deveria ser `/assets/app/js`.
+Não é obrigatório usar o caminho absolut para o pasth, but é fortemente recomendado.
 
-For example: if your web server will serve the folder `public/x` when asked for the URI `/x`,
-and your `output-dir` for a module is `public/assets/app/js` then your asset-path should be `/assets/app/js`.
-You are not required to use an absolute asset path, but it is highly recommended.
+== Modulos
 
-== Modules
+Modulos configuram como os fontes compilados são empacotados juntos e como o `.js` final é gerado. Cada módulo declara uma lista de Namespace de entrada e a partir dessio e dependência de graph é construida. Quando usando multiplos modulos o código é divido então a quantidade máxima do código é movida para as bordas externas do graph. O objetivo é minimizar a quantidade de código que o navegador tem que carregar inicialmente e carregar o resto sobre demanda.
 
-Modules configure how the compiled sources are bundled together and how the final `.js` are generated. Each Module declares a list of Entry Namespace and from that dependency graph is built. When using multiple Modules the code is split so that the maximum amount of code is moved to the outer edges of the graph. The goal is to minimize the amount of code the browser has to load initially and loading the rest on-demand.
+DICA: Não se preocupe muito sobre :modules no começo. Comece com apenas um e divida eles depois.
 
-TIP: Don't worry too much about :modules in the beginning. Start with one and split them later.
+A sessão de configuração do `:modules` é sempre um mapa chaveado pelo ID do modulo. O ID do module também é usado
+para gerar o nome do arquivo Javascript. Module `:main` vai gerar o `main.js` no `:output-dir`.
 
-The `:modules` section of the config is always a map keyed by module ID. The module ID is also used
-to generate the Javascript filename. Module `:main` will generate `main.js` in `:output-dir`.
-
-The available options in a module are:
+As opções disponiveis em um modulo são:
 
 [horizontal]
+`:entries`:: O namespace que serve com o 
+
+
 `:entries`:: The namespaces that serve as the root nodes of the dependency graph for the output code of this module.
 `:init-fn`:: Fully qualified symbol pointing to a function that should be called when the module is loaded initially.
 `:depends-on`:: The names of other modules that must be loaded in order for this one to have everything it needs.
