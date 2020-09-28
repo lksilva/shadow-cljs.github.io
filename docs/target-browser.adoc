@@ -55,20 +55,17 @@ para gerar o nome do arquivo Javascript. Module `:main` vai gerar o `main.js` no
 As opções disponiveis em um modulo são:
 
 [horizontal]
-`:entries`:: O namespace que serve com o 
+`:entries`:: O namespace que serve com a raíz dos nodes do grafo de dependências para o código de saída desse modulo.
+`:init-fn`:: O symbol qualificado para apontar a uma função que deveria ser chamada quando o módulo for carregado inicialmente.
+`:depends-on`:: Os nomes dos módulos que devem ser carregado em ordem para ter tudo que é preciso para funcionar adequadamente.
+`:prepend`:: String que ira prefixar a saída js. Útil para comentários, copyright, etc.
+`:append`:: String que vai acrescentar a saída js. Útil para comentários, copyright, etc.
+`:prepend-js`:: Uma string para prefixar o módulo de saída contendo um javascript válido que vai rodar através do Closure optimizer.
+`:append-js`:: Uma string pra acrescentar o módulo de saída contendo javascript válido que vai rodar através do Closure optimizer.
 
+O seguinte exemplo mostra o configuração minima do módulo:
 
-`:entries`:: The namespaces that serve as the root nodes of the dependency graph for the output code of this module.
-`:init-fn`:: Fully qualified symbol pointing to a function that should be called when the module is loaded initially.
-`:depends-on`:: The names of other modules that must be loaded in order for this one to have everything it needs.
-`:prepend`:: String content that will be prepended to the js output. Useful for comments, copyright notice, etc.
-`:append`:: String content that will be appended to the js output. Useful for comments, copyright notice, etc.
-`:prepend-js`:: A string to prepend to the module output containing valid javascript that will be run through Closure optimizer.
-`:append-js`:: A string to append to the module output containing valid javascript that will be run through Closure optimizer.
-
-The following example shows a minimum module configuration:
-
-.Example :browser config
+.Examplo :browser config
 ```
 {...
  :builds
@@ -78,7 +75,7 @@ The following example shows a minimum module configuration:
         :modules {:main {:entries [my.app]}}}}}
 ```
 
-.Example :browser config with :init-fn
+.Examplo :browser config com :init-fn
 ```
 {...
  :builds
