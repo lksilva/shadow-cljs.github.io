@@ -151,11 +151,11 @@ Atualmente os Sigle-Page-Apps (SPA) estão se tornando mais populares e eles tra
 
 ==== Usando shadow-cljs's built-in Loader Support
 
-The compiler supports generating the required data for using the `shadow.loader` utility namespace. It exposes a simple interface to let you load modules on-demand at runtime.
+O compiler suporta gerar o dado requerido usando o `shadow.loader` namespace. Ele expõe uma simples interface que permite carregar modules sob demanda em tempo de compilação.
 
-You only need to add `:module-loader true` to your build config. The loader will always be injected into the default module (the one everything else depends on).
+Você apenas precisa adicionar o `:module-loader true` ao seu build config. O loader vai sempre ser injetado em um módulo padrão (aquele do qual todo mundo depende).
 
-At runtime you may use the `shadow.loader` namespace to load modules. You may also load a module eagerly by just using a `<script>` tag in your page.
+No runtime você deve usar o namespace `shadow.loader` para carregar os modulos. Você deve também carregar o módulo avidamente apenas usando uma tag `<script>` na sua página.
 
 ```
 {...
