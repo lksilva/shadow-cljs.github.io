@@ -85,26 +85,26 @@ O seguinte exemplo mostra o configuração minima do módulo:
         :modules {:main {:init-fn my.app/init}}}}}
 ```
 
-`shadow-cljs` will follow the dependency graph from the root set of code entry points in the `:entries`
-to find everything needed to actually compile and include in the output. Namespaces that are not required will not be included.
+`shadow-cljs` seguira a dependência de grafo a partir do conjunto raíz do ponto de entrada em `:entries``
+para encontrar tudo que é preciso para na verdade compilar e incluir na saída. Namespaces que não são requeridas não serão incluidas.
 
-The above config will create a `public/js/main.js` file. During development there will be an additional `public/js/cljs-runtime` directory with lots of files. This directory is not required for `release` builds.
+A configuração acima vai criar um arquivo `public/js/main.js`. Durante o desenvolvimento haverá um diretório adicional `public/js/cljs-runtime` com vários arquivos. Esse diretório não é requerido para builds `release`.
 
 == Code Splitting [[CodeSplitting]]
 
-Declaring more than one Module requires a tiny bit of additional static configuration so the Compiler can figure out how the Modules are related to each other and how you will be loading them later.
+Declarando mais que um Module requer um pouquinho de configuração estatica adicional então o Compiler pode descobrir como os Modulos são relacionado uns com os outros e como vão ser carregados mais tarde.
 
-In addition to `:entries` you'll need to declare which module depends on which (via `:depends-on`). How you structure this is entirely up to your needs and there is no one-size-fits-all solution unfortunately.
+Além de `:entries` você vai precisar declar quais modulos dependes de quais (via `:depends-on`). Como você estrutura depende inteiramente das suas necessidades e não existe uma solução bala de prata nessa situação.
 
-Say you have a traditional website with actual different pages.
+Digamos que você tenha um website tradicional com pagínas diferentes.
 
-- `www.acme.com` - serving the homepage
-- `www.acme.com/login` - serving the login form
-- `www.acme.com/protected` - protected section that is only available once the user is logged in
+- `www.acme.com` - serve a página inicial
+- `www.acme.com/login` - serve o formulário de login
+- `www.acme.com/protected` - sessão protegida que só é disponível quando o usuário ta logado
 
-One good configuration for this would be to have one common module that is shared between all the pages. Then one for each page.
+Uma boa configuração para isso seria ter um módulo common que é compartilhado entre todas as páginas. Então uma para cada página.
 
-.Example config with multiple `:modules`
+.Exemplo de config com múltiplos módulos `:modules`
 ```clojure
 {...
  :output-dir "public/js"
@@ -122,9 +122,9 @@ One good configuration for this would be to have one common module that is share
    :depends-on #{:shared}}
 ```
 
-TIP: You can leave the `:entries` of the `:shared` module empty to let the compiler figure out which namespaces are shared between the other modules.
+DICA: É possível deixar o `:entries` do modulo `:shared` vázio para permitir que o compilador descubra quais namespaces são compartilhados entre os outros módulos.
 
-.Generated file structure
+.Estrutura de arquivos geradas
 ```text
 .
 └── public
@@ -135,21 +135,21 @@ TIP: You can leave the `:entries` of the `:shared` module empty to let the compi
         └── protected.js
 ```
 
-In your HTML for the Homepage you'd then always include the `shared.js` on each page and the others conditionally depending on which page the user is on.
+No seu HTML para a página inicial você então sempre inclui o `shared.js` em cada página e outros condicionalmente dependen de qual página o usuário está online.
 
-.HTML for the `/login` page
+.HTML para a página de `/login`
 ```html
 <script src="/js/shared.js"></script>
 <script src="/js/login.js"></script>
 ```
 
-IMPORTANT: The `.js` files must be included in the correct order. The <<BrowserManifest, `manifest.edn`>> can help with this.
+IMPORTANTE: Os arquivos `.js` devem ser incluidos na ordem correta. O <<BrowserManifest, `manifest.edn`>> pode ajudar com isso.
 
-=== Loading code dynamically
+=== Carregando código dinamicamente
 
-These days Single-Page-Apps (SPA) are becoming more popular and they work similarly only that instead of letting the Server decide which JS to include to Client does it by itself.
+Atualmente os Sigle-Page-Apps (SPA) estão se tornando mais populares e eles trabalham de maneira semelhante ao invés de deixar o servidor decidir qual JS incluir ao Client ele faz isso por si só.
 
-==== Using shadow-cljs's built-in Loader Support
+==== Usando shadow-cljs's built-in Loader Support
 
 The compiler supports generating the required data for using the `shadow.loader` utility namespace. It exposes a simple interface to let you load modules on-demand at runtime.
 
