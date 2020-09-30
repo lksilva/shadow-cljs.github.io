@@ -204,15 +204,24 @@ Então a expressão a seguir pode ser usada para carregar o código:
 
 Você pode checar se um módulo é carregado usando `(loaded? "module-name")`.
 
-===== Loader Costs
+===== Custos do Loader
 
-Using the loader is very lightweight. It has a few dependencies which you may not be otherwise using. In practice using `:module-loader true` adds about 8KB gzip'd to the default module. This will vary depending on how much of `goog.net` and `goog.events` you are already using, and what level of optimization you use for your release builds.
+Usar o loader é bastante leve. Ele tem poucas dependências das quais você não deve ser muito claro usando. Em prática usar `:module-loader true` adicionar 8KB gzip'd para o modulo padrão. Isso vai variar dependendo quanto do `goog.net` e `goog.events` você já está usando, e em qual nível de otimização você usa para o seus builds de release.
 
-==== Using the Standard ClojureScript API
+==== Usando o padrão da ClojureScript API
 
-The generated code is capable of using the standard ClojureScript `cljs.loader` API. See the
-https://clojurescript.org/news/2017-07-10-code-splitting[documentation] on the ClojureScript
-website for instructions.
+O código gerado é capaz de usar a API padrão ClojureScript `cljs.loader`. Veja a
+https://clojurescript.org/news/2017-07-10-code-splitting[documentação] no website ClojureScrip
+para mais informações.
+
+A vantagem de usar a API padrão é que seu código vai funcionar bem com outras APIs
+
+
+
+
+
+
+
 
 The advantage of using the standard API is that your code will play well with others. This
 may be of particular importance to library authors. The disadvantage is that the dynamic module
