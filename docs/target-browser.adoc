@@ -169,7 +169,7 @@ No runtime você deve usar o namespace `shadow.loader` para carregar os modulos.
                         :depends-on #{:main}}}}}}
 ```
 
-If you had the following for your main entry point:
+Se você teve o seguinte entry point:
 
 ```
 (ns my.app
@@ -182,27 +182,27 @@ If you had the following for your main entry point:
   (js/console.log "extra load failed"))
 ```
 
-Then the following expressions can be used for loading code:
+Então a expressão a seguir pode ser usada para carregar o código:
 
-.Loading a module
+.Carregando um módulo
 ```
 ;; load returns a goog.async.Deferred, and can be used like a promise
 (-> (loader/load "extra")
     (.then fn-to-call-on-load fn-to-call-on-error))
 ```
 
-.Loading many modules
+.Carregando muitos módulos
 ```
 ;; must be a JS array, also returns goog.async.Deferred
 (loader/load-many #js ["foo" "bar"])
 ```
 
-.Including a callback
+.Incluindo uma callback
 ```
 (loader/with-module "extra" fn-to-call-on-load)
 ```
 
-You can check if a module is loaded using `(loaded? "module-name")`.
+Você pode checar se um módulo é carregado usando `(loaded? "module-name")`.
 
 ===== Loader Costs
 
