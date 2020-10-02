@@ -225,7 +225,7 @@ suporte no `shadow-cljs`.
 
 build de `release` para `:browser` com apenas um `:modules` são encapsulados em `(function(){<the-code>}).call(this);` por padrão. Então variaveis globais não são criadas.
 
-When using multiple `:modules` (a.k.a <<CodeSplitting, code splitting>>) this is not enabled by default since each module must be able to access the variables created by the modules it depends on. The Closure Compiler supports an additional option to enable the use of an output wrapper in combination with multiple `:modules` named `:rename-prefix-namespace`. This will cause the Compiler to scope all "global" variables used by the build into one actual global variable. By default this is set to `:rename-prefix-namespace "$APP"` when `:output-wrapper` is set to `true`.
+Quando usando multiplos `:modules` (a.k.a <<CodeSplitting, code splitting>>) isso não é habilitado por padrão desde que cada modulo deve ser capaz de acessar as variaveis criadas pelo modulo que ela depende. O Closure Compiler suporta uma opção adicional para o habilitar o uso de uma saída encapsulada em combinação com multiplos `:modules` nomeado como `:rename-prefix-namespace`. Este será o caso para todos os escopos de variaveis "global" usada pelo build dentro de uma variavel global. Por padrão esse é o conjunto para `:rename-prefix-namespace "$APP"` quando `:output-wrapper` é configurado para `true`.
 
 ```clojure
 {...
@@ -237,20 +237,19 @@ When using multiple `:modules` (a.k.a <<CodeSplitting, code splitting>>) this is
    :rename-prefix-namespace "MY_APP"}}}
 ```
 
-This will only create the `MY_APP` global variable. Since every "global" variable will now be prefixed by `MY_APP.` (e.g. `MY_APP.a` instead of just `a`) the code size can go up substantially. It is important to keep this short. Browser compression (e.g. `gzip`) helps reduce the overhead of the extra code but depending on the amount of global variables in your build this can still produce a noticeable increase.
+Isso vai criar uma variável global `MY_APP`. Desde que cada variavel "global" vai ser prefixada agora para `MY_APP`. (ex. `MY_APP.a` ao invés de apenas `a`) o tamanho do código pode aumentar substâncialmente. É importante manter isso pequeno. A compressão do navegador (ex `gzip`) ajuda a reduzir a sobrecarga de código extra mas dependendo da quantidade de variaveis globais em seu build isso pode ainda produzir um notável aumento.
 
-IMPORTANT: Note that the created variable isn't actually useful directly. It will contain a lot of munged/minified properties. All exported (eg. `^:export`) variables will still be exported into the global scope and are not affect by this setting. The setting only serves to limit the amount of global variables created, nothing else. Do not use it directly.
-
+IMPORTANTE: Perceba que a variavel criada não é diretamente últil na verdade. Ela vai conter um monte de propriedades minificadas. Todas as variaveis exportadas (ex. `^:export`) ainda vão ser exportadas dentro de um escopo global e não são diretamente afetadas por essa configuração. A configuração vai apenas servir para limitar a quantidade de variaveis globais criadas, nada mais que isso. Não use isso diretamente.
 
 == Web Workers
 
-The `:modules` configuration may also be used to generate files intended to be used as a Web Workers.
-You may declare any module as a Web Worker by setting `:web-worker true`. The
-generated file will contain some additional bootstrap code which will load its dependencies
-automatically. The way `:modules` work also ensures that code used only by the worker will also only
-be in the final file for the worker. Each worker should have a dedicated CLJS namespace.
+A configuração `:modules` deve também ser usada para gerar arquivos desejados para serem usados como um Web Workers.
+Você deve declarar qualquer modulo como um Web Worker configurando `:web-worker true`. O
+arquivo gerado vai conter alguns códigos adicionais dos quais carrega as dependências automaticamente.
+O `:modules` trabalha para garantir que o código usado apenas pelo worker vai também também está
+apenas no arquivo final para o worker. Cada worker deveria ter um namespace CLJS dedicado.
 
-.An example of generating a web worker script
+.Um exemplo de geração de um script web worker
 ```
 {...
  :builds
@@ -273,16 +272,16 @@ be in the final file for the worker. Each worker should have a dedicated CLJS na
    }}}
 ```
 
-The above configuration will generate `worker.js` which you can use to start the Web Worker.
-It will have all code from the `:shared` module available (but not `:main`). The code in the
-`my.app.worker` namespace will only ever execute in the worker. Worker generation happens in
-both development and release modes.
+A configuração vai gerar um `worker.js` da qual você pode usar para iniciar o Web Worker.
+Isso vai ter todo o código a partir do modulo `:shared` disponível (mas não `:main`). O código no
+namespace `my.app.worker` será apenas executado no worker. A geração do Worker acontece em ambos
+os modos desenvolvimento e release.
 
-Note that the empty `:entries []` in the `:shared` module will make it collect all the code shared between the `:main` and `:worker` modules.
+Perceba que `:entries []` no módulo `:shared` vai fazer isso coletar todos os códigos compartilhados entre o `:main` e os modulos `:worker`.
 
-The `:devtools {:browser-inject :main}` is currently required to tell the compiler where the browser devtools/hud should be added to. It defaults to adding them to the "base" module which would be `:shared` in this case. Since that contains code not compatible with the Worker environment we need to move it.
+O `:devtools {:browser-inject :main}` é atualmente requerido para falar ao compiler onde o navegador devtools/hud deveria ser adicionado. o Padrão para adicionar eles para o modulo "base" do qual seria `:shared` nesse caso. Desde que ele contém código não compátivel com o ambiente Worker nós precisamos mover ele. 
 
-.Sample echo worker
+.Amostra do worker
 ```
 (ns my.app.worker)
 
@@ -302,9 +301,9 @@ The `:devtools {:browser-inject :main}` is currently required to tell the compil
     (.. worker (postMessage "hello world"))))
 ```
 
-IMPORTANT: Since we now have a `:shared` module you must ensure to load it properly in your HTML. If you just load `main.js` you will get an error.
+IMPORTANTE: Desde nós agora temos um modulo `:shared` você deve ter certeza de carregar ele adequadamente em seu HTML. Se você apenas carrega o `main.js` você vai gerar um erro.
 
-.HTML Loading shared.js and main.js
+.HTML Carregando shared.js e main.js
 ```
 <script src="/js/shared.js"></script>
 <script src="/js/main.js"></script>
