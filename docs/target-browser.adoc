@@ -309,21 +309,21 @@ IMPORTANTE: Desde nós agora temos um modulo `:shared` você deve ter certeza de
 <script src="/js/main.js"></script>
 ```
 
-== Cacheable Output
+== Cachenado Saída 
 
-In a web setting it is desirable to cache `.js` files for a very long time to avoid extra request. It is common
-practice the generate a unique name for the `.js` file for every released version. This changes the URL used to
-access it and thereby is safe to cache forever.
+Nas configuração da web é desejavel cachear os arquivos `.js` por um longo tempo com a finalidade de evitar requests desnecessárias. É uma prática comum
+gerar arquivos `.js` únicos para cada versão lançada. Isso muda a URL usada para
+acessar ele e assim é seguro cachear para sempre.
 
-=== Release Versions [[release-version]]
+=== Versões de lançamento [[release-version]]
 
-Creating unique filenames for each release can be done via the `:release-version` config setting. Generally you'll pass this in from the command line via <<config-merge, --config-merge>>.
+Criando nomes de arquivos únicos para cada lançamento pode ser feito através da configuração `:release-version`. Geralmente você vai passar isso a partir da linha de comando via <<config-merge, --config-merge>>.
 
 ```
 shadow-cljs release app --config-merge '{:release-version "v1"}'
 ```
 
-.Example :modules config
+.Exemplo do config :modules
 ```
 {...
  :builds
@@ -337,21 +337,21 @@ shadow-cljs release app --config-merge '{:release-version "v1"}'
                         :depends-on #{:main}}}}}}
 ```
 
-This would create the `main.v1.js` and `extra.v1.js` files in `public/js` instead of the usual `main.js` and `extra.js`.
+Isso criaria o `main.v1.js` e `extra.v1.js` em arquivos no `public/js` ao invés do `main.js` e `extra.js`.
 
-You can use manual versions or something automated like the `git` sha at the time of the build. Just make sure that you bump whatever it is once you shipped something out to the user since with caching they won't be requesting newer versions of old files.
+Você pode criar versões manuais ou algo automatizado como o `git`no tempo de build.
 
-=== Filenames with Fingerprint-Hash [[NameHashing]]
+=== Nomes de arquivos com Fingerprint-Hash [[NameHashing]]
 
-You can add `:module-hash-names true` to your build config to automatically create a MD5
-signature for each generated output module file. That means that a `:main` module will generate
-a `main.<md5hash>.js` instead of just the default `main.js`.
+É possível adicionar `:module-hash-names true` para seu build config manualmente, crie uma assinatura MD5
+para cada modulo gerado. Isso significa que o modulo `:main` vai gerar um `main.<md5hash>.js` ao invés do
+padrão `main.js`.
 
-`:module-hash-names true` will include the full 32-length md5 hash, if you prefer a shorter version you can specify a
-number between 1-32 instead (eg. `:module-hash-names 8`). Be aware that shortening the hash may increase the chances
-of generating conflicts. I recommend using the full hash.
+`:module-hash-names true` vai incluir o hash md5 32-length completo , se você preferir uma versão mais curta você pode especificar um
+número entre 1-32 (ex. `:module-hash-names 8`). Esteja consciente que encurtar o hash deve aumentar as chances de conflito. 
+Eu recomendo o hash completo.
 
-.Example :module-hash-names config
+.Exemplo de config :module-hash-names
 ```
 {...
  :builds
