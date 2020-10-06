@@ -366,18 +366,18 @@ Eu recomendo o hash completo.
                         :depends-on #{:main}}}}}}
 ```
 
-Instead of generating `main.js` it will now generate `main.<hash>.js` in the `:output-dir`.
+Ao invés de gerar o `main.js` isso vai gerar um `main.<hash>.js` no `:output-dir`. 
 
-Since the filename can change with every release it gets a little bit more complicated to include them
-in your HTML. The <<BrowserManifest, Output Manifest>> can help with that.
+Desde que o nome do arquivo pode mudar com cada release fica um pouco mais complicado incluir eles
+no seu HTM. O <<BrowserManifest, Output Manifest>> pode ajudar com isso.
 
-== Output Manifest [[BrowserManifest]]
+== Manifesto de Saída [[BrowserManifest]]
 
-`shadow-cljs` generates a `manifest.edn` file in the configured `:output-dir`.
-This file contains a description of the module config together with an extra `:output-name` property which
-maps the original module name to actual filename (important when using the `:module-hash-names` feature).
+`shadow-cljs` gera um arquivo `manifest.edn` no `:output-dir` configurado.
+Esse arquivo contém uma descrição do modulo config juntamente com um propriedade extra `:output-name` da qual
+mapeia o modulo original para o nome de arquivo atual (importante quando usando a funcionalidade `:module-hash-names`).
 
-.Sample output of manifest.edn when using hashed filenames.
+.Exemplo de saída do manifest.edn quando usando nomes de arquivos hasheados.
 ```
 [{:module-id :common,
   :name :common,
@@ -394,18 +394,18 @@ maps the original module name to actual filename (important when using the `:mod
  ...]
 ```
 
-The manifest contains all `:modules` sorted in dependency order. You can use it to map the `:module-id` back to the
-actual generated filename.
+O manifest contém todos os `:modules` ordernados em ordem de dependência. É possível usar isso para mapear o `:module-id` de volta
+para o nome de arquivo gerado.
 
-Development builds also produce this file and you may check if for modifications to
-know when a new build completed. `:module-hash-names` does not apply during development so you'll get the usual
-filenames.
+Builds de desenvolvimento também produzem esse arquivo e você deve verificar modificações conhecidas
+quando a nova build estiver completa. `:module-hash-names` não é aplicada durante o desenvolvimento 
+então você vai pegar os filenames.
 
-You can configure the name of the generated manifest file via the `:build-options :manifest-name` entry. It defaults to
-`manifest.edn`. If you configure a filename with `.json` ending the output will be JSON instead of EDN. The file will
-be relative to the configured `:output-dir`.
+Você pode configurar o nome dos arquivos manifest gerados através do `:build-options :manifest-name`. É o padrão para
+`manifest.edn`. Se você configura um nome de arquivo com `.json` terminando a saída será um JSON ao invés de um EDN. O arquivo vai
+ser relative ao configurado no `:output-dir`.
 
-.Example manifest.json config
+.Exemplo de config manifest.json
 ```
 {...
  :builds
