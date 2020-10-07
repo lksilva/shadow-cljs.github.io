@@ -420,22 +420,22 @@ ser relative ao configurado no `:output-dir`.
 
 == Development Support
 
-The `:devtools` section of the configuration for `:browser` supports a few additional
-options for configuring an optional dev-time HTTP server for a build and CSS reloading.
+O sessão `:devtools` da configuração para o `:browser` suporta algumas opções adicionais
+para configurar um servidor HTTP opcional para uma build e CSS reloading.
 
 === Heads-Up Display (HUD) [[hud]]
 
-The `:browser` target now uses a HUD to display a loading indicator when a build is started. It will also display warnings and errors if there are any.
+O target `:browser` agora usa um HUD para exibir loading quando um build é iniciado. Ele também mostra alertar e errors se existir algum.
 
-You can disable it completely by setting `:hud false` in the `:devtools` section.
+É possível desabilitar isso completamente configurando `:hud false` na sessão do `:devtools`.
 
-You may also toggle certain features by specifying which features you care about via setting `:hud #{:errors :warnings}`. This will show errors/warnings but no progress indicator. Available options are `:errors`, `:warnings`, `:progress`. Only options included will be enabled, all other will be disabled.
+Você também pode esconder certas funcionalidades especifciando quais funcionalidade você se preocupada através do `:hud #{:errors :warnings}`. Isso vai mostrar erros/alertas mas não o indicador de progesso. As opções disponíveis são `:erros`, `:warnings`, `:progress`. Apenas opções incluidas vão ser habilitadas, todas as outras serão desabilitadas.
 
-==== Opening Files [[open-file-command]]
+==== Abrindo Arquivos [[open-file-command]]
 
-Warnings include a link to source location which can be clicked to open the file in your editor. For this a little bit of config is required.
+Alertas incluem um link para o fonte do qual pode ser clicado para abrir o arquivo no seu editor. Para isso uma pequena configuração é requerida.
 
-You can either configure this in your `shadow-cljs.edn` config for the project or globally in your home directory under `~/.shadow-cljs/config.edn`.
+Você também pode configurar isso no seu config `shadow-cljs.edn` para o projeto ou globalmente em seu home directory dentro `~/.shadow-cljs/config.edn`.
 
 .`:open-file-command` configuration
 ```clojure
@@ -443,9 +443,10 @@ You can either configure this in your `shadow-cljs.edn` config for the project o
  ["idea" :pwd "--line" :line :file]}
 ```
 
-The `:open-file-command` expects a vector representing a very simple DSL. Strings are kept as they are and keyword are replaced by their respective values. A nested vector can be used in case you need to combine multiple params, using `clojure.core/format` style pattern.
+O `:open-file-command` espera um vetor representando um simples DSL. Strings são aceitas como elas são e keyword são substituidas por seus respectivos valores. Um vetor aninhado pode ser usado em caso de você precisar combinar multiplos parametros, usando o padrão de estilo `clojure.core/format`.
 
-The above example would execute
+O exemplo abaixo executaria
+
 ```bash
 $ idea /path/to/project-root --line 3 /path/to/project-root/srv/main/demo/foo.cljs
 ```
@@ -460,7 +461,7 @@ $ idea /path/to/project-root --line 3 /path/to/project-root/srv/main/demo/foo.cl
 $ emacsclient -n +3:1 /path/to/project-root/srv/main/demo/foo.cljs
 ```
 
-The available replacement variables are:
+As possiveis substituições são:
 
 [Horizontal]
 `:pwd`::
@@ -481,39 +482,36 @@ Translated WSL file path. Useful when running `shadow-cljs` via WSL Bash. Transl
 `:wsl-pwd`::
 Translated `:pwd`
 
-
-
 === CSS Reloading
 
-The Browser devtools can also reload CSS for you. This is enabled by default and in most cases requires no additional
-configuration when you are using the built-in <<dev-http, development HTTP servers>>.
+O devtools do navegador pode também recarregar o CSS para você. Isso é habilitado por padrão e na maioria dos casos não requer configuração adicional quando você está usando o <<dev-http, development HTTP servers>>.
 
-Any stylesheet included in a page will be reloaded if modified on the filesystem. Prefer using absolute paths but relative paths should work as well.
+Qualquer stylesheet vai ser recarregado se modificado no filesystem. Prefira usar paths absolutos mas path relativos deveriam funcionar também.
 
-.Example HTML snippet
+.Exemplo HTML snippet
 ```html
 <link rel="stylesheet" href="/css/main.css"/>
 ```
 
-.Example Hiccup since we aren't savages
+.Exemplo Hiccup
 ```
 [:link {:rel "stylesheet" :href "/css/main.css"}]
 ```
 
-.Using the built-in dev HTTP server
+.Usando o HTTP server dev built-in
 ```
 :dev-http {8000 "public"}
 ```
 
-This will cause the browser to reload `/css/main.css` when `public/css/main.css` is changed.
+Isso vai causar o navegar recarregar `/css/main.css` quando `public/css/main.css` estiver mudado.
 
-`shadow-cljs` currently provides no support for directly compiling CSS but the usual tools will work and should
-be run separately. Just make sure the output is generated into the correct places.
+`shadow-cljs` atualmente não provê suporte para diretamente compilar CSS mas a ferramenta vai funcionar e deveria
+estar rodando separadamente. Apenas tenha certeza que o output é gerado no lugar correto.
 
-When you are not using the built-in HTTP Server you can specify `:watch-dir` instead which should be a path to the
-document root used to serve your content.
+Quando você não estiver usando o servidor built-in HTTP você pode especificar o `:watch-dir` em vez disso, deveria ser um path 
+para o documento raíz usado para servir o conteúdo.
 
-.Example :watch-dir config
+.Exemplo do config :watch-dir
 ```clojure
 {...
     {:builds
@@ -521,9 +519,10 @@ document root used to serve your content.
              :devtools {:watch-dir "public"}}}}
 ```
 
-When your HTTP Server is serving the files from a virtual directory and the filesystem paths don't exactly match the path used in the HTML you may adjust the path by setting `:watch-path` which will be used as a prefix.
+Quando seu servidor HTTP está servindo os arquivos a partir de um diretório virtual e os paths do filesystem não exatamente combina com o usado em seu HTML você deve ajustar o path configurando `:watch-path` do qual vai ser usado como um prefixo.
 
-.Example `public/css/main.css` being served under `/foo/css/main.css`
+
+.Examplo `public/css/main.css` sendo servido dentro do `/foo/css/main.css`
 ```clojure
 {...
  {:builds
@@ -535,7 +534,7 @@ When your HTTP Server is serving the files from a virtual directory and the file
 
 === Proxy Support [[proxy-support]]
 
-By default the devtools client will attempt to connect to the `shadow-cljs` process via the configured <<http, HTTP server>> (usually `localhost`). If you are using a reverse proxy to serve your HTML that might not be possible. You can set `:devtools-url` to configure which URL to use.
+Por padrão o cliente devtools vai tentar se conectar ao processo `shadow-cljs` através do configurado <<http, HTTP server>> (geralmente `localhost`). Se você esta usando um proxy reverso para servir seu HTML isso não dever ser possível. Você pode configurar `:devtools-url` para configurar qual URL usar.
 
 ```
 {...
@@ -547,19 +546,18 @@ By default the devtools client will attempt to connect to the `shadow-cljs` proc
                    ...}}}}
 ```
 
-`shadow-cljs` will then use the `:devtools-url` as the base when making requests. It is not the final URL so you must ensure that all requests starting with the path you configured (eg. `/shadow-cljs/*`) are forwarded to the host `shadow-cljs` is running on.
+`shadow-cljs` vai então usar o `:devtools-url` como a base quando fazendo requests. Essa não deve ser a URL final então você deve ter certeza que todas as requests começando com o caminho que você configurou (ex. `/shadow-cljs/*`) estão encaminhadas para o host `shadow-cljs` que está rodando.
 
-
-.Incoming Request to Proxy
+.Request de entrada para o Proxy
 ```text
 https://some.host/shadow-cljs/ws/foo/bar?asdf
 ```
-.must forward to
+.deve encaminhar para
 ```
 http://localhost:9630/foo/bar?asdf
 ```
 
-The client will make WebSocket request as well as normal XHR requests to load files. Ensure that your proxy properly upgrades WebSockets.
+O cliente vai fazer requests WebSocket assim como requests XHR para carregar os arquivos. Tenha certeza que seu proxy está devidamente atualizando o WebScokets.
 
-IMPORTANT: The requests must be forwarded to the main <<http, HTTP server>>, not the one configured in the build itself.
+IMPORTANTE: As requests devem ser encaminhadas para o principal <<http, HTTP server>>, não aquele configurado na build ele mesmo.
 
