@@ -1,37 +1,35 @@
-The `:target :node-library` emits code that can be used (via `require`) as a standard node library, and is
-useful for publishing your code for re-use as a compiled Javascript artifact.
+O `:target :node-library` emite o código que pode ser usado (via `require`) como uma biblioteca node padrão, e é
+útil para publicar seu código para re uso como um artefato Javascript compilado.
 
-As with other modes the <<config, main configuration options>> apply and must be set.
-The target-specific options are:
+Como com outro modos o <<config, main configuration options>> é aplicado e deve ser configurado.
+As opções target-specific são:
 
 [horizontal]
-`:target`:: Use :node-library
-`:output-to`:: (required). The path and filename for the generated library.
-`:output-dir`:: (optional). The path for supporting files in development mode. Defaults to a cache directory.
+`:target`:: Usa :node-library
+`:output-to`:: (required). O caminho e o nome do arquivo para a biblioteca gerada.
+`:output-dir`:: (optional). O caminho para os arquivos em modo de desenvolvimento. Padrão para o diretório de cache.
 
-The hot code reload story is similar to <<NodeHotCodeReload, the script target>>, but may not work as well
-since it cannot as easily control all of the code that is loaded.
+O hot code reload é siilar ao <<NodeHotCodeReload, the script target>>, mas não deve funcionar bem 
+desde que isso não pode ser facilmente controlar tudo do código que é carregado.
 
-Controlling what code is actually exported is done via one of the following options:
+Controlar o que o código na verdade exporta é feito através das seguintes opções:
 
-- `:exports` -  a map of keyword to fully qualified symbols
-- `:exports-var` - a fully qualified symbol
-- `:exports-fn` - a fully qualified symbol
+- `:exports` - um mapa de keyword para simbolos totalmente qualificados
+- `:exports-var` - um simbolo totalmente qualificado
+- `:exports-fn` - um simbolo totalmente qualificado
 
 === Single static "default" export
 
-`:exports-var` will just return whatever is declared under that var. It can point to a `defn` or normal `def`.
+`:exports-var` irá apenas retornar o que for declarado sob essa var. Isso pode apontar para um `defn` ou o `def`.
 
-
-
-.Build config using `:exports-var`
+.Construindo o config usando `:exports-var`
 ```
 {...
  :builds {:lib {:output-to "lib.js"
                 :exports-var demo.ns/f
                 ...}}}
 ```
-.Example CLJS
+.Exemplo CLJS
 ```
 (ns demo.ns)
 
@@ -40,18 +38,18 @@ Controlling what code is actually exported is done via one of the following opti
 (def f #js {:foo ...})
 ```
 
-.Consuming the generated code
+.Consumindo o código gerado
 ```bash
 $ node
 > var f = require('./lib.js');
 f(); // the actual demo.ns/f function
 ```
 
-It is effectively generating `module.exports = demo.ns.f;`
+Isso está gerando efetivamente o `module.exports = demo.ns.f;`
 
-=== Multiple static named exports
+=== Multiplos exports nomeados estáticos
 
-.Build configuration with multiple exports
+.Build configuration com multiples exports
 ```
 {...
  :builds {:lib {:exports {:g       demo.ns/f
@@ -60,8 +58,8 @@ It is effectively generating `module.exports = demo.ns.f;`
                 ...}}}
 ```
 
-The keyword is used as the name of the entry in the exported object. *No munging is done* to this keyword name
-(but namespaces are dropped). So, the above example maps cljs `f` to `g`, etc.:
+A keyword é usada como o nome da entidade em um objeto exportado. *Nenhum assalto é feito* para essa keyword
+(mas os namespaces são soltos). Então, o exemplo abaixo de mapas cljs `f` para `g`, etc.:
 
 ```bash
 $ node
@@ -70,16 +68,16 @@ lib.g(); // call demo-ns/f
 lib["ok?"](); // call another-ns/ok?
 ```
 
-You can achieve the exact same thing by using `:exports-var` pointing to a `def`
+É possível alcançar o mesmo resultado usando `:exports-var` apontando para o `def`
 
 ```
 (def exports #js {:g f
                   ...})
 ```
 
-=== "Dynamic" exports
+=== Exportes "Dinâmicos"
 
-In addition you may specify `:exports-fn` as a fully qualified symbol. This should point to a function with no arguments which should return a JS object (or function). This function will only ever be called ONCE as `node` caches the return value.
+Além do que você deve especificar o `:exports-fn` como um simbolo completamente qualificado. Isso deveria apontar para uma função sem argumentos dos quais deveria retornar um objeto JS (ou função). Essa função vai apenas ser chamada uma vez como `node` e cachear o valor retornado. 
 
 ```clojure
 (ns demo.ns
@@ -97,11 +95,11 @@ In addition you may specify `:exports-fn` as a fully qualified symbol. This shou
                 ...}}}
 ```
 
-NOTE: The exports config automatically tracks exported symbols and passes them on to the optimization stage. This means that anything listed in `:exports` will not be renamed by Google Closure optimizations.
+ATENÇÃO: Os exports de config automaticamente rastreia os simbolos exportados e passa eles para um estágio de otimizações. Isso significa que tudo listado em `:exports` não vai ser renomeado pelas otimizações do Google Closure.
 
-=== Full Example
+=== Exemplo Completo
 
-The example below creates a `lib.js` file intended to be consumed via the normal Node `require` mechanism.
+O exemplo abaixo cria um arquivo `lib.js` para ser consumido via o mecanismo Node `require`.
 
 ```
 (ns demo.lib)
@@ -111,7 +109,7 @@ The example below creates a `lib.js` file intended to be consumed via the normal
   "hello")
 ```
 
-The build configuration would be:
+O build configuration deveria ser:
 
 ```
 {...
@@ -120,7 +118,8 @@ The build configuration would be:
                     :exports   {:hello demo.lib/hello}}}}
 ```
 
-and the runtime use is as you would expect:
+
+E o uso do runtime funcionaria como o esperado:
 
 ```
 $ cd out/demo-library
@@ -132,6 +131,6 @@ hello
 'hello'
 ```
 
-As `:node-script` this will only create the file specified in `:output-to`. The `:exports` map maps CLJS vars to the name they should be exported to.
+Como `:node-script` isso apenas criaria o arquivo especificado em `:output-to`. O mapa `:exports` mapeia as variaveis CLJS para o nome eles deveriam ser exportados para.
 
-NOTE: Development mode has the <<NodeModes,same setup>> as for node scripts (extra dependencies).
+ATENÇÃO: O modo de desenvolvimento tem o <<NodeModes,same setup>> como para scripts node (dependencias extra).
