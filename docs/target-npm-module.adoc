@@ -1,11 +1,11 @@
-There is an additional target that is intended to integrate CLJS into an existing JS project. The output can seamlessly integrate with existing JS tools (eg. webpack, browserify, babel,
-create-react-app, ...) with little configuration.
+Esse é um target adicional que é pretendido que integre CLJS em um projeto JS existente. A saída pode perfeitamente integrar com ferramentas JS existentes (ex.: webpack, browserify, babel,
+create-react-app, ...) com poucas configurações.
 
 [horizontal]
-`:output-dir`:: The path for the output files are written to, defaults to `node_modules/shadow-cljs`.
-`:entries`:: (required) A vector of namespace symbols that should be compiled
+`:output-dir`:: O caminho para a saída do arquivo, padrão é `node_modules/shadow-cljs`.
+`:entries`:: (obrigatório) Um vetor de namespaces que devem ser compilados
 
-.Example `shadow-cljs.edn` config
+.Exemplo do config `shadow-cljs.edn`
 ```
 {...
  :builds
@@ -14,17 +14,17 @@ create-react-app, ...) with little configuration.
    :entries [demo.foo]}}}
 ```
 
-If you use the default `:output-dir` of `"node_modules/shadow-cljs"` you can access the declared namespaces by using `require("shadow-cljs/demo.foo")` in JS. When using something not in `node_modules` you must include them using a relative path. With `:output-dir "out"` that would be `require("./out/demo.foo")` from your project root.
+Se você usa o `:output-dir` padrão do `"node_modules/shadow-cljs"` você pode acessar o namescape declarado usando `require("shadow-cljs/demo.foo")` em JS. Quando não usando algo dentro do `node_modules` você deve incluir eles usando um path relativo. Com `:output-dir "out"` que deveria ser `require("./out/demo.foo")` a partir de seu projeto raíz.
 
-If you plan to distribute code on NPM, then you may want to use the <<NodeLibrary, `:node-library` target>> instead since it allows for a finer level of control over exports and optimization.
+Se você planeja distribuir o código no NPM, então você deve querer usar a <<NodeLibrary, `:node-library` target>> em vez idsso ele permite para um um melhor nível de controler sobre exports e otimizações.
 
-== Working with Optimizations
+== Trabalhando com otimizações
 
-Unlike the `:node-library` target, the module target does not know what you want to call the
-symbols you're exporting, so it just exports them as-is. If you use advanced compilation, then everything
-will get a minified munged name!
+Ao contrário do target `:node-library`, o modulo target não conhece o que você quer chamar para os
+simbolos que você está exportando, então isso apenas exporta eles as-is. Se vocie usar compilação avançanda, então tudo
+vai ser minificado!
 
-This is easy to remedy, simply add `:export` metadata on any symbols that you want to preserve:
+Essa é fácil de solucinar, simplesmentes adicione o metadado `:export` em qualquer simbolo que você quer preservar:
 
 ```
 (ns demo.foo)
@@ -34,8 +34,8 @@ This is easy to remedy, simply add `:export` metadata on any symbols that you wa
 (defn ^:export bar [] ...)
 ```
 
-This is a standard annotation that is understood by ClojureScript and prevents Google Closure from
-renaming an artifact. JS code will still be able to access them after optimizations. Without the `^:export` hint the closure-compiler will likely have removed or renamed them.
+Esse é a notação padrão que é entendida pelo ClojureScript e previne o Google Closure de 
+renomear os artefatos. O código JS vai ainda ser capaz de acessar eles depois das otimizações. Sem a dica do `^:export` o closure-compile provavelmente vai ter removido ou renomeado eles.
 
 ```
 var ns = require("shadow-cljs/demo.foo");
