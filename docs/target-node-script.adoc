@@ -1,5 +1,5 @@
-The `:target :node-script` produces single-file stand-alone output that can be run using `node.js`.
-The code is just ClojureScript, and an entry point is easy to define:
+O `:target :node-script` produz uma única saída de arquivo padrão que pode ser rodada usando `node.js`.
+O código é apenas ClojureScript, e um ponto de entrada é fácil de definir:
 
 ```
 (ns demo.script)
@@ -8,19 +8,18 @@ The code is just ClojureScript, and an entry point is easy to define:
   (prn "hello world"))
 ```
 
-=== Build Options
+=== Opções de Build
 
-You will need the same basic <<config,main configuration>> as in other targets (like
-`:source-paths`), but you'll need some node-specific build target options:
+Você vai precisar apenas de algumas configurações básicas <<config,main configuration>> como em outros targets (como `:source-paths`), mas você vai precisar construir algumas opções especificas do node:
 
 [horizontal]
-`:main`:: (required). The namespace-qualified symbol of your script's entry point function.
-`:output-to`:: (required). The path and filename for the generated script.
-`:output-dir`:: (optional). The path for supporting files in development mode. Defaults to a cache directory.
+`:main`:: (obrigatório). O namespace qualificado para ser o ponto de entrada do seu script.
+`:output-to`:: (required). O caminho e o nome do arquivo para o script gerado.
+`:output-dir`:: (optional). O caminho para suportar arquivos em modo de desenvolvimento. O padrão para um diretório de cache.
 
 // TODO: Thomas mentioned that node can be picky and sometimes output-dir is useful...an example would be nice.
 
-.Sample node script build
+.Exemplo de um node script build
 ```
 {:source-paths [...]
  ...
@@ -31,22 +30,22 @@ You will need the same basic <<config,main configuration>> as in other targets (
    :output-to "out/demo-script/script.js"}}}
 ```
 
-When compiled this results in a standalone `out/demo-script/script.js` file intended to be called
-via `node script.js <command line args>`. When run it will call `(demo.script/main <command line args>)`
-function on startup. This only ever produces the file specified in `:output-to`. Any other support files
-(e.g. for development mode) are written to a temporary support directory.
+Quando compilado isso resulta em um arquivo padrão `out/demo-script/script.js` pretendido ser chamado através do
+`node script.js <command line args>`. Quando rodando isso vai chamar a função `(demo.script/main <command line args>)`
+na inicialização. Isso sempre produz arquivos especificados em `:output-to`. Qualquer outros arquivos de suporte
+(ex.: para modo de desenvolvimento) são escritos e um diretório temporário de suporte.
 
 === Hot Code Reload [[NodeHotCodeReload]]
 
-You will often write scripts that run as servers or some other long-running process. Hot code reload can
-be quite useful when working with these, and it is simple to set up:
+Você vai frequentemente escrever scripts que rodam como um servidor ou algum outro processo de longa duração. Hot code reload pode ser
+bastante útil quando trabalhando isso, e é bem simples de configurar:
 
-. Add start/stop callback functions.
-. Configure the build use those hooks.
+. E start/stop funções de callback.
+. Configure o build para usar esses hooks.
 
-Here is an example http server in node:
+Aqui está um exemplo de um servidor http em node:
 
-.Sample node script with start/stop hooks for hot code reload.
+.Exemplo de um script em node com hooks de start/stop para hot reload do código
 ```
 (ns demo.script
   (:require ["http" :as http]))
@@ -90,9 +89,9 @@ Here is an example http server in node:
 (js/console.log "__filename" js/__filename)
 ```
 
-The associated configuration is (`shadow-cljs.edn`):
+A configuração associada é (`shadow-cljs.edn`):
 
-.Adding hooks for hot code reload.
+.Adicionando hooks para hot reload do código.
 ```
 {...
  :builds
@@ -103,7 +102,6 @@ The associated configuration is (`shadow-cljs.edn`):
                          :after-load demo.script/start}}}}
 ```
 
-WARNING: Many libraries hide state or do actions that prevent hot code reloading from working well. There
-is nothing the compiler can do to improve this since it has no idea what those libraries are doing.
-Hot code reload will only work well in situations where you can cleanly "stop" and "restart" the
-artifacts used.
+ALERTA: Muitas bibliotecas escodem estado ou fazem ações que dificultam funcionamento do hot reloading do código. 
+Não há nada que o compilado possa fazer para melhorar isso desde ele não tem conhecimento do que essas bibliotecas estão fazendo.
+Hot reload do código vai funcionar bem em situações onde você consegue "stop" e "restart" os artefatos usados.
