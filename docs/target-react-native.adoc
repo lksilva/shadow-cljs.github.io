@@ -1,15 +1,14 @@
-The `:target :react-native` produces code that is meant to integrate into the default `react-native` tooling (eg. `metro`). Tools like `expo` which wrap those tools should automatically work and require no additional setup.
+O `:target :react-native` produz código que integra nas ferramentas padrões do `react-native` (ex. `metro`). Ferramentas como `expo` da qual encapsula essas ferramentas deveria automáticamente trabalhar e não requerer configuração adicional. 
 
-You will need the same basic <<config,main configuration>> as in other targets (like
-`:source-paths`), the build specific config is very minimal and requires at least 2 options (besides `:target` itself)
+Você vai precisar da configuração básica <<config,main configuration>> como em outro targets (como `:soure-paths`), o config do build especifico é minimo e requer pelo menos duas opções (alés da `:target`)
 
 [horizontal]
-`:init-fn`:: (required). The namespace-qualified symbol of your apps init function. This function will be called once on startup and should probably render something.
-`:output-dir`:: (required). The directory used to write output files.
+`:init-fn`:: (obrigatório). A função inicial do seu app. Essa função será chamada uma vez na inicialização e provavelmente deveria renderizar alguma.
+`:output-dir`:: (obrigatório). O diretório usado para escrever arquivos de saída.
 
 // TODO: Thomas mentioned that node can be picky and sometimes output-dir is useful...an example would be nice.
 
-.Sample :react-native config
+.Exemplo da configuração do :react-native
 ```
 {:source-paths [...]
  :dependencies [...]
@@ -21,22 +20,22 @@ You will need the same basic <<config,main configuration>> as in other targets (
    :output-dir "app"}}}
 ```
 
-When compiled this results in a `app/index.js` file intended to be used as an entry point for the `react-native` tools. During development the `:output-dir` will contain many more files but you should only reference the generated `app/index.js` directly. A `release` build will only generated the optimized `app/index.js` and requires no additional files.
+Quando compilando esse resultado em um arquivo `app/index.js` para ser usado como ponto de entrada para as ferramentas do `react-native`. Durante o desenvolvimento o `:output-dir` vai conter muito mais arquivos mas você deveria apenas referenciar o `app/index.js` gerado. Um build `release` vai apenas gerar o `app/index.js` otimizado e não requer arquivos adicionais.
 
 == React Native
 
-There are two ways to use `react-native`, "plain" `react-native`, which allows you to use native code and libraries and the one "wrapped" in https://expo.io/[expo] (described below). All the steps described above are sufficient to start using shadow-cljs with the plain `react-native`. See this example repo:
+Existe duas maneiras de usar `react-native`, "plain" `react-native`, do qual permite você usar código nátivo e bibliotecas e um "wrapped" no https://expo.io/[expo] (descrito abaixo). Todos os passos descritos acima são suficientes para começar usando shadow-cljs como `react-native` puro. Veja esse exemplo de repo:
 
 - https://github.com/thheller/reagent-react-native
 
 == Expo
 
-https://expo.io/[expo] makes working with `react-native` quite easy. There are two provided example setups.
+https://expo.io/[expo] funcionando com `react-native` de maneira fácil. Existem dois exemplos de configuração.
 
 - https://github.com/thheller/fulcro-expo
 - https://github.com/thheller/reagent-expo
 
-Both examples where generated using `expo init ...` and the only adjusted change in the config was adding the proper `entryPoint` to the generated `app.json`.
+Ambos exemplos onde gerados usando `expo init...` e apenas mudanças ajustadas no config estava adicionando o `entryPoint` adequado para o `app.json` gerado.
 
 ```
 {
@@ -50,9 +49,9 @@ Both examples where generated using `expo init ...` and the only adjusted change
 }
 ```
 
-`expo` requires that a React Component is registered on startup which can be done manually or by using the `shadow.expo/render-root` function which takes care of creating the Component and instead directly expects a React Element instance to start rendering.
+`expo` requer que o Component React seja registrado na inicialização da qual pode ser feita manualmente ou usando a função `shadow.expo/render-root` da qual cuida de criar o Component e diretamente expera uma instância de um element React para começar a renderizar.
 
-.From the Reagent https://github.com/thheller/reagent-expo/blob/2c73ed0513a8f5050b250c0c7e53b9ae7543cee9/src/main/test/app.cljs#L34-L40[example]
+.A partir do Reagent https://github.com/thheller/reagent-expo/blob/2c73ed0513a8f5050b250c0c7e53b9ae7543cee9/src/main/test/app.cljs#L34-L40[example]
 ```
 (defn start
   {:dev/after-load true}
@@ -63,4 +62,4 @@ Both examples where generated using `expo init ...` and the only adjusted change
   (start))
 ```
 
-`init` is called once on startup. Since the example doesn't need to do any special setup it just calls `start` directly. `start` will be called repeatedly when `watch` is running each time after the code changes were reloaded. The `reagent.core/as-element` function can be used to generate the required React Element from the reagent hiccup markup.
+`init` é chamado uma vez na inicialização. Desde o exemplo nnao precisa fazer nenhuma configuração especial isso apenas chama o `start` diretamente. `start` vai ser chamado repetidamente quando `watch` está rodando cada vez depois de uma mudança. A função `reagent.core/as-element` pode ser usada para gerar o Elemento React requerido a partir de uma marcação do hiccup.
