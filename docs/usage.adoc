@@ -6,15 +6,15 @@ Durante o desenvolvimento você tem a opção de `compilar` uma build uma vez ou
 
 Quando chegar o momento de criar uma build de <<release, `release`>> da qual cria um build otmizado adequado para produção. Para isso o https://developers.google.com/closure/compiler/[Closure Compiler] é usado porque aplicar algumas otimizações `:advanced` para seu código criar o a melhor saída possível. Isso deve requerer alguns <<externs, tuning>> para que funcione adequadamente quando usando um monte de interop com JavaScript nativo mas funciona perfeitamente para ClojureScript (e o código a partir da https://developers.google.com/closure/library/[Closure Library]).
 
-== Command Line
+== Linha de comando
 
-If <<Installation, installed>> globally, you can use the `shadow-cljs` command directly.
+Se <<Installation, installed>> globalmente, você consegue usar o comando `shadow-cljs` diretamente.
 
 ```bash
 $ shadow-cljs help
 ```
 
-If you prefer to only use the local `npm` install you can invoke it via `npx` or `yarn`.
+Se você preferir usar apenas o `npm` local você consegue invocar ele via `npx` ou `yarn`.
 
 ```bash
 # npm
@@ -27,7 +27,7 @@ $ yarn shadow-cljs help
 $ ./node_modules/.bin/shadow-cljs help
 ```
 
-.Commonly used shadow-cljs commands during development
+.Comandos `shadow-cljs` comumente usados durante o desenvolvimento
 ```bash
 # compile a build once and exit
 $ shadow-cljs compile app
@@ -42,15 +42,15 @@ $ shadow-cljs cljs-repl app
 $ shadow-cljs node-repl
 ```
 
-.Running a release build optimized for production use.
+.Rodando um build de release otimizado para usar em produção.
 ```
 $ shadow-cljs release app
 ```
 
-Sometimes you may run into some release issues due to `:advanced` compilation. These
-commands can help track down the causes.
+Alguma vezes você deve encontrar alguns problemas relacionados a compilação `:advanced`. Esses
+comandos podem ajudar a rastrear as causas.
 
-.Release debugging commands.
+.Comando release debugging.
 ```
 $ shadow-cljs check app
 $ shadow-cljs release app --debug
