@@ -1,11 +1,10 @@
-= Usage
+= Uso
 
-`shadow-cljs` can be used in many different ways but the general workflow stays the same.
+`shadow-cljs` pode ser usando de diversas maneiras mas em geral o fluxo de trabalho permanece o mesmo.
 
-During development you have the option to `compile` a build once or run a `watch` worker which watches your source files for changes and re-compiles them automatically. When <<devtools, enabled>> the `watch` will also hot-reload your code and provide a REPL. During development the focus is on developer experience with fast feedback cycles. Development code should never be shipped to the public.
+Durante o desenvolvimento você tem a opção de `compilar` uma build uma vez ou rodar um worker `watch` do qual vai assistir a mudanças nos seus arquivos fontes e re-compilar eles automaticamente. Quando o <<devtools, enabled>> `watch` também recarrega seu código e provê uma REPL. Durante o desenvolvimento o foco é na experiência do desenvolvedor com rápidos ciclos de feedback. O código de desenvolvimento nunca deveria ser publicado em produção.
 
-When it is time to get serious you create a <<release, `release`>> build which creates an optimized build suitable for production. For this the https://developers.google.com/closure/compiler/[Closure Compiler] is used which applies some seriously `:advanced` optimizations to your code to create the most optimal output available. This may require some <<externs, tuning>> to work properly when using lots of interop with native JavaScript but works flawlessly for ClojureScript (and the code from the https://developers.google.com/closure/library/[Closure Library]).
-
+Quando chegar o momento de criar uma build de <<release, `release`>> da qual cria um build otmizado adequado para produção. Para isso o https://developers.google.com/closure/compiler/[Closure Compiler] é usado porque aplicar algumas otimizações `:advanced` para seu código criar o a melhor saída possível. Isso deve requerer alguns <<externs, tuning>> para que funcione adequadamente quando usando um monte de interop com JavaScript nativo mas funciona perfeitamente para ClojureScript (e o código a partir da https://developers.google.com/closure/library/[Closure Library]).
 
 == Command Line
 
