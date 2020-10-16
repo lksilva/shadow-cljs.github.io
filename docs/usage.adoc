@@ -58,12 +58,12 @@ $ shadow-cljs release app --debug
 
 === Server Mode [[server-mode]]
 
-A `shadow-cljs` command can be fairly slow to start. To improve this `shadow-cljs` can run in "server mode" which means that a dedicated process is started which all other commands can use to execute a lot faster since they won't have to start a new JVM/Clojure instance.
+Um comando `shadow-cljs` pode ser bastante lento pra iniciar. Para melhorar isso o `shadow-cljs` pode rodar em "server mode" o que significa que um processo dedicado é iniciado do qual todos os outros comando podem usar para executar um pouco mais rápido desde que eles não precisam iniciar uma nova instância JVM/Clojure.
 
-Commands that do long-running things implicitly start a server instance (eg. `watch`) but it is often advisable to have
-a dedicated server process running.
+Comando que fazendo coisas demoradas implicitamente iniciam uma instância do servidor (ex. `watch`) mas isso é frequentemente aconselhavel ter
+um processo dedicado no servidor rodando.
 
-You can run the process in the foreground in a dedicated terminal. Use `CTRL+C` to terminate the server.
+Você pode rodar o processo em primeiro plano no terminal dedicado. Use o `CTRL+C` para terminar o servidor.
 
 ```bash
 $ shadow-cljs server
