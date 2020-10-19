@@ -1,3 +1,4 @@
+
 = Uso
 
 `shadow-cljs` pode ser usando de diversas maneiras mas em geral o fluxo de trabalho permanece o mesmo.
@@ -72,7 +73,7 @@ $ shadow-cljs server
 $ shadow-cljs clj-repl
 ```
 
-You can also run the server in the background controlled via the common `start|stop|restart` functions.
+É possível rodar o servidor em segundo plano através das funções `start|stop|restart`.
 
 ```bash
 $ shadow-cljs start
@@ -80,17 +81,17 @@ $ shadow-cljs stop
 $ shadow-cljs restart
 ```
 
-Once any server is running every other command will use that and run much faster.
+Uma vez que qualquer servidor rodando cada outro comando vai usar isso e rodar mais rápido.
 
 == Build Tool Integration
 
-`shadow-cljs` can integrate with other Clojure tools since the primary distribution is just a `.jar` file available via https://clojars.org/thheller/shadow-cljs[Clojars]. By default your `:dependencies` are managed via `shadow-cljs.edn` but you can use other builds tools to manage your dependencies as well.
+`shadow-cljs` consegue integrar com outras ferramentas Clojure desde a primeira distribuição é apenas um arquivo `.jar` disponível através do https://clojars.org/thheller/shadow-cljs[Clojars]. Por padrão seu `:dependencies` são gerenciados via as versões `shadow-cljs`. Mas você consegue usar outras builds tools para gerenciar suas dependencias também.
 
-CAUTION: It is strongly recommended to use the standalone `shadow-cljs` version. The command does a lot of things to optimize the user experience (e.g. faster startup) which are not done by other tools. You'll also save yourself a lot of headaches dealing with dependency conflicts and other related errors.
+CUIDADE: É fortemente recomendado usar as versões padrões do `shadow-cljs`. O comando faz um monte de coisas para otimizar a experiência do usuário (ex: inicialização mais rápida) das quais não são feitas em outras ferramentas. Você vai evitar um monte de dor de cabeça lidando com conflito de dependências e outros erros relacionados.
 
 === Leiningen [[Leiningen]]
 
-If you'd like to use https://leiningen.org/[Leiningen] to manage your dependencies, you can do so by adding a `:lein` entry to your `shadow-cljs.edn` config. With this setting, the `shadow-cljs` command will use `lein` to launch the JVM, ignoring any `:source-paths` and `:dependencies` in `shadow-cljs.edn`; relying instead on `lein` to set them from `project.clj`.
+Se você gostaria de usar  https://leiningen.org/[Leiningen] para gerenciar suas dependencias, você pode fazer isso adicionando um `:lein` em seu config `shadow-cljs.edn`. Com essa configuração, o comando `shadow-cljs` vai usar `lein` para subir a JVM, ignorando qualquer `:source-paths` e `:dependencies` em `shadow-cljs.edn`; confiando no `lein` para configurar eles a partir do `projct.clj`.
 
 ```
 {:lein true
@@ -99,7 +100,7 @@ If you'd like to use https://leiningen.org/[Leiningen] to manage your dependenci
  :builds { ... }
 ```
 
-.Using a dedicated `lein` profile
+.Usando um `lein` profile dedicado
 ```
 {:lein {:profile "+cljs"}
  :builds {...}}
@@ -115,56 +116,55 @@ If you'd like to use https://leiningen.org/[Leiningen] to manage your dependenci
                    [reagent "0.8.1"]]}})
 ```
 
-When using `project.clj` to manage your `:dependencies` you must manually include the https://clojars.org/thheller/shadow-cljs[thheller/shadow-cljs] artifact in your `:dependencies` (directly or in a profile).
+Quando usando `project.clj` para gerenciar suar `:dependencies` você deve manualmente incluir o artefato https://clojars.org/thheller/shadow-cljs[thheller/shadow-cljs] em seu `:dependencies` (diretamente ou em um profile).
 
-IMPORTANT: When you are running into weird Java Stackstraces when starting `shadow-cljs` or trying compile builds you may have a dependency conflict. It is very important that `shadow-cljs` is used with proper matching `org.clojure/clojurescript` and `closure-compiler` versions. You can check via `lein deps :tree` and the required versions are listed on https://clojars.org/thheller/shadow-cljs[clojars] (on the right side).
+IMPORTANTE: Quando rodando um Java Stackstraces esquisito quando inicializando o `shadow-cljs` ou tentando compilar seus builds você deve ter um conflito de dependências. É muito importante que `shadow-cljs` seja usado com coincidindo as versões do `org.clojure/clojurescript` e `closure-compiler`. É possível chegar isso via `lein deps :tree` e as versões requeridas são listadas no https://clojars.org/thheller/shadow-cljs[clojars] (no lado direito).
 
-==== Running Tasks Directly From Leiningen
+==== Rodando Tarefas diretamente a partir do Leiningen
 
-You may also directly execute `shadow-cljs` commands via `lein` if you prefer to not use the `shadow-cljs` command itself.
+Você deve executar diretamente comando `shadow-cljs` via `lein` se você preferir não usar os comando `shadow-cljs`.
 
-IMPORTANT: It is recommended to still use the `shadow-cljs` command to run commands since that will take full advantage of a running server mode instance. This will run commands substantially faster than launching additional JVMs when using `lein` directly.
+IMPORTANTE: É recomendado ainda usar os comandos `shadow-cljs` para rodar comando desde que isso vai tirar vantagem de uma instância rodando em modo servidor. Isso vai rodar comandos substâncialmente mais rápido que JVM adicionais usando `lein` diretamente.
 
-
-.Just compile :dev mode once, no REPL or live-reload:
+.Apenas compile modo :dev uma vez, não precisa de REPL ou live-reload:
 ```bash
 $ lein run -m shadow.cljs.devtools.cli compile build-id
 ```
 
-.Create a :release mode optimized build:
+.Crie um build no modo :release otimizado:
 ```bash
 $ lein run -m shadow.cljs.devtools.cli release build-id
 ```
 
 === tools.deps / deps.edn [[deps-edn]]
 
-The new https://clojure.org/guides/deps_and_cli[deps.edn] can also be used to manage your `:dependencies` and `:source-paths` instead of using the built-in methods or `lein`. All `shadow-cljs` commands will then be launched via the new `clojure` utility instead.
+O novo https://clojure.org/guides/deps_and_cli[deps.edn] pode também ser usado para gerenciar suas `:dependencies` e `:source-paths` ao invés de usar os métodos built-in ou `lein`. Todos os comandos `shadow-cljs` serão então iniciados através do novo `clojure`.
 
-IMPORTANT: `tools.deps` is still changing quite frequently. Make sure you are using the latest version.
+IMPORTANTE: `tools.deps` está mudando muito frequentemente. Tenha certeza que você está usando a última versão.
 
-To use this set the `:deps true` property in your config. It is also possible to configure which `deps.edn` aliases should be used.
+Para usar isso configure a propriedade `:deps true` em seu config. Também é possível configurar `deps.edn` que deveria ser usadas.
 
-You must add the `thheller/shadow-cljs` artifact to your `deps.edn` manually.
+Você deve adicionar o artefator `thheller/shadow-cljs` para seu `deps.edn` manualmente.
 
-.Simple `shadow-cljs.edn` example
+.Simples exemplos `shadow-cljs.edn`
 ```clojure
 {:deps true
  :builds ...}
 ```
 
-.Simple `deps.edn` example
+.Simples exemplos `deps.edn`
 ```clojure
 {:paths [...]
  :deps {thheller/shadow-cljs {:mvn/version <latest>}}}
 ```
 
-.Example `shadow-cljs.edn` with :cljs alias
+.Examplo `shadow-cljs.edn` com :cljs 
 ```clojure
 {:deps {:aliases [:cljs]}
  :builds ...}
 ```
 
-.Example `deps.edn`
+.Examplo `deps.edn`
 ```clojure
 {:paths [...]
  :deps {...}
@@ -173,7 +173,7 @@ You must add the `thheller/shadow-cljs` artifact to your `deps.edn` manually.
   {:extra-deps {thheller/shadow-cljs {:mvn/version <latest>}}}}
 ```
 
-Running with `clj` directly.
+Rodando diretamente com `clj`.
 ```
 {:paths [...]
  :deps {...}
@@ -187,24 +187,24 @@ Running with `clj` directly.
 clj -A:shadow-cljs watch app
 ```
 
-You may also specify additional aliases via the command line using `-A`, eg. `shadow-cljs -A:foo:bar ...`.
+Você deve especificar apelidos adicionais através da linha de comando usando `-A`, ex. `shadow-cljs -A:foo:bar ...`.
 
-IMPORTANT: Aliases are only applied when a new instance/server is started. They do not apply when connecting to a running server using the `shadow-cljs` command. Running via `clj` will always start a new JVM and does not support server-mode.
+IMPORTANTE: Apelidos são apenas aplicados quando uma nova instância/servidor é iniciado. Eles não aplicam quando conectando a um servidor rodando usando o comando `shadow-cljs`. Rodando através do `clj` vai sempre iniciar uma nova JVM e não suporta o modo servidor.
 
 === Boot
 
-The authors have little Boot experience, so this chapter is in need of contributions. We understand
-that Boot allows you to build your tool chain out of functions. Since `shadow-cljs` is a normal
-JVM library, you can call functions within it to invoke tasks.
+Os autores tem pouca experiênca com Boot, então nesse capitulo é preciso de contribuidores. Nós entendemos
+que Boot permite você construir sua cadeia de ferramentas fora das funções. Desde que `shadow-cljs` e uma 
+biblioteca JVM normal, você pode chamar funções internas para invocar tarefas.
 
-Some boot tasks are available here:
+Algumas tarefas boot são disponíveis aqui:
 https://github.com/jgdavey/boot-shadow-cljs
 
-== Running Clojure Code [[clj-run]]
+== Rodando Código Clojure[[clj-run]]
 
-You can use the `shadow-cljs` CLI to call specific Clojure functions from the command line. This is useful when you want run some code before/after certain tasks. Suppose you wanted to `rsync` the output of your `release` build to a remote server.
+Você pode usar o CLI `shadow-cljs` para chamar funções de Clojure especificas a partir da linha de comando. Isso é útil quando vocie quer rodar algum código antes/depois de certas tarefas. Suponhamos que você queira `rsync` a saída de seu build `release` para um servidor remoto.
 
-.Example Clojure Namespace in `src/my/build.clj`
+.Exemplo de um Namespace Clojure em `src/my/build.clj`
 ```clojure
 (ns my.build
   (:require
@@ -216,16 +216,16 @@ You can use the `shadow-cljs` CLI to call specific Clojure functions from the co
   (sh "rsync" "-arzt" "path/to/output-dir" "my@server.com:some/path"))
 ```
 
-.Running the `release` function
+.Rodando as funções `release`
 ```bash
 $ shadow-cljs clj-run my.build/release
 # or
 $ shadow-cljs run my.build/release
 ```
 
-You can pass arguments to the invoked functions via the command line.
+Você pode passar argumentos para funções invocadas através da linha de comando.
 
-.Using arguments via normal Clojure fn args
+.Usando argumento via fn args Clojure
 ```clojure
 ...
 (defn release [server]
@@ -233,23 +233,22 @@ You can pass arguments to the invoked functions via the command line.
   (sh "rsync" "-arzt" "path/to/output-dir" server))
 ```
 
-.Passing the server from the command line
+.Passando o servidor através da linha de comandos
 ```bash
 $ shadow-cljs clj-run my.build/release my@server.com:some/path
 ```
 
-TIP: The usual `(defn release [& args])` structure also works if you want to parse the args with something like https://github.com/clojure/tools.cli[tools.cli].
+DICA: A estrutura `(defn release [& args])` também funciona se você quiser parsear os argumentos com alguma coisa como https://github.com/clojure/tools.cli[tools.cli].
 
-You have access to the full power of Clojure here. You can build entire tools on top of this if you like. As a bonus everything you write this way is also directly available via the Clojure REPL.
+Você tem que acessar o poder do Clojure aqui. É possível construir ferramentas no topo disso se você quiser. Como um bônus tudo que você escreve desssa maneira é também diretamente disponível astravés do REPL Clojure.
 
-IMPORTANT: When the <<server-mode, server>> is running the namespace will not be reloaded automatically, it will only be loaded once. It is recommended to do the development using a REPL and reload the file as usual (eg. `(require 'my.build :reload)`). You may also run `shadow-cljs clj-eval "(require 'my.build :reload)"` to reload manually from the command line.
+IMPORTANTE: Quando o <<server-mode, server>> está rodando o namespace não vai ser recarregado automáticamente, isso vai ser carregado apenas uma vez. É recomendado fazer o desenvolviemnto usando uma REPL e recarregando o arquivo (ex: `(require 'my.buid :reload)`). Você deve rodar `shadow-cljs clj-eval "(require 'my.build :reload)"` para recarregar manualmente a partir da linha de comando.
 
+=== Chamando watch através do clj-run
 
-=== Calling watch via clj-run
+Por padrão as funções chamadas pelo `clj-run` apenas tem acesso ao minimo da runtime `shadow-cljs` da qual é suficiente para rodar o `compile`, `release` e qualquer outra funcionalidade Clojure. A JVM vai terminar quando suas funcões estivem completas.
 
-By default the functions called by `clj-run` only have access to a minimal `shadow-cljs` runtime which is enough to run `compile`, `release` and any other Clojure functionality. The JVM will terminate when your function completes.
-
-If you want to start a `watch` for a given build you need to declare that the function you are calling requires a full server. This will cause the process to stay alive until you explicitly call `(shadow.cljs.devtools.server/stop!)` or `CTRL+C` the process.
+Se você quer iniciar um `watch` para uma determinada build você precisar declarar que a função que você está chamando requer um servidor completo. Isso vai causar o processo para ficar vivo até você explicitamente chamar o `(shadow.cljs.devtools.server/stop!)` ou `CTRL+C`.
 
 ```clojure
 (ns demo.run
